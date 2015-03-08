@@ -1,0 +1,23 @@
+//
+//  pptv_Prefix.pch
+//  PPTV
+//
+//  Created by yebaohua on 14/11/16.
+//  Copyright (c) 2014年 yebaohua. All rights reserved.
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+#import "config.h"
+#import "AppDelegate.h"
+#import "SHPrivateAPI.h"
+#endif
+

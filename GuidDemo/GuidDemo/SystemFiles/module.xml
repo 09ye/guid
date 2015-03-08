@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+
+
+<module
+name="login"
+pre_action ="notification_login_successful"
+target="SHLoginViewController" />
+
+
+</root>
