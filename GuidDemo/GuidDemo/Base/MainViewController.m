@@ -49,15 +49,6 @@
     
     mDictionary = [[NSMutableDictionary alloc]init];
     
-    
-    //    [SHConfigManager.instance setURL:URL_FOR(@"site/getAppConfig")];
-    //    [SHConfigManager.instance refresh];
-    //    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationWithName:) name: object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notification:) name:CORE_NOTIFICATION_CONFIG_STATUS_CHANGED object:nil];
-    //    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notificationWithName:) name: object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notification:) name:NOTIFICATION_LOGIN_SUCCESSFUL object:nil];
-    //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notification:) name:NOTIFICATION_LOGINOUT object:nil];
-    
     UINavigationController * nacontroller = [[UINavigationController alloc]initWithRootViewController: [[SHMainFuntionViewController alloc ] init]];
     NSDictionary *attributes=[NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor],NSForegroundColorAttributeName,nil];
     [nacontroller.navigationBar setTitleTextAttributes:attributes];
@@ -67,8 +58,8 @@
     if(!iOS7){
         nacontroller.navigationBar.clipsToBounds = YES;
     }
-    [nacontroller.navigationBar setBackgroundImage:[UIImage imageNamed:@"ic_title"] forBarMetrics:UIBarMetricsDefault];
-    //    nacontroller.navigationBar.barTintColor = [UIColor colorWithRed:31/255.0 green:129/255.0 blue:198/255.0 alpha:1];
+    
+    nacontroller.navigationBar.barTintColor = [SHSkin.instance colorOfStyle:@"ColorBase"];
     nacontroller.view.frame =  self.view.bounds;
     [self.view addSubview:nacontroller.view];
     [self addChildViewController:nacontroller];
@@ -144,7 +135,7 @@
         
     }
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"]) {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"firstLaunch"] && false) {
         // 这里判断是否第一次
         guideVC=[[SHGuideViewController alloc]  init];
         guideVC.delegate=self;

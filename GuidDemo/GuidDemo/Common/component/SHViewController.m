@@ -316,6 +316,10 @@ typedef NS_ENUM(NSInteger, RMoveDirection) {
 }
 
 - (void)leftItemClick4ViewController{
+    if (_tapGestureRec.enabled) {
+        [self closeSideBar];
+        return;
+    }
     CGAffineTransform conT = [self transformWithDirection:RMoveDirectionRight];
     [self configureViewShadowWithDirection:RMoveDirectionRight];
     CGRect frame = self.leftViewController.view.frame;

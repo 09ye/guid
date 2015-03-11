@@ -20,6 +20,7 @@
 @implementation AppDelegate
 
 
+
 @synthesize wbtoken;
 static bool __isupdate = NO;
 
@@ -51,6 +52,11 @@ static bool __isupdate = NO;
     //        NSLog(@"manager start failed!");
     //    }
     [super application:application didFinishLaunchingWithOptions:launchOptions];
+    _locationManager = [[CLLocationManager alloc]init];
+    _locationManager.delegate = self;
+    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
+//    _locationManager.distanceFilter = 100.0f;
+    [_locationManager startUpdatingLocation];
     //    [_locService startUserLocationService];
     //
     //
@@ -80,6 +86,17 @@ static bool __isupdate = NO;
     [SHConfigManager.instance show];
 }
 
+-(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
+{
+    CLLocation * currLocation = [locations lastObject];
+    NSLog(@"%3.5f===%3.5f",currLocation.coordinate.latitude,currLocation.coordinate.longitude);
+   
+    
+}
+-(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
+{
+    
+}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

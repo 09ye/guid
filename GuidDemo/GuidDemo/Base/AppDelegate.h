@@ -9,6 +9,8 @@
 
 #import <UIKit/UIKit.h>
 #import "SHAppDelegate.h"
+#import <CoreLocation/CLLocationManagerDelegate.h>
+#import <CoreLocation/CoreLocation.h>
 
 
 #import "SHAnalyzeFactory.h"
@@ -20,7 +22,7 @@
 //
 //@end
 
-@interface AppDelegate : SHAppDelegate<UIApplicationDelegate,SHTaskDelegate>
+@interface AppDelegate : SHAppDelegate<UIApplicationDelegate,SHTaskDelegate,CLLocationManagerDelegate>
 {
     
 
@@ -29,9 +31,10 @@
     
     
     
+    
 }
 @property (strong, nonatomic) NSString * wbtoken;
-
+@property(nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic,strong) NSDictionary * locationDistrict;
 #pragma mark - 微信
 - (void)changeScene:(NSInteger)scene;

@@ -11,6 +11,7 @@
 #import "SHAppDelegate.h"
 #import "Utility.h"
 #import "SHStatisticalData.h"
+#import "SHXmlParser.h"
 
 
 #define URL_HEADER @ "http://padapi.wasu.cn"
@@ -67,8 +68,8 @@
 #define RETAIN ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
 
 #define IPHONE4 ([UIScreen instancesRespondToSelector:@selector(currentMode)] ? CGSizeEqualToSize(CGSizeMake(640, 960), [[UIScreen mainScreen] currentMode].size) : NO)
-#define UIScreenWidth MAX([[UIScreen mainScreen]bounds].size.width ,[[UIScreen mainScreen]bounds].size.height)
-#define UIScreenHeight MIN([[UIScreen mainScreen]bounds].size.width ,[[UIScreen mainScreen]bounds].size.height)
+#define UIScreenWidth MIN([[UIScreen mainScreen]bounds].size.width ,[[UIScreen mainScreen]bounds].size.height)
+#define UIScreenHeight MAX([[UIScreen mainScreen]bounds].size.width ,[[UIScreen mainScreen]bounds].size.height)
 
 #define BEST_SCROLLVIEW_WIDTH 262
 typedef enum

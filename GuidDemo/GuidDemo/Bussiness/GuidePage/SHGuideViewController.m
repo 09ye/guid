@@ -31,33 +31,24 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
-    
-    if (!IPHONE4) {
-         [self.scrollView setContentSize:CGSizeMake(320*3, 568)];
-    }else {
-         [self.scrollView setContentSize:CGSizeMake(320*3, 480)];
-    }
+    [self.scrollView setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight)];
     self.scrollView.delegate=self;
     for (int i = 0 ; i < 3; i++) {
 		
 		NSString *imageName = @"";
 		
-		if (!IPHONE5) {
-			imageName = @"guide4";
-		}else {
-			imageName = @"guide0";
-		}
-        
+//		if (!IPHONE5) {
+//			imageName = @"guide4";
+//		}else {
+//			imageName = @"guide0";
+//		}
+        imageName = @"guid";
         imageName = [imageName stringByAppendingFormat:@"%d.png", i + 1];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];
         
         NSLog(@"%@",imageName);
-        
-		if (!IPHONE4) {
-			imageView.frame = CGRectMake(i * 320, 0, 320, 568);
-		}else {
-			imageView.frame = CGRectMake(i * 320, 0, 320, 480);
-		}
+    
+        imageView.frame = CGRectMake(i * UIScreenWidth, 0, UIScreenWidth, UIScreenHeight);
         [self.scrollView addSubview:imageView];
     }
     
