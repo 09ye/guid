@@ -28,4 +28,6 @@
 +(float) getFileSize:(NSString *)filePath;
 // 完整路径
 + (BOOL)deleteFileOfPath :(NSString*) file;
+
+
 @end

@@ -20,7 +20,9 @@
     __weak IBOutlet UIButton *mbtnStart;
 }
 - (IBAction)btnSaoOntouch:(id)sender;
-- (IBAction)segmentOnvaluechange:(id)sender;
+- (IBAction)segmentOnvaluechange:(UISlider*)sender;
 - (IBAction)btnStartPauseOntouch:(UIButton *)sender;
+- (IBAction)progressSliderUpAction:(UISlider*)sender;
+- (IBAction)progressSliderDownAction:(UISlider *)sender;
 
 @end

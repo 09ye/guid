@@ -12,11 +12,14 @@
 {
 
 }
+@property (nonatomic,strong)NSString * pathName;
 @property (nonatomic,strong)NSMutableDictionary * detail;
-@property (nonatomic,strong) NSMutableArray * listMaps;
+@property (nonatomic,strong) NSMutableArray * listPics;
 @property (nonatomic,strong) NSMutableArray * listVideos;
 @property (nonatomic,strong) NSMutableArray * listHotPoints;
 @property (nonatomic,strong) NSMutableArray * listAttractions;
 
 +(SHXmlParser*)instance;
+
+-(BOOL)start:(NSString *)path;
 @end

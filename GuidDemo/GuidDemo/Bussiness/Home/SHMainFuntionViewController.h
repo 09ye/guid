@@ -10,12 +10,17 @@
 #import "ZBarSDK.h"
 #import "SHIOS7_ScanViewController.h"
 #import "QRCodeGenerator.h"
+#import "ASIHTTPRequest.h"
+#import "SHResPackListViewController.h"
 
 
-@interface SHMainFuntionViewController : SHTableViewController<ZBarReaderDelegate,UIActionSheetDelegate>
+@interface SHMainFuntionViewController : SHTableViewController<ZBarReaderDelegate,UIActionSheetDelegate,ASIHTTPRequestDelegate,SHResPackListViewControllerDeleaget>
 {
     __weak IBOutlet UIScrollView *mScrollview;
     __weak IBOutlet UIButton *mbtnSao;
+    NSDictionary * dicPack;
+    NSMutableArray * listPacks;
+    NSString * stringProgress;
 
    
     int num;

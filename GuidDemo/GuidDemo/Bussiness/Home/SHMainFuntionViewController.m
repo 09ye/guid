@@ -11,6 +11,8 @@
 #import "ImgScrollView.h"
 #import "TapImageView.h"
 #import "SHXmlParser.h"
+#import "ZipArchive.h"
+
 
 @interface SHMainFuntionViewController ()<TapImageViewDelegate>
 {
@@ -19,8 +21,7 @@
    UIView *imgView;
    UIView *markView;
    UIScrollView *imgScrollview;
-   NSMutableArray *mListImage;
-   NSArray *_urls;
+   NSArray *listImages;
 }
 
 @end
@@ -53,7 +54,12 @@
     
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
-    self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
+    
+    [self loadCacheList];
+    
+//    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
+//    [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
+   
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
@@ -61,50 +67,41 @@
     UIBarButtonItem * button1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more"] target:self action:@selector(btnMore)];
     UIBarButtonItem * button2 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"map"] target:self action:@selector(btnShowMap)];
     [self.navigationItem setRightBarButtonItems:@[button1,button2]];
-
-    arryMore =  [[SHXmlParser.instance detail]objectForKey:@"more"];
-    _urls = @[@"http://img.ycwb.com/news/attachement/jpg/site2/20120511/90fba60187191116b78506.jpg", @"http://img.ycwb.com/news/attachement/jpg/site2/20120511/90fba60187191116b78506.jpg", @"http://ww4.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr1d0vyj20pf0gytcj.jpg", @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr1xydcj20gy0o9q6s.jpg", @"http://ww2.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr2n1jjj20gy0o9tcc.jpg", @"http://ww2.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr39ht9j20gy0o6q74.jpg", @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr3xvtlj20gy0obadv.jpg", @"http://ww4.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr4nndfj20gy0o9q6i.jpg", @"http://ww3.sinaimg.cn/thumbnail/8e88b0c1gw1e9lpr57tn9j20gy0obn0f.jpg"];
-
     
-    mListImage = [[NSMutableArray alloc]init];
-    [mScrollview setContentSize:CGSizeMake(UIScreenWidth*_urls.count, UIScreenHeight-49)];
-//    mScrollview.delegate=self;
-    UIImage *placeholder = [UIImage imageNamed:@"timeline_image_loading.png"];
-    for (int i = 0 ; i < 4; i++) {
-        
-        NSString *imageName = @"";
-        imageName = @"guid";
-        imageName = [imageName stringByAppendingFormat:@"%d.png", i + 1];
-        if (i == 3) {
-            imageName = @"media_player_progress_button";
-        }
-        UIImage * image = [UIImage imageNamed:imageName];
+    [self requestDataDrawUI];
+    
+}
+//图片导航
+-(void) requestDataDrawUI
+{
+    self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
+    arryMore =  [[SHXmlParser.instance detail]objectForKey:@"more"];
+    listImages  = [SHXmlParser.instance listPics];
+    [mScrollview setContentSize:CGSizeMake(UIScreenWidth*listImages.count, UIScreenHeight-49)];
+    for (int i = 0 ; i < listImages.count; i++) {
+        NSDictionary *dic  = [listImages objectAtIndex:i];
+        NSData *imageData = [NSData dataWithContentsOfFile:[dic objectForKey:@"fpath"]];
+        UIImage *image = [UIImage imageWithData:imageData];
         UIImageView *imageView = [[UIImageView alloc] init];
         [mScrollview addSubview:imageView];
-        [mListImage addObject:image];
         // 计算位置
-        imageView.frame = CGRectMake(0, 0, image.size.width>UIScreenWidth?UIScreenWidth/2:image.size.width/2, image.size.width>UIScreenHeight?UIScreenHeight/2:image.size.width/2);
-        NSLog(@"%f===%f==%f",UIScreenWidth,self.view.frame.size.width,self.view.center.x);
+        imageView.frame = [Utility sizeFitImage:image.size];
         CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y);
         imageView.center = point;
-        
         // 下载图片
         imageView.image  = image;
-//        [imageView setImageURLStr:_urls[i] placeholder:placeholder];
-        
         // 事件监听
         imageView.tag = i;
         imageView.userInteractionEnabled = YES;
         [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-        
         // 内容模式
         imageView.clipsToBounds = YES;
         imageView.contentMode = UIViewContentModeScaleAspectFill;
         
-        
     }
     
 }
+
 
 -(void) btnLeftOntouch
 {
@@ -153,24 +150,7 @@
         
     }
 }
-//-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
-//{
-//    return imageMap;
-//}
-//-(void)scrollViewDidZoom:(UIScrollView *)scrollView
-//{
-//    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
-//    
-//    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
-//    
-//    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
-//    
-//    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
-//    
-//    imageMap.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
-//                                  
-//                                  scrollView.contentSize.height * 0.5 + offsetY);
-//}
+
 #pragma   图片浏览
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
@@ -367,13 +347,159 @@
         
         NSLog(@" 二维码<<<<  %@",result);
         NSData *testData = [result dataUsingEncoding: NSUTF8StringEncoding];
-        NSMutableDictionary * dic = [NSJSONSerialization JSONObjectWithData:testData options:NSJSONReadingMutableContainers error:nil];
-        [self.tableView reloadData];
+        NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
+        
+        [self requestDateZip:url];
+      
         
     }];
 }
+-(void) requestDateZip:(NSString * )url
+{
+    SHHttpTask * post  = [[SHHttpTask alloc]init];
+    post.URL = url;
+    post.delegate = self;
+    [post start:^(SHTask *task) {
+        NSError * error ;
+        NSDictionary * network = nil;
+        if([task result] != nil){
+            network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
+        }
+        if ([network objectForKey:@"success"]) {
+            NSArray * list = [network objectForKey:@"package"];
+            if (list.count>0) {
+              dicPack =  [list objectAtIndex:0];
+                for(NSDictionary * dicfile in listPacks){
+                    if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
+                        [self showAlertDialog:@"您已经下载过该资源"];
+                        return ;
+                    }
+                    
+                }
+              [self beginRequest:[dicPack objectForKey:@"dir"]];
+            }
+        }else{
+            [self showAlertDialog:[network objectForKey:@"msg"]];
+        }
+    } taskWillTry:^(SHTask *task) {
+        
+    } taskDidFailed:^(SHTask *task) {
+        
+    }];
+}
+#pragma  download
+-(void)beginRequest:(NSString* )url
+{
+    ////    如果不存在则创建临时存储目录
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    if(![fileManager fileExistsAtPath:[SHFileManager getTargetFloderPath]])
+    {
+        [fileManager createDirectoryAtPath:[SHFileManager getTargetFloderPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    stringProgress = @"0%";
+    NSString * zipPath = [[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",[dicPack objectForKey:@"name"]]];
+    [self showWaitDialog:@"正在下载..." state:@"请稍等"];
+    ASIHTTPRequest *request=[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
+    request.delegate=self;
+    [request setDownloadDestinationPath:[NSString stringWithFormat:@"%@.zip",zipPath]];
+    [request setTemporaryFileDownloadPath:[NSString stringWithFormat:@"%@.temp",zipPath]];
+    [request setDownloadProgressDelegate:self];
+    [request setAllowResumeForFileDownloads:YES];//支持断点续传
+    [request setTimeOutSeconds:120];
+    [request setNumberOfTimesToRetryOnTimeout:3];
+    [request setUserInfo:[NSDictionary dictionaryWithObject:zipPath forKey:@"path"]];//设置上下文的文件基本信息
+    [request startAsynchronous];
+}
+//遍历资源包
+-(void) loadCacheList
+{
+    NSFileManager *filemgr =[NSFileManager defaultManager];
+    NSString * filePath = [SHFileManager getTargetFloderPath];
+    NSArray* directoryContents = [[NSFileManager defaultManager] directoryContentsAtPath:filePath];
+    listPacks = [[NSMutableArray alloc]init];
+    for (NSString *url in directoryContents) {
+        NSMutableDictionary * dic  =[[NSMutableDictionary alloc]init];
+        [dic setValue:[NSString stringWithFormat:@"%@/%@/medias",filePath,url] forKey:@"path"];
+        [dic setValue:url forKey:@"name"];
+        BOOL isDir;
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",filePath,url]  isDirectory:&isDir] && isDir){// 目录
+            [listPacks addObject:dic];
+        }
+        
+    }
+    if(listPacks.count ==0){
+        [self showAlertDialog:@"您还没有下载资源包，快去扫一扫下载吧"];
+    }else if (listPacks.count ==1){
+        NSDictionary * dic  = [listPacks objectAtIndex:0];
+        [SHXmlParser.instance start:[dic objectForKey:@"path"]];
+    }else {
+        SHIntent * intent  = [[SHIntent alloc]init];
+        [intent.args setValue:listPacks forKey:@"list"];
+        intent.delegate = self;
+        intent.target = @"SHResPackListViewController";
+        [[UIApplication sharedApplication]open:intent];
+    }
+    
+}
+#pragma ASIHttpRequest回调委托
 
+//出错了，如果是等待超时，则继续下载
+-(void)requestFailed:(ASIHTTPRequest *)request
+{
+    
+    [self dismissWaitDialog];
+    [self showAlertDialog:@"下载失败"];
+    
+}
 
+-(void)requestStarted:(ASIHTTPRequest *)request
+{
+    NSLog(@"开始了!");
+}
+-(void)requestFinished:(ASIHTTPRequest *)request
+{
+   NSString * path = [request.userInfo objectForKey:@"path"];
+    [self unZipPack:path];
+    
+}
+- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders {
+    
+    NSLog(@"didReceiveResponseHeaders-%@",[responseHeaders valueForKey:@"Content-Length"]);
+    NSLog(@"收到回复了！");
+}
+-(void)setProgress:(float)newProgress
+{
+//    stringProgress = [NSString stringWithFormat:@"%1f%",newProgress*100];
+    NSLog(@"setProgress-%f",newProgress);
+}
+-(void) unZipPack:(NSString *)path
+{
+    ZipArchive *za = [[ZipArchive alloc]init];
+    if ([za UnzipOpenFile:[NSString stringWithFormat:@"%@.zip",path]]) {
+        BOOL ret = [za UnzipFileTo:path overWrite: YES];
+        if (ret){
+            [za UnzipCloseFile];
+            [SHFileManager deleteFileOfPath:[NSString stringWithFormat:@"%@.zip",path]];
+            [self dismissWaitDialog];
+        }else{
+            [self dismissWaitDialog];
+            [self showAlertDialog:@"下载失败"];
+        }
+    }else{
+        [self dismissWaitDialog];
+        [self showAlertDialog:@"下载失败"];
+    }
+//    NSString *imageFilePath = [path stringByAppendingPathComponent:@"photo.png"];
+//    NSString *textFilePath = [path stringByAppendingPathComponent:@"text.txt"];
+//    NSData *imageData = [NSData dataWithContentsOfFile:imageFilePath options:0 error:nil];
+//    UIImage *img = [UIImage imageWithData:imageData];
+//    NSString *textString = [NSString stringWithContentsOfFile:textFilePath
+//                                                     encoding:NSASCIIStringEncoding error:nil];
+}
 
+-(void)resPackListViewControllerDidSelect:(SHResPackListViewController *)controller detail:(NSDictionary *)detail
+{
+    [self requestDataDrawUI];
+}
 
 @end

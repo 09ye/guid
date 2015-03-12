@@ -22,24 +22,25 @@
 
     self.view.backgroundColor = [UIColor blackColor];
     self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
-    UIImage * image = [UIImage imageNamed:@"ditu"];
-    imageMap = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width/2, image.size.height/2)];
+    NSData *imageData = [NSData dataWithContentsOfFile:[[SHXmlParser.instance detail] objectForKey:@"ditupic"]];
+    UIImage *image = [UIImage imageWithData:imageData];
+    imageMap = [[UIImageView alloc]init];
     imageMap.image = image;
-    CGPoint point = CGPointMake(UIScreenWidth/2, UIScreenHeight/2);
+    // 计算位置
+    imageMap.frame = [Utility sizeFitImage:image.size];
+    CGPoint point = CGPointMake(UIScreenWidth/2, self.view.center.y);
     imageMap.center = point;
     [mScrollview addSubview:imageMap];
+    [mScrollview setMinimumZoomScale:1];
+    [mScrollview setMaximumZoomScale:4];
+    
     UIView * paint = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
     paint.layer.cornerRadius = 5;
     paint.center = CGPointMake(250.5, 40);
     paint.alpha = 0.3;
     paint.backgroundColor = [UIColor redColor];
     [imageMap addSubview:paint];
- 
    
-    
-    [mScrollview setMinimumZoomScale:1];
-    
-    [mScrollview setMaximumZoomScale:4];
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
     rotationAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
     rotationAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2.5, 2.5, 1.0)];
@@ -104,14 +105,5 @@
     // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

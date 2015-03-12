@@ -13,7 +13,10 @@
 		774AFF421AADF2AC00C51E69 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 774AFF401AADF2AC00C51E69 /* WebViewController.m */; };
 		774AFF431AADF2AC00C51E69 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 774AFF411AADF2AC00C51E69 /* WebViewController.xib */; };
 		774AFF451AADF9DB00C51E69 /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 774AFF441AADF9DB00C51E69 /* more.png */; };
-		77BEA1391AADFB04006C76E9 /* 1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 77BEA1381AADFB04006C76E9 /* 1.mp3 */; };
+		7753FF811AB1ECF70041D333 /* mediacontroller_pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 7753FF7F1AB1ECF70041D333 /* mediacontroller_pause.png */; };
+		7753FF821AB1ECF70041D333 /* mediacontroller_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 7753FF801AB1ECF70041D333 /* mediacontroller_play.png */; };
+		7753FF861AB1F0120041D333 /* SHResPackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7753FF841AB1F0120041D333 /* SHResPackListViewController.m */; };
+		7753FF871AB1F0120041D333 /* SHResPackListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7753FF851AB1F0120041D333 /* SHResPackListViewController.xib */; };
 		77D816F31AAC1A12002836EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D816F21AAC1A12002836EE /* main.m */; };
 		77D816F91AAC1A12002836EE /* GuidDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D816F71AAC1A12002836EE /* GuidDemo.xcdatamodeld */; };
 		77D816FF1AAC1A12002836EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D816FD1AAC1A12002836EE /* Main.storyboard */; };
@@ -269,13 +272,17 @@
 		77D81A0E1AAC3865002836EE /* SHGuidIntroduceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A0C1AAC3865002836EE /* SHGuidIntroduceViewController.m */; };
 		77D81A0F1AAC3865002836EE /* SHGuidIntroduceViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D81A0D1AAC3865002836EE /* SHGuidIntroduceViewController.xib */; };
 		77D81A131AAC3A8E002836EE /* media_player_progress_button.png in Resources */ = {isa = PBXBuildFile; fileRef = 77D81A111AAC3A8E002836EE /* media_player_progress_button.png */; };
-		77D81A141AAC3A8E002836EE /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 77D81A121AAC3A8E002836EE /* pause.png */; };
 		77D81A181AAC4A2A002836EE /* SHShowVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A161AAC4A2A002836EE /* SHShowVideoViewController.m */; };
 		77D81A191AAC4A2A002836EE /* SHShowVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D81A171AAC4A2A002836EE /* SHShowVideoViewController.xib */; };
 		77D81A1F1AAD6FAB002836EE /* ImgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A1B1AAD6FAB002836EE /* ImgScrollView.m */; };
 		77D81A201AAD6FAB002836EE /* TapImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A1D1AAD6FAB002836EE /* TapImageView.m */; };
 		77E7CD261AB0559F00DC2D0C /* SHShowBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */; };
 		77E7CD271AB0559F00DC2D0C /* SHShowBigImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */; };
+		77E7CD461AB1846A00DC2D0C /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD3C1AB1846A00DC2D0C /* ioapi.c */; };
+		77E7CD471AB1846A00DC2D0C /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD3E1AB1846A00DC2D0C /* mztools.c */; };
+		77E7CD481AB1846A00DC2D0C /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD401AB1846A00DC2D0C /* unzip.c */; };
+		77E7CD491AB1846A00DC2D0C /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD421AB1846A00DC2D0C /* zip.c */; };
+		77E7CD4A1AB1846A00DC2D0C /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD451AB1846A00DC2D0C /* ZipArchive.m */; };
 		77F171F61AAD9D2D00394C4C /* default.xml in Resources */ = {isa = PBXBuildFile; fileRef = 77F171F51AAD9D2D00394C4C /* default.xml */; };
 		77F171F91AADA04F00394C4C /* SHXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F171F81AADA04F00394C4C /* SHXmlParser.m */; };
 		77F171FD1AADB12E00394C4C /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F171FC1AADB12E00394C4C /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -300,7 +307,11 @@
 		774AFF401AADF2AC00C51E69 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		774AFF411AADF2AC00C51E69 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
 		774AFF441AADF9DB00C51E69 /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more.png; sourceTree = "<group>"; };
-		77BEA1381AADFB04006C76E9 /* 1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 1.mp3; sourceTree = "<group>"; };
+		7753FF7F1AB1ECF70041D333 /* mediacontroller_pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mediacontroller_pause.png; sourceTree = "<group>"; };
+		7753FF801AB1ECF70041D333 /* mediacontroller_play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mediacontroller_play.png; sourceTree = "<group>"; };
+		7753FF831AB1F0120041D333 /* SHResPackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHResPackListViewController.h; sourceTree = "<group>"; };
+		7753FF841AB1F0120041D333 /* SHResPackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHResPackListViewController.m; sourceTree = "<group>"; };
+		7753FF851AB1F0120041D333 /* SHResPackListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHResPackListViewController.xib; sourceTree = "<group>"; };
 		77D816ED1AAC1A12002836EE /* GuidDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuidDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D816F11AAC1A12002836EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D816F21AAC1A12002836EE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -757,11 +768,9 @@
 		77D81A0C1AAC3865002836EE /* SHGuidIntroduceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGuidIntroduceViewController.m; sourceTree = "<group>"; };
 		77D81A0D1AAC3865002836EE /* SHGuidIntroduceViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGuidIntroduceViewController.xib; sourceTree = "<group>"; };
 		77D81A111AAC3A8E002836EE /* media_player_progress_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = media_player_progress_button.png; sourceTree = "<group>"; };
-		77D81A121AAC3A8E002836EE /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		77D81A151AAC4A2A002836EE /* SHShowVideoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShowVideoViewController.h; sourceTree = "<group>"; };
 		77D81A161AAC4A2A002836EE /* SHShowVideoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShowVideoViewController.m; sourceTree = "<group>"; };
 		77D81A171AAC4A2A002836EE /* SHShowVideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHShowVideoViewController.xib; sourceTree = "<group>"; };
-		77D81A1A1AAC4D24002836EE /* test.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test.mp4; sourceTree = "<group>"; };
 		77D81A1B1AAD6FAB002836EE /* ImgScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImgScrollView.m; sourceTree = "<group>"; };
 		77D81A1C1AAD6FAB002836EE /* TapImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapImageView.h; sourceTree = "<group>"; };
 		77D81A1D1AAD6FAB002836EE /* TapImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapImageView.m; sourceTree = "<group>"; };
@@ -769,6 +778,17 @@
 		77E7CD231AB0559F00DC2D0C /* SHShowBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShowBigImageViewController.h; sourceTree = "<group>"; };
 		77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShowBigImageViewController.m; sourceTree = "<group>"; };
 		77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHShowBigImageViewController.xib; sourceTree = "<group>"; };
+		77E7CD3B1AB1846A00DC2D0C /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		77E7CD3C1AB1846A00DC2D0C /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		77E7CD3D1AB1846A00DC2D0C /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		77E7CD3E1AB1846A00DC2D0C /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		77E7CD3F1AB1846A00DC2D0C /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		77E7CD401AB1846A00DC2D0C /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		77E7CD411AB1846A00DC2D0C /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		77E7CD421AB1846A00DC2D0C /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		77E7CD431AB1846A00DC2D0C /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		77E7CD441AB1846A00DC2D0C /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		77E7CD451AB1846A00DC2D0C /* ZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipArchive.m; sourceTree = "<group>"; };
 		77F171F51AAD9D2D00394C4C /* default.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.xml; sourceTree = "<group>"; };
 		77F171F71AADA04F00394C4C /* SHXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXmlParser.h; sourceTree = "<group>"; };
 		77F171F81AADA04F00394C4C /* SHXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHXmlParser.m; sourceTree = "<group>"; };
@@ -862,6 +882,7 @@
 		77D816EF1AAC1A12002836EE /* GuidDemo */ = {
 			isa = PBXGroup;
 			children = (
+				77E7CD391AB1846A00DC2D0C /* ZipArchive */,
 				77D819931AAC1EEA002836EE /* Bussiness */,
 				77D8171A1AAC1AFE002836EE /* frame */,
 				77D817411AAC1AFE002836EE /* SystemFiles */,
@@ -1671,6 +1692,9 @@
 				77E7CD231AB0559F00DC2D0C /* SHShowBigImageViewController.h */,
 				77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */,
 				77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */,
+				7753FF831AB1F0120041D333 /* SHResPackListViewController.h */,
+				7753FF841AB1F0120041D333 /* SHResPackListViewController.m */,
+				7753FF851AB1F0120041D333 /* SHResPackListViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1827,14 +1851,39 @@
 		77D81A101AAC3A8E002836EE /* Res */ = {
 			isa = PBXGroup;
 			children = (
-				77BEA1381AADFB04006C76E9 /* 1.mp3 */,
+				7753FF7F1AB1ECF70041D333 /* mediacontroller_pause.png */,
+				7753FF801AB1ECF70041D333 /* mediacontroller_play.png */,
 				774AFF441AADF9DB00C51E69 /* more.png */,
 				77F171F51AAD9D2D00394C4C /* default.xml */,
-				77D81A1A1AAC4D24002836EE /* test.mp4 */,
 				77D81A111AAC3A8E002836EE /* media_player_progress_button.png */,
-				77D81A121AAC3A8E002836EE /* pause.png */,
 			);
 			path = Res;
+			sourceTree = "<group>";
+		};
+		77E7CD391AB1846A00DC2D0C /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				77E7CD3A1AB1846A00DC2D0C /* minizip */,
+				77E7CD441AB1846A00DC2D0C /* ZipArchive.h */,
+				77E7CD451AB1846A00DC2D0C /* ZipArchive.m */,
+			);
+			path = ZipArchive;
+			sourceTree = "<group>";
+		};
+		77E7CD3A1AB1846A00DC2D0C /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				77E7CD3B1AB1846A00DC2D0C /* crypt.h */,
+				77E7CD3C1AB1846A00DC2D0C /* ioapi.c */,
+				77E7CD3D1AB1846A00DC2D0C /* ioapi.h */,
+				77E7CD3E1AB1846A00DC2D0C /* mztools.c */,
+				77E7CD3F1AB1846A00DC2D0C /* mztools.h */,
+				77E7CD401AB1846A00DC2D0C /* unzip.c */,
+				77E7CD411AB1846A00DC2D0C /* unzip.h */,
+				77E7CD421AB1846A00DC2D0C /* zip.c */,
+				77E7CD431AB1846A00DC2D0C /* zip.h */,
+			);
+			path = minizip;
 			sourceTree = "<group>";
 		};
 		77F171FA1AADB12E00394C4C /* xml */ = {
@@ -1929,7 +1978,6 @@
 			files = (
 				77D819261AAC1AFF002836EE /* SHTableViewTitleImageCell2.xib in Resources */,
 				77D816FF1AAC1A12002836EE /* Main.storyboard in Resources */,
-				77D81A141AAC3A8E002836EE /* pause.png in Resources */,
 				774AFF431AADF2AC00C51E69 /* WebViewController.xib in Resources */,
 				77D818A81AAC1AFF002836EE /* style.xml in Resources */,
 				773704631AAF44A5008C2EA6 /* SHMapViewController.xib in Resources */,
@@ -1981,6 +2029,7 @@
 				77D819F31AAC294C002836EE /* zbar-helpicons.png in Resources */,
 				77D818B31AAC1AFF002836EE /* SHContentViewController.xib in Resources */,
 				77D819251AAC1AFF002836EE /* SHTableViewTitleImageCell.xib in Resources */,
+				7753FF821AB1ECF70041D333 /* mediacontroller_play.png in Resources */,
 				77D818D21AAC1AFF002836EE /* grayArrow@2x.png in Resources */,
 				77D819F41AAC294C002836EE /* zbar-samples.png in Resources */,
 				77D818A41AAC1AFF002836EE /* color.xml in Resources */,
@@ -1994,6 +2043,7 @@
 				77D818C81AAC1AFF002836EE /* DSLCalendarDaySelection-right.png in Resources */,
 				77D819F81AAC2FE7002836EE /* guid1.png in Resources */,
 				77D81A0A1AAC3805002836EE /* SHLeftViewController.xib in Resources */,
+				7753FF811AB1ECF70041D333 /* mediacontroller_pause.png in Resources */,
 				77D819F91AAC2FE7002836EE /* guid2.png in Resources */,
 				77D819F21AAC294C002836EE /* zbar-help.html in Resources */,
 				77D8199D1AAC1EEA002836EE /* guide02.jpg in Resources */,
@@ -2007,6 +2057,7 @@
 				77D818CB1AAC1AFF002836EE /* DSLCalendarDaySelection@2x.png in Resources */,
 				77D818C71AAC1AFF002836EE /* DSLCalendarDaySelection-middle@2x.png in Resources */,
 				77D819A01AAC1EEA002836EE /* SHGuideViewController.xib in Resources */,
+				7753FF871AB1F0120041D333 /* SHResPackListViewController.xib in Resources */,
 				77D818C41AAC1AFF002836EE /* DSLCalendarDaySelection-left.png in Resources */,
 				77D819351AAC1AFF002836EE /* status-bar-pattern-default.jpg in Resources */,
 				773704651AAF452F008C2EA6 /* ditu.png in Resources */,
@@ -2016,7 +2067,6 @@
 				77D818CD1AAC1AFF002836EE /* blackArrow.png in Resources */,
 				77D819371AAC1AFF002836EE /* status-bar-progress.png in Resources */,
 				77D81A131AAC3A8E002836EE /* media_player_progress_button.png in Resources */,
-				77BEA1391AADFB04006C76E9 /* 1.mp3 in Resources */,
 				77D818CF1AAC1AFF002836EE /* blueArrow.png in Resources */,
 				77D8191F1AAC1AFF002836EE /* SHTableViewSelectCell.xib in Resources */,
 				77D8191B1AAC1AFF002836EE /* SHTableViewEditGeneralCell.xib in Resources */,
@@ -2047,6 +2097,7 @@
 			files = (
 				77D819421AAC1AFF002836EE /* NSDate+convenience.m in Sources */,
 				77D818B41AAC1AFF002836EE /* NSDate+Addtion.m in Sources */,
+				77E7CD471AB1846A00DC2D0C /* mztools.c in Sources */,
 				77D818B81AAC1AFF002836EE /* DSLCalendarDayView.m in Sources */,
 				77D819431AAC1AFF002836EE /* NSMutableArray+convenience.m in Sources */,
 				77D8190A1AAC1AFF002836EE /* UIImageView+MJWebCache.m in Sources */,
@@ -2054,6 +2105,7 @@
 				77D8194B1AAC1AFF002836EE /* GuidClear.m in Sources */,
 				77D819241AAC1AFF002836EE /* SHTableViewTitleImageCell.m in Sources */,
 				77D8192D1AAC1AFF002836EE /* SHImageViewController.m in Sources */,
+				77E7CD4A1AB1846A00DC2D0C /* ZipArchive.m in Sources */,
 				77D8191E1AAC1AFF002836EE /* SHTableViewSelectCell.m in Sources */,
 				77D819161AAC1AFF002836EE /* SHLoadingViewCell.m in Sources */,
 				77D819051AAC1AFF002836EE /* SDWebImagePrefetcher.m in Sources */,
@@ -2062,6 +2114,7 @@
 				77D818B61AAC1AFF002836EE /* DSLCalendarDayCalloutView.m in Sources */,
 				77D818FC1AAC1AFF002836EE /* MKAnnotationView+WebCache.m in Sources */,
 				77D8193A1AAC1AFF002836EE /* WTStatusView.m in Sources */,
+				7753FF861AB1F0120041D333 /* SHResPackListViewController.m in Sources */,
 				77D8195B1AAC1AFF002836EE /* ASIFormDataRequest.m in Sources */,
 				77D818FD1AAC1AFF002836EE /* NSData+GIF.m in Sources */,
 				77D819E61AAC294C002836EE /* qrencode.c in Sources */,
@@ -2075,6 +2128,7 @@
 				77D818DD1AAC1AFF002836EE /* PCLineChartView.m in Sources */,
 				77D818B01AAC1AFF002836EE /* SHCalendarViewController.m in Sources */,
 				77D81A201AAD6FAB002836EE /* TapImageView.m in Sources */,
+				77E7CD481AB1846A00DC2D0C /* unzip.c in Sources */,
 				77D819011AAC1AFF002836EE /* SDWebImageDownloader.m in Sources */,
 				77D819E51AAC294C002836EE /* QRCodeGenerator.m in Sources */,
 				77D819021AAC1AFF002836EE /* SDWebImageDownloaderOperation.m in Sources */,
@@ -2163,10 +2217,12 @@
 				77D8192F1AAC1AFF002836EE /* BWStatusBarOverlay.m in Sources */,
 				77D818AD1AAC1AFF002836EE /* SHStatisticalData.m in Sources */,
 				77D818DE1AAC1AFF002836EE /* PCPieChart.m in Sources */,
+				77E7CD461AB1846A00DC2D0C /* ioapi.c in Sources */,
 				77D819EA1AAC294C002836EE /* split.c in Sources */,
 				77D818E31AAC1AFF002836EE /* MMProgressHUD.m in Sources */,
 				77D819001AAC1AFF002836EE /* SDWebImageDecoder.m in Sources */,
 				77D819111AAC1AFF002836EE /* SHShowViewController.m in Sources */,
+				77E7CD491AB1846A00DC2D0C /* zip.c in Sources */,
 				77D819401AAC1AFF002836EE /* UIBarButtonItemAddtion.m in Sources */,
 				77D818AA1AAC1AFF002836EE /* MainViewController.m in Sources */,
 				77D8193B1AAC1AFF002836EE /* WTStatusWindow.m in Sources */,

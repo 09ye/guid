@@ -63,7 +63,7 @@
 
 +(NSString *)getDocumentPath
 {
-    return [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/videos"];
+    return [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Zipres"];
 }
 
 +(NSString *)getTargetFloderPath
@@ -90,7 +90,7 @@
 
 +(float)currentCachesFileSize{
     
-    NSString *savePath=[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/videos"];
+    NSString *savePath=[NSHomeDirectory() stringByAppendingPathComponent:@"Library/Caches/Zipres"];
     
     NSFileManager *filemgr;
     

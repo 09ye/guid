@@ -24,15 +24,22 @@ static SHXmlParser* _instance = nil;
 - (id)init{
     if(self = [super init]){
 
-        [self initDom];
-        
+       
     }
     return self;
 }
+-(BOOL)start:(NSString *)path
+{
+    self.pathName = path;
+    [self initDom];
+    return true;
+}
 - (GDataXMLDocument* )docForStyle:(NSString*)name{
+    
     NSError* error = nil;
-    NSData * data = nil;
-    data = [[NSData alloc]initWithContentsOfFile: [[NSBundle mainBundle]pathForResource:name ofType:@"xml"] ];
+//    NSData * data = nil;
+//    data = [[NSData alloc]initWithContentsOfFile: [[NSBundle mainBundle]pathForResource:name ofType:@"xml"] ];
+    NSData *data = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@.xml",self.pathName,name]];
     NSString *documentStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     GDataXMLDocument *_parserColor = [[GDataXMLDocument alloc] initWithXMLString:documentStr options:0 error:&error];
    
@@ -43,7 +50,6 @@ static SHXmlParser* _instance = nil;
 {
     self.detail = [[NSMutableDictionary alloc]init];
     GDataXMLDocument* doc = [self docForStyle:@"default"];
-//   NSArray * styles = ((GDataXMLNode*)[[doc nodesForXPath:[NSString stringWithFormat:@"//detail/packname"] error:nil] objectAtIndex:0]).children;
     GDataXMLElement * detail = [[doc nodesForXPath:[NSString stringWithFormat:@"/pack/detail"] error:nil]objectAtIndex:0];
     
     GDataXMLElement *parkEle = [[detail elementsForName:@"parkname"] objectAtIndex:0];
@@ -56,25 +62,26 @@ static SHXmlParser* _instance = nil;
     GDataXMLElement *aboutElement = [[detail elementsForName:@"about"] objectAtIndex:0];
      NSMutableDictionary * dicAbout = [[NSMutableDictionary alloc]init];
     [dicAbout setValue:[[aboutElement attributeForName:@"name"] stringValue] forKey:@"name"];
-    [dicAbout setValue:[[aboutElement attributeForName:@"path"] stringValue] forKey:@"path"];
+    [dicAbout setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[aboutElement attributeForName:@"path"] stringValue]] forKey:@"path"];// 完整路径
     
     GDataXMLElement *shopElement = [[detail elementsForName:@"shop"] objectAtIndex:0];
     NSMutableDictionary * dicShop = [[NSMutableDictionary alloc]init];
     [dicShop setValue:[[shopElement attributeForName:@"name"] stringValue] forKey:@"name"];
-    [dicShop setValue:[[shopElement attributeForName:@"path"] stringValue] forKey:@"path"];
+    [dicShop setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[shopElement attributeForName:@"path"] stringValue]] forKey:@"path"];
     
     NSMutableArray * listMore = [[NSMutableArray alloc]init];
     [listMore addObject:dicAbout];
     [listMore addObject:dicShop];
     [self.detail setValue:listMore forKey:@"more"];
     
-    GDataXMLElement *mapsEle = [[detail elementsForName:@"maps"]objectAtIndex:0];
-     NSArray * arrayMaps=  [mapsEle elementsForName:@"map"];
-    
-    self.listMaps = [[NSMutableArray alloc]init];
+     NSArray * arrayMaps=  [[[detail elementsForName:@"pics"]objectAtIndex:0] elementsForName:@"pic"];
+    self.listPics = [[NSMutableArray alloc]init];
     for (GDataXMLElement *map in arrayMaps) {
-       GDataXMLElement *nameElement =  [[map elementsForName:@"fpath"]objectAtIndex:0];
-        [self.listMaps addObject:[nameElement stringValue]];
+        NSMutableDictionary * dic  = [[NSMutableDictionary alloc]init];
+        [dic setValue:[[[map elementsForName:@"name"]objectAtIndex:0] stringValue] forKey:@"name"];
+        [dic setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[[map elementsForName:@"fpath"]objectAtIndex:0] stringValue]] forKey:@"fpath"];
+        [self.listPics addObject:dic];
+      
     }
     
 
@@ -83,13 +90,13 @@ static SHXmlParser* _instance = nil;
     for (GDataXMLElement *map in arrayVideos) {
         NSMutableDictionary * dic  = [[NSMutableDictionary alloc]init];
         [dic setValue:[[[map elementsForName:@"name"]objectAtIndex:0] stringValue] forKey:@"name"];
-        [dic setValue:[[[map elementsForName:@"fpath"]objectAtIndex:0] stringValue] forKey:@"fpath"];
+        [dic setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[[map elementsForName:@"fpath"]objectAtIndex:0] stringValue]] forKey:@"fpath"];
         [self.listVideos addObject:dic];
     }
     
     GDataXMLElement *dituEle = [[detail elementsForName:@"ditu"]objectAtIndex:0];
     GDataXMLElement *ditupicEle = [[dituEle elementsForName:@"ditupic"]objectAtIndex:0];
-    [self.detail setValue:[[ditupicEle attributeForName:@"fpath"]stringValue] forKey:@"ditupic"];
+    [self.detail setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[ditupicEle attributeForName:@"fpath"]stringValue]] forKey:@"ditupic"];
     
     NSArray * arrayPoint=  [[[ditupicEle elementsForName:@"hotpotes"]objectAtIndex:0]elementsForName:@"hotpot"];
     self.listHotPoints = [[NSMutableArray alloc]init];
@@ -109,11 +116,13 @@ static SHXmlParser* _instance = nil;
         NSMutableDictionary * dic  = [[NSMutableDictionary alloc]init];
         [dic setValue:[[[map elementsForName:@"code"]objectAtIndex:0] stringValue] forKey:@"code"];
         [dic setValue:[[[map elementsForName:@"name"]objectAtIndex:0] stringValue] forKey:@"name"];
-        [dic setValue:[[[map elementsForName:@"mp3Path"]objectAtIndex:0] stringValue] forKey:@"mp3Path"];
-        [dic setValue:[[[map elementsForName:@"txtPath"]objectAtIndex:0] stringValue] forKey:@"txtPath"];
-        [dic setValue:[[[map elementsForName:@"videoPath"]objectAtIndex:0] stringValue] forKey:@"videoPath"];
-        [dic setValue:[[[map elementsForName:@"latitude"]objectAtIndex:0] stringValue] forKey:@"latitude"];
-        [dic setValue:[[[map elementsForName:@"longitude"]objectAtIndex:0] stringValue] forKey:@"longitude"];
+        [dic setValue:[NSString stringWithFormat:@"%@/%@",self.pathName,[[[map elementsForName:@"mp3Path"]objectAtIndex:0] stringValue]] forKey:@"mp3Path"];
+        [dic setValue:[[[map elementsForName:@"txt"]objectAtIndex:0] stringValue] forKey:@"txt"];
+        
+//        [dic setValue:[[[map elementsForName:@"txtPath"]objectAtIndex:0] stringValue] forKey:@"txtPath"];
+//        [dic setValue:[[[map elementsForName:@"videoPath"]objectAtIndex:0] stringValue] forKey:@"videoPath"];
+//        [dic setValue:[[[map elementsForName:@"latitude"]objectAtIndex:0] stringValue] forKey:@"latitude"];
+//        [dic setValue:[[[map elementsForName:@"longitude"]objectAtIndex:0] stringValue] forKey:@"longitude"];
         
         NSArray * arraypic=  [[[map elementsForName:@"pictures"]objectAtIndex:0]elementsForName:@"pic"];
         NSMutableArray * pics = [[NSMutableArray alloc]init];

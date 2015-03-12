@@ -38,7 +38,10 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    AppDelegate * app  = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.avAudioPlayer) {
+        [app.avAudioPlayer stop];
+    }
     NSDictionary * dic  =[mList objectAtIndex:indexPath.row];
     SHIntent * intent =[[SHIntent alloc]init];
     if (mSegment.selectedSegmentIndex ==  0) {
@@ -46,7 +49,7 @@
     }else{
         intent.target = @"SHShowVideoViewController";
     }
-    [intent.args setValue:[dic objectForKey:@"name"] forKey:@"title"];
+    [intent.args setValue:dic forKey:@"detail"];
     intent.container = self.navigationController;
     [[UIApplication sharedApplication]open:intent];
     

@@ -12,6 +12,7 @@
 @interface SHShowVideoViewController ()
 {
     MPMoviePlayerViewController *playerViewController;
+    NSDictionary * detail;
 }
 
 @end
@@ -20,36 +21,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.title = [self.intent.args objectForKey:@"title"];
-    [self playMovie:@"test"];
+    detail = [self.intent.args objectForKey:@"detail"];
+    self.title = [detail objectForKey:@"name"];
+    [self playMovie:[detail objectForKey:@"fpath"]];
     // Do any additional setup after loading the view from its nib.
 }
 -(void)playMovie:(NSString *)fileName{
-    //视频文件路径
-    
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"test" ofType:@"mp4"];
-    //视频URL
-    fileName = @"http://padload-cnc.wasu.cn/pcsan08/mams/vod/201409/29/16/201409291618156309b21cbd8_4e58bd54.mp4";
-//    NSURL *url = [[NSBundle mainBundle] URLForResource:@"test"withExtension:@"mp4"];
-    NSURL *url = [NSURL URLWithString:fileName];
-    //视频播放对象
+   
+    NSURL *url = [[NSURL alloc ]initFileURLWithPath:fileName];
     playerViewController =[[MPMoviePlayerViewController alloc]     initWithContentURL:url];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[playerViewController moviePlayer]];
     //    playerViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     playerViewController.view.frame = self.view.bounds;
     [self.view addSubview:playerViewController.moviePlayer.view];
     MPMoviePlayerController *player = [playerViewController moviePlayer];
-        player.movieSourceType = MPMovieSourceTypeFile;
+    player.movieSourceType = MPMovieSourceTypeFile;
     player.shouldAutoplay = NO;
     [player setControlStyle:MPMovieControlStyleEmbedded];
-    [player setFullscreen:YES];
-    //    player.scalingMode = MPMovieScalingModeFill;
     [player prepareToPlay];
-    [player play];
-//    [self.navigationController presentMoviePlayerViewControllerAnimated:playerViewController];
-    
-    //    [self presentMoviePlayerViewControllerAnimated:playerViewController];
-    
+    [player play];    
 }
 
 #pragma mark -------------------视频播放结束委托--------------------

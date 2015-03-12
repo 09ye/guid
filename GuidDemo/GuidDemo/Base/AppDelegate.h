@@ -11,11 +11,12 @@
 #import "SHAppDelegate.h"
 #import <CoreLocation/CLLocationManagerDelegate.h>
 #import <CoreLocation/CoreLocation.h>
-
+#import <AVFoundation/AVFoundation.h>
 
 #import "SHAnalyzeFactory.h"
 
 #import "SHFileManager.h"
+
 
 //@interface SHAnalyzeFactoryExtension1 : SHAnalyzeFactoryExtension
 //
@@ -43,6 +44,7 @@
 
 -(void)sendLoginSina:(UIViewController *)vc;
 
+@property (nonatomic,strong) AVAudioPlayer *avAudioPlayer;
 
 //@property(nonatomic,retain)NSMutableArray *finishedlist;//已下载完成的文件列表（文件对象）
 //

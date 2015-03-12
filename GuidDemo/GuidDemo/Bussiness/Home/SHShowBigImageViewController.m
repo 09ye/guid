@@ -23,13 +23,10 @@
     self.view.backgroundColor = [UIColor blackColor];
     self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
     UIImage *image = [self.intent.args objectForKey:@"image"];
-//    CGRect  rect = imageShow.frame;
-//    rect.origin.x = 0 ;
-//    rect.origin.y = 0;
-//    imageShow.frame = rect;
-    imageShow = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, image.size.width>UIScreenWidth?UIScreenWidth/2:image.size.width/2, image.size.width>UIScreenHeight?UIScreenHeight/2:image.size.width/2)];
+    imageShow = [[UIImageView alloc]init];
+    imageShow.frame = [Utility sizeFitImage:image.size];
     imageShow.image = image;
-    CGPoint point = CGPointMake(UIScreenWidth/2, UIScreenHeight/2);
+    CGPoint point = CGPointMake(UIScreenWidth/2, self.view.center.y);
     imageShow.center = point;
     [mScrollview addSubview:imageShow];
   

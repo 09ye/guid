@@ -167,4 +167,111 @@
     NSLog(@"encodeVideoUrl===%@",results);
     return results;
 }
+
++ (CGSize)setoriginW: (CGSize)imageWH setoriginH:(CGSize)originWH
+
+{
+    float dWidth = imageWH.width;                                  //img的宽高
+    float dHeight = imageWH.height;
+    float dAspectRatio = dWidth/dHeight;                           //纵横比
+    
+    float dPictureWidth = originWH.width;
+    float dPictureHeight = originWH.height;                        //传图的宽高
+    float dPictureAspectRatio = dPictureWidth/dPictureHeight;      //长宽比
+    
+    CGSize newImage = CGSizeZero;
+    if (dPictureAspectRatio > dAspectRatio){
+        
+        float nNewHeight = dWidth/dPictureWidth*dPictureHeight;
+        newImage = CGSizeMake(dWidth, nNewHeight);
+        
+        
+    }else if (dPictureAspectRatio < dAspectRatio){
+        
+        float nNewWidth = dHeight/dPictureHeight*dPictureWidth;
+        newImage = CGSizeMake(nNewWidth, dHeight);
+        NSLog(@"newImage = %f \n %f",newImage.width,newImage.height);
+    }
+    
+    return  newImage;
+}
++(CGRect) sizeFitImage:(CGSize)originWH
+{
+    CGRect newRect = CGRectZero;
+    float dWidth = UIScreenWidth;                                  //img的宽高
+    float dHeight = UIScreenHeight;
+    float dAspectRatio = dWidth/dHeight;                           //纵横比
+    
+    float dPictureWidth = originWH.width;
+    float dPictureHeight = originWH.height;                        //传图的宽高
+    float dPictureAspectRatio = dPictureWidth/dPictureHeight;      //长宽比
+    
+    if (dPictureAspectRatio > dAspectRatio){
+        
+        float nNewHeight = dWidth/dPictureWidth*dPictureHeight;
+        newRect = CGRectMake(0, abs((dHeight-nNewHeight))/2, dWidth, nNewHeight);
+    }else if (dPictureAspectRatio < dAspectRatio){
+        
+        float nNewWidth = dHeight/dPictureHeight*dPictureWidth;
+        newRect = CGRectMake(abs((dWidth-nNewWidth))/2, 0,nNewWidth, dHeight);
+    }
+    
+    return  newRect;
+}
+
+/*字符串加密
+ *参数
+ *plainText : 加密明文
+ *key        : 密钥 64位
+ */
++ (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key
+{
+    NSString *ciphertext = nil;
+    const char *textBytes = [plainText UTF8String];
+    NSUInteger dataLength = [plainText length];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    size_t numBytesEncrypted = 0;
+    CCCryptorStatus cryptStatus = CCCrypt(kCCEncrypt, kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String], kCCKeySizeDES,
+                                          iv,
+                                          textBytes, dataLength,
+                                          buffer, 1024,
+                                          &numBytesEncrypted);
+    if (cryptStatus == kCCSuccess) {
+        NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
+        
+        ciphertext = [Base64 encode:data];
+    }
+    return ciphertext;
+}
+
+//解密
++ (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
+{
+    NSData* cipherData = [Base64 decode:cipherText];
+    unsigned char buffer[1024];
+    memset(buffer, 0, sizeof(char));
+    size_t numBytesDecrypted = 0;
+    Byte iv[] = {1,2,3,4,5,6,7,8};
+    CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
+                                          kCCAlgorithmDES,
+                                          kCCOptionPKCS7Padding,
+                                          [key UTF8String],
+                                          kCCKeySizeDES,
+                                          iv,
+                                          [cipherData bytes],
+                                          [cipherData length],
+                                          buffer,
+                                          1024,
+                                          &numBytesDecrypted);
+    NSString* plainText = nil;
+    if (cryptStatus == kCCSuccess) {
+        NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+        plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    }
+    return plainText;
+}
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SHTools.h"
+#import <CommonCrypto/CommonCryptor.h>
 
 @interface Utility : SHTools
 //post 请求参数 key=vlaue&key=value
@@ -22,4 +23,13 @@
 
 +(NSString *)encodeVideoUrl:(NSString *) url ;
 +(NSString *)encodeVideoUrl:(NSString *) url key:(NSString *)key;
+
+//图片等比
++ (CGSize)setoriginW: (CGSize)imageWH setoriginH:(CGSize)originWH;
+// 图片全屏自适应具中
++(CGRect) sizeFitImage:(CGSize)originWH;
+//des加密
++ (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key;
+//解密
++ (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key;
 @end

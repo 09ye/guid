@@ -64,19 +64,7 @@ static bool __isupdate = NO;
     CLLocation *before=[[CLLocation alloc] initWithLatitude:32.206340 longitude:119.425600];
     // 计算距离
     CLLocationDistance meters=[current distanceFromLocation:before];
-    //    [_locService startUserLocationService];
-    //
-    //
-    //    [ShareSDK registerApp:@"24732465ea3a"];     //参数为ShareSDK官网中添加应用后得到的AppKey
-    //
-    //
-    //    [ShareSDK connectSinaWeiboWithAppKey:APPID_Sina
-    //                               appSecret:APPID_KEY_Sina
-    //                             redirectUri:Sina_RedirectURI];
-    //
-    //    [ShareSDK connectQQWithQZoneAppKey:@"100371282"
-    //                     qqApiInterfaceCls:[QQApiInterface class]
-    //                       tencentOAuthCls:[TencentOAuth class]];
+    
     
     
 //    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configUpdate:) name:CORE_NOTIFICATION_CONFIG_STATUS_CHANGED object:nil];
