@@ -34,22 +34,35 @@
     paint.alpha = 0.3;
     paint.backgroundColor = [UIColor redColor];
     [imageMap addSubview:paint];
+ 
    
     
     [mScrollview setMinimumZoomScale:1];
     
     [mScrollview setMaximumZoomScale:4];
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    rotationAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
+    rotationAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2.5, 2.5, 1.0)];
+    
+    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    rotationAnimation.duration = 1;
+    rotationAnimation.autoreverses = YES;
+    rotationAnimation.RepeatCount = 100000;//你可以设置到最大的整数值
+    rotationAnimation.cumulative = NO;
+    rotationAnimation.removedOnCompletion = NO;
+    rotationAnimation.fillMode = kCAFillModeForwards;
+    [paint.layer addAnimation:rotationAnimation forKey:@"scaling"];
 
     
-    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
-    doubleTapRecognizer.numberOfTapsRequired = 2;
-    doubleTapRecognizer.numberOfTouchesRequired = 1;
-    [mScrollview addGestureRecognizer:doubleTapRecognizer];
-    
-    UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
-    twoFingerTapRecognizer.numberOfTapsRequired = 1;
-    twoFingerTapRecognizer.numberOfTouchesRequired = 2;
-    [mScrollview addGestureRecognizer:twoFingerTapRecognizer];
+//    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
+//    doubleTapRecognizer.numberOfTapsRequired = 2;
+//    doubleTapRecognizer.numberOfTouchesRequired = 1;
+//    [mScrollview addGestureRecognizer:doubleTapRecognizer];
+//    
+//    UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
+//    twoFingerTapRecognizer.numberOfTapsRequired = 1;
+//    twoFingerTapRecognizer.numberOfTouchesRequired = 2;
+//    [mScrollview addGestureRecognizer:twoFingerTapRecognizer];
     // Do any additional setup after loading the view from its nib.
     
 }

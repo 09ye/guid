@@ -274,6 +274,8 @@
 		77D81A191AAC4A2A002836EE /* SHShowVideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D81A171AAC4A2A002836EE /* SHShowVideoViewController.xib */; };
 		77D81A1F1AAD6FAB002836EE /* ImgScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A1B1AAD6FAB002836EE /* ImgScrollView.m */; };
 		77D81A201AAD6FAB002836EE /* TapImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D81A1D1AAD6FAB002836EE /* TapImageView.m */; };
+		77E7CD261AB0559F00DC2D0C /* SHShowBigImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */; };
+		77E7CD271AB0559F00DC2D0C /* SHShowBigImageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */; };
 		77F171F61AAD9D2D00394C4C /* default.xml in Resources */ = {isa = PBXBuildFile; fileRef = 77F171F51AAD9D2D00394C4C /* default.xml */; };
 		77F171F91AADA04F00394C4C /* SHXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F171F81AADA04F00394C4C /* SHXmlParser.m */; };
 		77F171FD1AADB12E00394C4C /* GDataXMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 77F171FC1AADB12E00394C4C /* GDataXMLNode.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -764,6 +766,9 @@
 		77D81A1C1AAD6FAB002836EE /* TapImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TapImageView.h; sourceTree = "<group>"; };
 		77D81A1D1AAD6FAB002836EE /* TapImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TapImageView.m; sourceTree = "<group>"; };
 		77D81A1E1AAD6FAB002836EE /* ImgScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImgScrollView.h; sourceTree = "<group>"; };
+		77E7CD231AB0559F00DC2D0C /* SHShowBigImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHShowBigImageViewController.h; sourceTree = "<group>"; };
+		77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHShowBigImageViewController.m; sourceTree = "<group>"; };
+		77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHShowBigImageViewController.xib; sourceTree = "<group>"; };
 		77F171F51AAD9D2D00394C4C /* default.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.xml; sourceTree = "<group>"; };
 		77F171F71AADA04F00394C4C /* SHXmlParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHXmlParser.h; sourceTree = "<group>"; };
 		77F171F81AADA04F00394C4C /* SHXmlParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHXmlParser.m; sourceTree = "<group>"; };
@@ -1663,6 +1668,9 @@
 				77D819A41AAC1F51002836EE /* SHMainFuntionViewController.h */,
 				77D819A51AAC1F51002836EE /* SHMainFuntionViewController.m */,
 				77D819A61AAC1F51002836EE /* SHMainFuntionViewController.xib */,
+				77E7CD231AB0559F00DC2D0C /* SHShowBigImageViewController.h */,
+				77E7CD241AB0559F00DC2D0C /* SHShowBigImageViewController.m */,
+				77E7CD251AB0559F00DC2D0C /* SHShowBigImageViewController.xib */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -1952,6 +1960,7 @@
 				77D818C31AAC1AFF002836EE /* DSLCalendarDayCallout@2x.png in Resources */,
 				77D818AB1AAC1AFF002836EE /* MainViewController.xib in Resources */,
 				77D8199E1AAC1EEA002836EE /* guide03.jpg in Resources */,
+				77E7CD271AB0559F00DC2D0C /* SHShowBigImageViewController.xib in Resources */,
 				77D818D01AAC1AFF002836EE /* blueArrow@2x.png in Resources */,
 				77D819211AAC1AFF002836EE /* SHTableViewTitleContentBottomCell.xib in Resources */,
 				77D819A81AAC1F51002836EE /* SHMainFuntionViewController.xib in Resources */,
@@ -2165,6 +2174,7 @@
 				77D818E91AAC1AFF002836EE /* SHSelectionViewController.m in Sources */,
 				77D818E81AAC1AFF002836EE /* MMVectorImage.m in Sources */,
 				77D818D71AAC1AFF002836EE /* KxMenu.m in Sources */,
+				77E7CD261AB0559F00DC2D0C /* SHShowBigImageViewController.m in Sources */,
 				77D8195C1AAC1AFF002836EE /* ASIHTTPRequest.m in Sources */,
 				77D819391AAC1AFF002836EE /* WTStatusBar.m in Sources */,
 				77D819491AAC1AFF002836EE /* DebugTextView.m in Sources */,

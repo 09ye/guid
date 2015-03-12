@@ -83,7 +83,7 @@
         [mScrollview addSubview:imageView];
         [mListImage addObject:image];
         // 计算位置
-        imageView.frame = CGRectMake(0, 0, image.size.width>UIScreenWidth?UIScreenWidth:image.size.width, image.size.width>UIScreenHeight?UIScreenHeight:image.size.width);
+        imageView.frame = CGRectMake(0, 0, image.size.width>UIScreenWidth?UIScreenWidth/2:image.size.width/2, image.size.width>UIScreenHeight?UIScreenHeight/2:image.size.width/2);
         NSLog(@"%f===%f==%f",UIScreenWidth,self.view.frame.size.width,self.view.center.x);
         CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y);
         imageView.center = point;
@@ -153,28 +153,55 @@
         
     }
 }
+//-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView
+//{
+//    return imageMap;
+//}
+//-(void)scrollViewDidZoom:(UIScrollView *)scrollView
+//{
+//    CGFloat offsetX = (scrollView.bounds.size.width > scrollView.contentSize.width)?
+//    
+//    (scrollView.bounds.size.width - scrollView.contentSize.width) * 0.5 : 0.0;
+//    
+//    CGFloat offsetY = (scrollView.bounds.size.height > scrollView.contentSize.height)?
+//    
+//    (scrollView.bounds.size.height - scrollView.contentSize.height) * 0.5 : 0.0;
+//    
+//    imageMap.center = CGPointMake(scrollView.contentSize.width * 0.5 + offsetX,
+//                                  
+//                                  scrollView.contentSize.height * 0.5 + offsetY);
+//}
 #pragma   图片浏览
 - (void)tapImage:(UITapGestureRecognizer *)tap
 {
-    int count = 3;
-    // 1.封装图片数据
-    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
-    for (int i = 0; i<mListImage.count; i++) {
-        // 替换为中等尺寸图片
-        NSString *url = [_urls[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-        MJPhoto *photo = [[MJPhoto alloc] init];
-//        photo.url = [NSURL URLWithString:url]; // 图片路径
-        photo.image  = [mListImage objectAtIndex:i];
-//        photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
-         photo.srcImageView=mScrollview.subviews[i];
-        [photos addObject:photo];
-    }
+    UIImageView * imageview = (UIImageView *)tap.view;
+    SHIntent * intent  = [[SHIntent alloc]init];
+    intent.target = @"SHShowBigImageViewController";
+    [intent.args setValue:imageview.image forKey:@"image"];
+    intent.container = self.navigationController;
+    [[UIApplication sharedApplication]open:intent];
+
     
-    // 2.显示相册
-    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
-    browser.photos = photos; // 设置所有的图片
-    [browser show];
+    
+//    int count = 3;
+//    // 1.封装图片数据
+//    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
+//    for (int i = 0; i<mListImage.count; i++) {
+//        // 替换为中等尺寸图片
+//        NSString *url = [_urls[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
+//        MJPhoto *photo = [[MJPhoto alloc] init];
+////        photo.url = [NSURL URLWithString:url]; // 图片路径
+//        photo.image  = [mListImage objectAtIndex:i];
+////        photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
+//         photo.srcImageView=mScrollview.subviews[i];
+//        [photos addObject:photo];
+//    }
+//    
+//    // 2.显示相册
+//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
+//    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
+//    browser.photos = photos; // 设置所有的图片
+//    [browser show];
 }
 
 

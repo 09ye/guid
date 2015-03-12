@@ -45,7 +45,7 @@
     avAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     avAudioPlayer.delegate = self;
     avAudioPlayer.volume = 1;
-    avAudioPlayer.numberOfLoops = 1;  //-1为一直循环
+    avAudioPlayer.numberOfLoops = 0;  //-1为一直循环
     [avAudioPlayer prepareToPlay];
     [avAudioPlayer play];
     timer = [NSTimer scheduledTimerWithTimeInterval:0.1

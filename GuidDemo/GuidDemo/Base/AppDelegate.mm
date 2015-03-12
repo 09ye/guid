@@ -55,8 +55,15 @@ static bool __isupdate = NO;
     _locationManager = [[CLLocationManager alloc]init];
     _locationManager.delegate = self;
     _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-//    _locationManager.distanceFilter = 100.0f;
+    _locationManager.distanceFilter = 50.0f;
     [_locationManager startUpdatingLocation];
+    
+    //第一个坐标
+    CLLocation *current=[[CLLocation alloc] initWithLatitude:32.178722 longitude:119.508619];
+    //第二个坐标
+    CLLocation *before=[[CLLocation alloc] initWithLatitude:32.206340 longitude:119.425600];
+    // 计算距离
+    CLLocationDistance meters=[current distanceFromLocation:before];
     //    [_locService startUserLocationService];
     //
     //
@@ -76,9 +83,9 @@ static bool __isupdate = NO;
 //    [SHConfigManager instance];
 //    [SHConfigManager instance].URL = URL_FOR(@"get_config");
     
-    //    [self loadCachesfiles];
+
     
-    [self loadCacheList];
+//    [self loadCacheList];
     return YES;
 }
 - (void)configUpdate:(NSObject*)sender
