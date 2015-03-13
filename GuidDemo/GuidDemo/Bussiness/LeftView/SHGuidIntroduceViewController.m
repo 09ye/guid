@@ -15,12 +15,22 @@
     NSTimer *timerSlider;
     NSDictionary * detail;
     AppDelegate * app;
+
 }
 
 @end
 
 @implementation SHGuidIntroduceViewController
-
+-(void) viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:YES];
+    app.attractionShow = true;
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:YES];
+    app.attractionShow = false;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     detail = [self.intent.args objectForKey:@"detail"];
@@ -47,9 +57,12 @@
 }
 -(void)showMp3
 {
+    if(![detail objectForKey:@"mp3Path"] || [[detail objectForKey:@"mp3Path"] isEqualToString:@""]){
+        return;
+    }
     //把音频文件转换成url格式
     NSURL *url = [NSURL fileURLWithPath:[detail objectForKey:@"mp3Path"]];
-   
+    
     //初始化音频类 并且添加播放文件
     
     if (app.avAudioPlayer) {
@@ -307,15 +320,14 @@ NSLog(@"UpAction==%f",sender.value);
         NSLog(@" 二维码<<<<  %@",result);
         NSData *testData = [result dataUsingEncoding: NSUTF8StringEncoding];
         NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
-        //        ¦ñi>õ­Kª¶ô]]îzØÁåPötðTÙû¸óßà¾íêVç=!õYcf=m×d|
-        //        Ý»øI¾7Cº§M5&GsÀ<ÔÄÉ0jà
-        
-        
+        [self refresh:[Utility decryptUseDES:url]];
+
         
     }];
 }
--(void) requestDateZip:(NSString * )url
+-(void) refresh:(NSString * )url
 {
+    
     SHHttpTask * post  = [[SHHttpTask alloc]init];
     post.URL = url;
     post.delegate = self;
@@ -325,7 +337,22 @@ NSLog(@"UpAction==%f",sender.value);
         if([task result] != nil){
             network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
         }
-        
+        if ([network objectForKey:@"scene_id"]) {
+            NSArray * list = [SHXmlParser.instance listAttractions];
+            for(int i = 0;i<list.count;i++){
+                NSDictionary * dic =[list objectAtIndex:i];
+                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_id"]]){
+                    self.title = [dic objectForKey:@"name"];
+                    detail = [dic mutableCopy];
+                    mlabIntroduce.text = [dic objectForKey:@"txt"];
+                    [mlabIntroduce sizeToFit];
+                    [self showMp3];
+                }
+                
+            }
+        }else{
+            [self showAlertDialog:@"未找到相关景点"];
+        }
     } taskWillTry:^(SHTask *task) {
         
     } taskDidFailed:^(SHTask *task) {

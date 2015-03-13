@@ -42,7 +42,7 @@
     [self drawPointRed];
     listHotPoints = [SHXmlParser.instance listHotPoints];
     
-    NSDictionary * dic  = [app distanceFromCurrentLocation];
+    NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (![[dic objectForKey:@"potx"] isEqualToString:@""]) {
         paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
     }
@@ -86,7 +86,7 @@
 }
 -(void)notification:(NSNotification*)noti
 {
-    NSDictionary * dic  = [app distanceFromCurrentLocation];
+    NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic) {
         paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
     }

@@ -48,14 +48,16 @@
 
 @property (nonatomic,strong) CLLocation * myLoaction;
 
+@property (nonatomic,assign) BOOL  attractionShow;
+
 @property(nonatomic,strong)NSMutableArray *requestlist;//caches 目录下得文件 .temp 和。MP4
 
 @property(nonatomic,strong)NSMutableArray *cachesInfolist;//下载文件信息 id name pic url
 
 -(void)beginRequest:(int )videoId hdType:(int)hdType isCollection:(BOOL)isCollection isBeginDown:(BOOL)isBeginDown ;
 
--(NSDictionary *) distanceFromCurrentLocation;
-
+-(NSDictionary *) distanceFromCurrentLocationPoint;
+-(NSDictionary *) distanceFromCurrentLocationAttraction;
 
 
 

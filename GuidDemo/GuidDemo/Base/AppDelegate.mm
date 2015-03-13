@@ -71,7 +71,7 @@ static bool __isupdate = NO;
 //    [self loadCacheList];
     return YES;
 }
--(NSDictionary *) distanceFromCurrentLocation
+-(NSDictionary *) distanceFromCurrentLocationPoint
 {
     NSArray * list = [SHXmlParser.instance listHotPoints];
     NSMutableDictionary * dicResult = [[NSMutableDictionary alloc]init];
@@ -80,6 +80,27 @@ static bool __isupdate = NO;
         NSDictionary * dic =[list objectAtIndex:i];
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
          CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
+        if (i== 0) {
+            dicResult = [dic mutableCopy];
+            minDistance = meters;
+        }
+        if (minDistance >meters) {
+            dicResult = [dic mutableCopy];
+            minDistance = meters;
+        }
+        
+    }
+    return dicResult;
+}
+-(NSDictionary *) distanceFromCurrentLocationAttraction
+{
+    NSArray * list = [SHXmlParser.instance listAttractions];
+    NSMutableDictionary * dicResult = [[NSMutableDictionary alloc]init];
+    double minDistance = 0.0;
+    for(int i = 0;i<list.count;i++){
+        NSDictionary * dic =[list objectAtIndex:i];
+        CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
+        CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (i== 0) {
             dicResult = [dic mutableCopy];
             minDistance = meters;
@@ -102,8 +123,15 @@ static bool __isupdate = NO;
     self.myLoaction = [locations lastObject];
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOCATION_CHANGE object:self.myLoaction];
     NSLog(@"%3.5f===%3.5f",self.myLoaction.coordinate.latitude,self.myLoaction.coordinate.longitude);
-   
-    
+    if(!self.attractionShow){
+        NSDictionary * dic  = [self distanceFromCurrentLocationAttraction];
+        if (dic) {
+            SHIntent * intent =[[SHIntent alloc]init];
+            intent.target = @"SHGuidIntroduceViewController";
+            [intent.args setValue:dic forKey:@"detail"];
+            [[UIApplication sharedApplication]open:intent];
+        }
+    }
 }
 -(void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error
 {

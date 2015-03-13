@@ -29,7 +29,7 @@
 // 图片全屏自适应具中
 +(CGRect) sizeFitImage:(CGSize)originWH;
 //des加密
-+ (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key;
++ (NSString *) encryptUseDES:(NSString *)plainText ;
 //解密
-+ (NSString *) decryptUseDES:(NSData*)cipherText key:(NSString*)key;
++ (NSString *) decryptUseDES:(NSString*)cipherText ;
 @end

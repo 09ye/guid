@@ -58,44 +58,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GuidDemo/Bussiness/Home/SHMainFuntionViewController.m"
-            timestampString = "447904197.338208"
+            timestampString = "447953328.82229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "360"
-            endingLineNumber = "360"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "-requestDateZip:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GuidDemo/Bussiness/Home/SHMainFuntionViewController.m"
-            timestampString = "447904197.338208"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "353"
-            endingLineNumber = "353"
-            landmarkName = "-imagePickerController:didFinishPickingMediaWithInfo:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GuidDemo/Base/Utility.m"
-            timestampString = "447903423.199216"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "271"
-            endingLineNumber = "271"
-            landmarkName = "+decryptUseDES:key:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -118,16 +86,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GuidDemo/Bussiness/Map/SHMapViewController.m"
-            timestampString = "447908213.06386"
+            filePath = "GuidDemo/Base/Utility.m"
+            timestampString = "447955057.968604"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "280"
+            endingLineNumber = "280"
+            landmarkName = "+decryptUseDES:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -137,13 +105,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GuidDemo/Base/SHXmlParser.m"
-            timestampString = "447908540.414258"
+            filePath = "GuidDemo/Bussiness/LeftView/SHGuidIntroduceViewController.m"
+            timestampString = "447953328.82229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
-            landmarkName = "-initDom"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "-showMp3"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
