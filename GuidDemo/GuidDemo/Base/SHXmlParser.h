@@ -19,7 +19,9 @@
 @property (nonatomic,strong) NSMutableArray * listHotPoints;
 @property (nonatomic,strong) NSMutableArray * listAttractions;
 
+
 +(SHXmlParser*)instance;
 
 -(BOOL)start:(NSString *)path;
+
 @end

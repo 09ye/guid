@@ -249,9 +249,9 @@
 }
 
 //解密
-+ (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key
++ (NSString *) decryptUseDES:(NSData*)cipherText key:(NSString*)key
 {
-    NSData* cipherData = [Base64 decode:cipherText];
+    NSData* cipherData = cipherText;
     unsigned char buffer[1024];
     memset(buffer, 0, sizeof(char));
     size_t numBytesDecrypted = 0;

@@ -12,7 +12,7 @@
 @interface SHGuidIntroduceViewController ()<AVAudioPlayerDelegate>
 {
     AVAudioPlayer *avAudioPlayer;
-    NSTimer *timer;
+    NSTimer *timerSlider;
     NSDictionary * detail;
     AppDelegate * app;
 }
@@ -62,7 +62,7 @@
     [avAudioPlayer prepareToPlay];
     [avAudioPlayer play];
     app.avAudioPlayer =  avAudioPlayer;
-    timer = [NSTimer scheduledTimerWithTimeInterval:0.1
+    timerSlider = [NSTimer scheduledTimerWithTimeInterval:0.1
                                              target:self
                                            selector:@selector(playProgress)                                                     userInfo:nil
                                             repeats:YES];
@@ -77,13 +77,13 @@
 }
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    [timer invalidate]; //NSTimer暂停   invalidate  使...无效;
+    [timerSlider invalidate]; //NSTimer暂停   invalidate  使...无效;
 }
 
 
 
 - (IBAction)btnSaoOntouch:(id)sender {
-    
+    [self scannerAction:nil];
 }
 
 
@@ -142,5 +142,194 @@ NSLog(@"UpAction==%f",sender.value);
     m = (seconds - h * 3600) / 60;
     s = seconds - h * 3600 - m * 60;
     return [NSString stringWithFormat:@"%02ld:%02ld",m,s];
+}
+
+#pragma  mark   ===========================
+#pragma  mark  二维码扫描
+
+- (void)scannerAction:(id)sender {
+    
+    num = 0;
+    
+    AppDelegate* app=(AppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    if(!iOS7)
+    {
+        SHIOS7_ScanViewController * rt = [[SHIOS7_ScanViewController alloc]init];
+        [app.viewController presentViewController:rt animated:YES completion:^{
+            
+        }];
+    }
+    else
+    {
+        
+        upOrdown = NO;
+        //初始话ZBar
+        __autoreleasing ZBarReaderViewController * reader = [[ZBarReaderViewController alloc]init];
+        //设置代理
+        reader.readerDelegate = self;
+        
+        //支持界面旋转
+        reader.supportedOrientationsMask = ZBarOrientationMaskAll;
+        reader.showsHelpOnFail = NO;
+        reader.showsZBarControls=NO;
+        reader.showsCameraControls=NO;
+        
+        reader.scanCrop = CGRectMake(0.1, 0.2, 0.8, 0.8);//扫描的感应框
+        ZBarImageScanner * scanner = reader.scanner;
+        [scanner setSymbology:ZBAR_I25
+                       config:ZBAR_CFG_ENABLE
+                           to:0];
+        
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        view.backgroundColor = [UIColor clearColor];
+        reader.cameraOverlayView = view;
+        
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 40)];
+        label.text = @"请将扫描的二维码至于下面的框内\n谢谢！";
+        label.textColor = [UIColor whiteColor];
+        label.textAlignment = 1;
+        label.lineBreakMode = 0;
+        label.numberOfLines = 2;
+        label.backgroundColor = [UIColor clearColor];
+        [view addSubview:label];
+        
+        UIImageView * image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pick_bg.png"]];
+        image.frame = CGRectMake(20, 80, 280, 280);
+        [view addSubview:image];
+        
+        UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
+        [b setFrame:CGRectMake(0, 440, 320, 35)];
+        [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [b  setTitle:@"取消" forState:UIControlStateNormal];
+        [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
+        [view bringSubviewToFront:b];
+        [view addSubview:b];
+        
+        _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 220, 2)];
+        _line.image = [UIImage imageNamed:@"line.png"];
+        [image addSubview:_line];
+        
+        //定时器，设定时间过1.5秒，
+        timer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(animation1) userInfo:nil repeats:YES];
+        
+        [app.viewController presentViewController:reader animated:YES completion:^{
+            
+        }];
+    }
+    
+}
+
+-(void)cancelMe{
+    
+    [timer invalidate];
+    _line.frame = CGRectMake(30, 10, 220, 2);
+    num = 0;
+    upOrdown = NO;
+    
+    AppDelegate* app=(AppDelegate*)[UIApplication sharedApplication].delegate;
+    
+    [app.viewController  dismissViewControllerAnimated:YES completion: nil ];
+    
+}
+-(void)animation1
+{
+    
+    
+    if (upOrdown == NO) {
+        num ++;
+        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        if (2*num == 260) {
+            upOrdown = YES;
+        }
+    }
+    else {
+        num --;
+        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        if (num == 0) {
+            upOrdown = NO;
+        }
+    }
+}
+
+#pragma mark   ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+#pragma mark   zbar 委托 方法
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [timer invalidate];
+    _line.frame = CGRectMake(30, 10, 220, 2);
+    num = 0;
+    upOrdown = NO;
+    
+    
+    AppDelegate* app=(AppDelegate*)[UIApplication sharedApplication].delegate;
+    [app.viewController  dismissViewControllerAnimated:YES completion:^{
+        [picker removeFromParentViewController];
+    }];
+    
+    //    [picker dismissViewControllerAnimated:YES completion:^{
+    //          [picker removeFromParentViewController];
+    //    }];
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    [timer invalidate];
+    _line.frame = CGRectMake(30, 10, 220, 2);
+    num = 0;
+    upOrdown = NO;
+    
+    [picker dismissViewControllerAnimated:YES completion:^{
+        [picker removeFromParentViewController];
+        UIImage * image = [info objectForKey:UIImagePickerControllerOriginalImage];
+        //初始化
+        ZBarReaderController * read = [ZBarReaderController new];
+        //设置代理
+        read.readerDelegate = self;
+        CGImageRef cgImageRef = image.CGImage;
+        ZBarSymbol * symbol = nil;
+        id <NSFastEnumeration> results = [read scanImage:cgImageRef];
+        for (symbol in results)
+        {
+            break;
+        }
+        NSString * result;
+        if ([symbol.data canBeConvertedToEncoding:NSShiftJISStringEncoding])
+            
+        {
+            result = [NSString stringWithCString:[symbol.data cStringUsingEncoding: NSShiftJISStringEncoding] encoding:NSUTF8StringEncoding];
+        }
+        else
+        {
+            result = symbol.data;
+        }
+        
+        NSLog(@" 二维码<<<<  %@",result);
+        NSData *testData = [result dataUsingEncoding: NSUTF8StringEncoding];
+        NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
+        //        ¦ñi>õ­Kª¶ô]]îzØÁåPötðTÙû¸óßà¾íêVç=!õYcf=m×d|
+        //        Ý»øI¾7Cº§M5&GsÀ<ÔÄÉ0jà
+        
+        
+        
+    }];
+}
+-(void) requestDateZip:(NSString * )url
+{
+    SHHttpTask * post  = [[SHHttpTask alloc]init];
+    post.URL = url;
+    post.delegate = self;
+    [post start:^(SHTask *task) {
+        NSError * error ;
+        NSDictionary * network = nil;
+        if([task result] != nil){
+            network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
+        }
+        
+    } taskWillTry:^(SHTask *task) {
+        
+    } taskDidFailed:^(SHTask *task) {
+        
+    }];
 }
 @end

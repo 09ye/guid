@@ -57,8 +57,9 @@
 //notification
 #define NOTIFICATION_LOGIN_SUCCESSFUL @"notification_login_successful"
 #define NOTIFY_SinaAuthon_Success     @"SinaAuthonSuccess"
+#define NOTIFICATION_LOCATION_CHANGE     @"notification_location_change"
 #define NOTIFICATION_INTENT_CANCLE_SUCCESSFUL     @"notification_intent_cancle_successful"
-#define NOTIFICATION_HOME_TABBAR_DIDSELECT     @"notification_home_tabbar_didselect"
+
 
 
 #define DELEGATE_IS_READY(x) (self.delegate && [self.delegate respondsToSelector:@selector(x)])

@@ -7,8 +7,11 @@
 //
 
 #import "SHTableViewController.h"
+#import "ZBarSDK.h"
+#import "SHIOS7_ScanViewController.h"
+#import "QRCodeGenerator.h"
 
-@interface SHGuidIntroduceViewController : SHTableViewController
+@interface SHGuidIntroduceViewController : SHTableViewController<SHTaskDelegate,ZBarReaderDelegate>
 {
     
     __weak IBOutlet UIScrollView *mScrollview;
@@ -18,7 +21,13 @@
     __weak IBOutlet UILabel *mlabTotalTime;
     __weak IBOutlet UISlider *mSlider;
     __weak IBOutlet UIButton *mbtnStart;
+    
+    int num;
+    BOOL upOrdown;
+    NSTimer * timer;
 }
+@property (nonatomic, strong) UIImageView    * line;
+
 - (IBAction)btnSaoOntouch:(id)sender;
 - (IBAction)segmentOnvaluechange:(UISlider*)sender;
 - (IBAction)btnStartPauseOntouch:(UIButton *)sender;

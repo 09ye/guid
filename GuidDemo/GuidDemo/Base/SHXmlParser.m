@@ -102,11 +102,11 @@ static SHXmlParser* _instance = nil;
     self.listHotPoints = [[NSMutableArray alloc]init];
     for (GDataXMLElement *map in arrayPoint) {
         NSMutableDictionary * dic  = [[NSMutableDictionary alloc]init];
-        [dic setValue:[[[map elementsForName:@"idcode"]objectAtIndex:0] stringValue] forKey:@"idcode"];
-        [dic setValue:[[[map elementsForName:@"latitude"]objectAtIndex:0] stringValue] forKey:@"latitude"];
-        [dic setValue:[[[map elementsForName:@"longitude"]objectAtIndex:0] stringValue] forKey:@"longitude"];
-        [dic setValue:[[[map elementsForName:@"potx"]objectAtIndex:0] stringValue] forKey:@"potx"];
-        [dic setValue:[[[map elementsForName:@"poty"]objectAtIndex:0] stringValue] forKey:@"poty"];
+        [dic setValue:[[[[map elementsForName:@"idcode"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"idcode"];
+        [dic setValue:[[[[map elementsForName:@"latitude"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"latitude"];
+        [dic setValue:[[[[map elementsForName:@"longitude"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"longitude"];
+        [dic setValue:[[[[map elementsForName:@"potx"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"potx"];
+        [dic setValue: [[[[map elementsForName:@"poty"]objectAtIndex:0] attributeForName:@"value"]stringValue]  forKey:@"poty"];
         [self.listHotPoints addObject:dic];
     }
     

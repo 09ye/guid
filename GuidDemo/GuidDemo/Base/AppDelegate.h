@@ -46,15 +46,15 @@
 
 @property (nonatomic,strong) AVAudioPlayer *avAudioPlayer;
 
-//@property(nonatomic,retain)NSMutableArray *finishedlist;//已下载完成的文件列表（文件对象）
-//
-//@property(nonatomic,retain)NSMutableArray *downinglist;//正在下载的文件列表(ASIHttpRequest对象)
+@property (nonatomic,strong) CLLocation * myLoaction;
 
 @property(nonatomic,strong)NSMutableArray *requestlist;//caches 目录下得文件 .temp 和。MP4
 
 @property(nonatomic,strong)NSMutableArray *cachesInfolist;//下载文件信息 id name pic url
 
 -(void)beginRequest:(int )videoId hdType:(int)hdType isCollection:(BOOL)isCollection isBeginDown:(BOOL)isBeginDown ;
+
+-(NSDictionary *) distanceFromCurrentLocation;
 
 
 

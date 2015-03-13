@@ -54,7 +54,7 @@
     
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
-    
+    [Utility encryptUseDES:@"1PALMPAY " key:@"12345678"];
     [self loadCacheList];
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
@@ -347,9 +347,10 @@
         
         NSLog(@" 二维码<<<<  %@",result);
         NSData *testData = [result dataUsingEncoding: NSUTF8StringEncoding];
-        NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
-        
-        [self requestDateZip:url];
+//        NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
+//        ¦ñi>õ­Kª¶ô]]îzØÁåPötðTÙû¸óßà¾íêVç=!õYcf=m×d|
+//        Ý»øI¾7Cº§M5&GsÀ<ÔÄÉ0jà
+        [self requestDateZip:[Utility decryptUseDES:testData key:@"\0\0\0\0\0\0\0\0"]];
       
         
     }];

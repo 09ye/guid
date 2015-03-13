@@ -31,5 +31,5 @@
 //des加密
 + (NSString *) encryptUseDES:(NSString *)plainText key:(NSString *)key;
 //解密
-+ (NSString *) decryptUseDES:(NSString*)cipherText key:(NSString*)key;
++ (NSString *) decryptUseDES:(NSData*)cipherText key:(NSString*)key;
 @end

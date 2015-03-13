@@ -11,6 +11,9 @@
 @interface SHMapViewController ()
 {
     UIImageView * imageMap ;
+    AppDelegate * app;
+    UIView * paintRed;
+    NSArray * listHotPoints;
 }
 
 @end
@@ -21,7 +24,9 @@
     [super viewDidLoad];
 
     self.view.backgroundColor = [UIColor blackColor];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notification:) name:NOTIFICATION_LOCATION_CHANGE object:nil];
     self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
+    app = (AppDelegate*)[UIApplication sharedApplication].delegate;
     NSData *imageData = [NSData dataWithContentsOfFile:[[SHXmlParser.instance detail] objectForKey:@"ditupic"]];
     UIImage *image = [UIImage imageWithData:imageData];
     imageMap = [[UIImageView alloc]init];
@@ -34,25 +39,15 @@
     [mScrollview setMinimumZoomScale:1];
     [mScrollview setMaximumZoomScale:4];
     
-    UIView * paint = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
-    paint.layer.cornerRadius = 5;
-    paint.center = CGPointMake(250.5, 40);
-    paint.alpha = 0.3;
-    paint.backgroundColor = [UIColor redColor];
-    [imageMap addSubview:paint];
-   
-    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
-    rotationAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
-    rotationAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2.5, 2.5, 1.0)];
+    [self drawPointRed];
+    listHotPoints = [SHXmlParser.instance listHotPoints];
     
-    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    rotationAnimation.duration = 1;
-    rotationAnimation.autoreverses = YES;
-    rotationAnimation.RepeatCount = 100000;//你可以设置到最大的整数值
-    rotationAnimation.cumulative = NO;
-    rotationAnimation.removedOnCompletion = NO;
-    rotationAnimation.fillMode = kCAFillModeForwards;
-    [paint.layer addAnimation:rotationAnimation forKey:@"scaling"];
+    NSDictionary * dic  = [app distanceFromCurrentLocation];
+    if (![[dic objectForKey:@"potx"] isEqualToString:@""]) {
+        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
+    }
+    
+    
 
     
 //    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
@@ -66,6 +61,35 @@
 //    [mScrollview addGestureRecognizer:twoFingerTapRecognizer];
     // Do any additional setup after loading the view from its nib.
     
+}
+-(void)drawPointRed
+{
+    paintRed = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+    paintRed.layer.cornerRadius = 5;
+    paintRed.center = CGPointMake(250.5, 40);
+    paintRed.alpha = 0.3;
+    paintRed.backgroundColor = [UIColor redColor];
+    [imageMap addSubview:paintRed];
+    
+    CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
+    rotationAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
+    rotationAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(2.5, 2.5, 1.0)];
+    
+    [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    rotationAnimation.duration = 1;
+    rotationAnimation.autoreverses = YES;
+    rotationAnimation.RepeatCount = 100000;//你可以设置到最大的整数值
+    rotationAnimation.cumulative = NO;
+    rotationAnimation.removedOnCompletion = NO;
+    rotationAnimation.fillMode = kCAFillModeForwards;
+    [paintRed.layer addAnimation:rotationAnimation forKey:@"scaling"];
+}
+-(void)notification:(NSNotification*)noti
+{
+    NSDictionary * dic  = [app distanceFromCurrentLocation];
+    if (dic) {
+        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
+    }
 }
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer {
     // Zoom out slightly, capping at the minimum zoom scale specified by the scroll view

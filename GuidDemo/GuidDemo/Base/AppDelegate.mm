@@ -57,13 +57,8 @@ static bool __isupdate = NO;
     _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     _locationManager.distanceFilter = 50.0f;
     [_locationManager startUpdatingLocation];
-    
-    //第一个坐标
-    CLLocation *current=[[CLLocation alloc] initWithLatitude:32.178722 longitude:119.508619];
-    //第二个坐标
-    CLLocation *before=[[CLLocation alloc] initWithLatitude:32.206340 longitude:119.425600];
-    // 计算距离
-    CLLocationDistance meters=[current distanceFromLocation:before];
+    self.myLoaction = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
+ 
     
     
     
@@ -76,6 +71,27 @@ static bool __isupdate = NO;
 //    [self loadCacheList];
     return YES;
 }
+-(NSDictionary *) distanceFromCurrentLocation
+{
+    NSArray * list = [SHXmlParser.instance listHotPoints];
+    NSMutableDictionary * dicResult = [[NSMutableDictionary alloc]init];
+    double minDistance = 0.0;
+    for(int i = 0;i<list.count;i++){
+        NSDictionary * dic =[list objectAtIndex:i];
+        CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
+         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
+        if (i== 0) {
+            dicResult = [dic mutableCopy];
+            minDistance = meters;
+        }
+        if (minDistance >meters) {
+            dicResult = [dic mutableCopy];
+            minDistance = meters;
+        }
+        
+    }
+    return dicResult;
+}
 - (void)configUpdate:(NSObject*)sender
 {
     [SHConfigManager.instance show];
@@ -83,8 +99,9 @@ static bool __isupdate = NO;
 
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    CLLocation * currLocation = [locations lastObject];
-    NSLog(@"%3.5f===%3.5f",currLocation.coordinate.latitude,currLocation.coordinate.longitude);
+    self.myLoaction = [locations lastObject];
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOCATION_CHANGE object:self.myLoaction];
+    NSLog(@"%3.5f===%3.5f",self.myLoaction.coordinate.latitude,self.myLoaction.coordinate.longitude);
    
     
 }
