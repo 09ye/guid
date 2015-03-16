@@ -274,8 +274,10 @@
     NSString* plainText = nil;
     if (cryptStatus == kCCSuccess) {
         NSData* data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesDecrypted];
+       
         plainText = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     }
+     NSLog(@"base64 decode==%@",[[NSString alloc] initWithData:[Base64 decode:plainText] encoding:NSUTF8StringEncoding]);
     NSLog(@"DES decode==%@",plainText);
     return plainText;
 }

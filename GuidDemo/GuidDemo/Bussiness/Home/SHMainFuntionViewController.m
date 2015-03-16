@@ -54,8 +54,13 @@
     
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
-    [Utility encryptUseDES:@"http://www.baidu.com" ];
-    [Utility decryptUseDES:@"OH1tx/ExmBo="];
+//    NSData* data = [@"http://www.baidu.com" dataUsingEncoding:NSUTF8StringEncoding];
+    NSLog(@"base64==%@",[Base64 decode:@"tULNHYov4yxRCDkKOB4jQcJULCV+6QNXy4y/DiJpAK4="]);
+//    [Utility decryptUseDES:[Utility encryptUseDES:@"aHR0cCUzQS8vd3d3LmJhaWR1LmNvbQ==" ]];
+    NSData * data = [Base64 decode:@"tULNHYov4yxRCDkKOB4jQcJULCV+6QNXy4y/DiJpAK4="];
+    NSString * ss = [[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
+    NSLog(@"sss==%@",ss);
+    [Utility decryptUseDES:ss];
     [self loadCacheList];
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
