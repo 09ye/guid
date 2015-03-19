@@ -63,9 +63,8 @@
 //   [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
 //    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
 //    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-//    NSLog(@"encode ===%@",url);
 //    [self requestDateZip:url];
-   
+//   [self beginRequest:@"http://dl.haima.me/download/haimapc/haimawan.exe"];
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
@@ -459,6 +458,7 @@
 {
     [MMProgressHUD dismissWithError:@"下载失败!"];
     [self dismissWaitDialog];
+    [self showAlertDialog:@"下载失败!"];
     
 
     
@@ -491,13 +491,15 @@
         if (ret){
             [za UnzipCloseFile];
             [SHFileManager deleteFileOfPath:[NSString stringWithFormat:@"%@.zip",path]];
-           
             [MMProgressHUD dismissWithSuccess:@"下载成功!"];
         }else{
+            
              [MMProgressHUD dismissWithError:@"下载失败!"];
+            [self showAlertDialog:@"下载失败!"];
         }
     }else{
         [MMProgressHUD dismissWithError:@"下载失败!"];
+        [self showAlertDialog:@"下载失败!"];
     }
      [self dismissWaitDialog];
 //    NSString *imageFilePath = [path stringByAppendingPathComponent:@"photo.png"];
