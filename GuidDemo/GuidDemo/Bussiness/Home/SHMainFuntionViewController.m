@@ -22,6 +22,7 @@
    UIView *markView;
    UIScrollView *imgScrollview;
    NSArray *listImages;
+    MMProgressHUD * progressDialog;
 }
 
 @end
@@ -57,8 +58,13 @@
     
     [self loadCacheList];
     
+    
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
-//    [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
+//   [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
+//    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
+//    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+//    NSLog(@"encode ===%@",url);
+//    [self requestDateZip:url];
    
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
@@ -352,6 +358,7 @@
         NSLog(@"encode ===%@==",url);
         [self requestDateZip:url];
         
+    
     }];
 }
 -(void) requestDateZip:(NSString * )url
@@ -365,7 +372,7 @@
         if([task result] != nil){
             network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
         }
-        if ([network objectForKey:@"success"]) {
+        if ([[network objectForKey:@"success"]boolValue]) {
             NSArray * list = [network objectForKey:@"package"];
             if (list.count>0) {
               dicPack =  [list objectAtIndex:0];
@@ -398,7 +405,11 @@
     }
     stringProgress = @"0%";
     NSString * zipPath = [[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",[dicPack objectForKey:@"name"]]];
-    [self showWaitDialog:@"正在下载..." state:@"请稍等"];
+    
+
+    [MMProgressHUD showProgressWithStyle:MMProgressHUDProgressStyleRadial title:@"正在下载.." status:nil];
+
+    
     ASIHTTPRequest *request=[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
     request.delegate=self;
     [request setDownloadDestinationPath:[NSString stringWithFormat:@"%@.zip",zipPath]];
@@ -446,9 +457,10 @@
 //出错了，如果是等待超时，则继续下载
 -(void)requestFailed:(ASIHTTPRequest *)request
 {
-    
+    [MMProgressHUD dismissWithError:@"下载失败!"];
     [self dismissWaitDialog];
-    [self showAlertDialog:@"下载失败"];
+    
+
     
 }
 
@@ -469,8 +481,7 @@
 }
 -(void)setProgress:(float)newProgress
 {
-//    stringProgress = [NSString stringWithFormat:@"%1f%",newProgress*100];
-    NSLog(@"setProgress-%f",newProgress);
+    [MMProgressHUD updateProgress:newProgress];
 }
 -(void) unZipPack:(NSString *)path
 {
@@ -480,15 +491,15 @@
         if (ret){
             [za UnzipCloseFile];
             [SHFileManager deleteFileOfPath:[NSString stringWithFormat:@"%@.zip",path]];
-            [self dismissWaitDialog];
+           
+            [MMProgressHUD dismissWithSuccess:@"下载成功!"];
         }else{
-            [self dismissWaitDialog];
-            [self showAlertDialog:@"下载失败"];
+             [MMProgressHUD dismissWithError:@"下载失败!"];
         }
     }else{
-        [self dismissWaitDialog];
-        [self showAlertDialog:@"下载失败"];
+        [MMProgressHUD dismissWithError:@"下载失败!"];
     }
+     [self dismissWaitDialog];
 //    NSString *imageFilePath = [path stringByAppendingPathComponent:@"photo.png"];
 //    NSString *textFilePath = [path stringByAppendingPathComponent:@"text.txt"];
 //    NSData *imageData = [NSData dataWithContentsOfFile:imageFilePath options:0 error:nil];

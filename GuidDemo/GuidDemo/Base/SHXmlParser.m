@@ -49,7 +49,7 @@ static SHXmlParser* _instance = nil;
 - (void) initDom
 {
     self.detail = [[NSMutableDictionary alloc]init];
-    GDataXMLDocument* doc = [self docForStyle:@"default"];
+    GDataXMLDocument* doc = [self docForStyle:@"list"];
     GDataXMLElement * detail = [[doc nodesForXPath:[NSString stringWithFormat:@"/pack/detail"] error:nil]objectAtIndex:0];
     
     GDataXMLElement *parkEle = [[detail elementsForName:@"parkname"] objectAtIndex:0];
