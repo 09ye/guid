@@ -54,13 +54,12 @@
     
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
-//    NSData* data = [@"http://www.baidu.com" dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"base64==%@",[Base64 decode:@"tULNHYov4yxRCDkKOB4jQcJULCV+6QNXy4y/DiJpAK4="]);
-//    [Utility decryptUseDES:[Utility encryptUseDES:@"aHR0cCUzQS8vd3d3LmJhaWR1LmNvbQ==" ]];
-    NSData * data = [Base64 decode:@"tULNHYov4yxRCDkKOB4jQcJULCV+6QNXy4y/DiJpAK4="];
-    NSString * ss = [[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
-    NSLog(@"sss==%@",ss);
-    [Utility decryptUseDES:ss];
+
+    NSData *dedata = [Base64 decode:@"C9pEG6g8ge76xt2q9XLbpw=="];
+    NSData * decode =[SHTools  AES256DecryptWithKey:dedata key:@"1234567890123456"];
+    NSString * stringde  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+    NSLog(@"encode ===%@==",stringde);
+    
     [self loadCacheList];
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
@@ -351,11 +350,12 @@
         {
             result = symbol.data;
         }
-        
         NSLog(@" 二维码<<<<  %@",result);
-        NSData *testData = [result dataUsingEncoding: NSUTF8StringEncoding];
-        NSString * url =[[NSString alloc]initWithData:testData encoding:NSUTF8StringEncoding];
-        [self requestDateZip:[Utility decryptUseDES:url]];
+        
+        NSData * decode =[SHTools  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
+        NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+        NSLog(@"encode ===%@==",url);
+        [self requestDateZip:url];
     }];
 }
 -(void) requestDateZip:(NSString * )url

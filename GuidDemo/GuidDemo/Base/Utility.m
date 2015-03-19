@@ -243,7 +243,8 @@
                                           &numBytesEncrypted);
     if (cryptStatus == kCCSuccess) {
         NSData *data = [NSData dataWithBytes:buffer length:(NSUInteger)numBytesEncrypted];
-        
+        NSString * string  = [[NSString alloc]initWithData:data encoding:NSASCIIStringEncoding];
+        NSLog(@"加密后：%@",string);
         ciphertext = [Base64 encode:data];
     }
      NSLog(@"DES encode==%@",ciphertext);
@@ -281,4 +282,5 @@
     NSLog(@"DES decode==%@",plainText);
     return plainText;
 }
+
 @end

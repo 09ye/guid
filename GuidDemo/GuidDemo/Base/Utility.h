@@ -32,4 +32,6 @@
 + (NSString *) encryptUseDES:(NSString *)plainText ;
 //解密
 + (NSString *) decryptUseDES:(NSString*)cipherText ;
+
+
 @end
