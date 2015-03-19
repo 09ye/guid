@@ -54,11 +54,6 @@
     
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
-
-    NSData *dedata = [Base64 decode:@"C9pEG6g8ge76xt2q9XLbpw=="];
-    NSData * decode =[SHTools  AES256DecryptWithKey:dedata key:@"1234567890123456"];
-    NSString * stringde  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-    NSLog(@"encode ===%@==",stringde);
     
     [self loadCacheList];
     
@@ -352,10 +347,11 @@
         }
         NSLog(@" 二维码<<<<  %@",result);
         
-        NSData * decode =[SHTools  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
+        NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
         NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
         NSLog(@"encode ===%@==",url);
         [self requestDateZip:url];
+        
     }];
 }
 -(void) requestDateZip:(NSString * )url

@@ -34,4 +34,8 @@
 + (NSString *) decryptUseDES:(NSString*)cipherText ;
 
 
+//aes 加密
++ (NSData *)AES256EncryptWithKey:(NSData*) date key:(NSString *)key;
+//解密
++ (NSData *)AES256DecryptWithKey:(NSData*) date key:(NSString *)key;
 @end

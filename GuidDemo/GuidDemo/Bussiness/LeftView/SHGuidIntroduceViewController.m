@@ -318,7 +318,7 @@ NSLog(@"UpAction==%f",sender.value);
         }
         
         NSLog(@" 二维码<<<<  %@",result);
-        NSData * decode =[SHTools  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
+        NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
         NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
         NSLog(@"encode ===%@==",url);
         [self refresh:[Utility decryptUseDES:url]];
