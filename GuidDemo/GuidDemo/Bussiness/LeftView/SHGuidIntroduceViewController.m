@@ -204,7 +204,7 @@ NSLog(@"UpAction==%f",sender.value);
         reader.showsZBarControls=NO;
         reader.showsCameraControls=NO;
         
-        reader.scanCrop = CGRectMake(0.1, 0.2, 0.8, 0.8);//扫描的感应框
+        reader.scanCrop = CGRectMake(1, 1, 0.8, 0.8);//扫描的感应框
         ZBarImageScanner * scanner = reader.scanner;
         [scanner setSymbology:ZBAR_I25
                        config:ZBAR_CFG_ENABLE
@@ -228,7 +228,7 @@ NSLog(@"UpAction==%f",sender.value);
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(20, 440, self.view.bounds.size.width-40, 35)];
+        [b setFrame:CGRectMake(20, view.bounds.size.height-60, self.view.bounds.size.width-40, 35)];
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
