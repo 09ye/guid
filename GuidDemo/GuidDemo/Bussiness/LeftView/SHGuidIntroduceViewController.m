@@ -21,18 +21,24 @@
 @end
 
 @implementation SHGuidIntroduceViewController
+
 -(void) viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:YES];
     app.attractionShow = true;
+//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+//    [self becomeFirstResponder];
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:YES];
     app.attractionShow = false;
+//    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+//    [self resignFirstResponder];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     detail = [self.intent.args objectForKey:@"detail"];
     self.title = [detail objectForKey:@"name"];
     mbtnSao.layer.cornerRadius = 5.0;
@@ -60,6 +66,7 @@
     if(![detail objectForKey:@"mp3Path"] || [[detail objectForKey:@"mp3Path"] isEqualToString:@""]){
         return;
     }
+   
     //把音频文件转换成url格式
     NSURL *url = [NSURL fileURLWithPath:[detail objectForKey:@"mp3Path"]];
     
@@ -90,7 +97,7 @@
 }
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
-    [timerSlider invalidate]; //NSTimer暂停   invalidate  使...无效;
+//    [timerSlider invalidate]; //NSTimer暂停   invalidate  使...无效;
 }
 
 
@@ -194,11 +201,11 @@ NSLog(@"UpAction==%f",sender.value);
                        config:ZBAR_CFG_ENABLE
                            to:0];
         
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         view.backgroundColor = [UIColor clearColor];
         reader.cameraOverlayView = view;
         
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 40)];
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, self.view.bounds.size.width-40, 40)];
         label.text = @"请将扫描的二维码至于下面的框内\n谢谢！";
         label.textColor = [UIColor whiteColor];
         label.textAlignment = 1;
@@ -208,18 +215,18 @@ NSLog(@"UpAction==%f",sender.value);
         [view addSubview:label];
         
         UIImageView * image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pick_bg.png"]];
-        image.frame = CGRectMake(20, 80, 280, 280);
+        image.frame = CGRectMake(20, 80, self.view.bounds.size.width-40, 280);
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(0, 440, 320, 35)];
+        [b setFrame:CGRectMake(0, 440, self.view.bounds.size.width, 35)];
         [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
         [view bringSubviewToFront:b];
         [view addSubview:b];
         
-        _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 220, 2)];
+        _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, self.view.bounds.size.width-100, 2)];
         _line.image = [UIImage imageNamed:@"line.png"];
         [image addSubview:_line];
         
@@ -236,7 +243,7 @@ NSLog(@"UpAction==%f",sender.value);
 -(void)cancelMe{
     
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
@@ -251,14 +258,14 @@ NSLog(@"UpAction==%f",sender.value);
     
     if (upOrdown == NO) {
         num ++;
-        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        _line.frame = CGRectMake(30, 10+2*num, self.view.bounds.size.width-100, 2);
         if (2*num == 260) {
             upOrdown = YES;
         }
     }
     else {
         num --;
-        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        _line.frame = CGRectMake(30, 10+2*num, self.view.bounds.size.width-100, 2);
         if (num == 0) {
             upOrdown = NO;
         }
@@ -271,7 +278,7 @@ NSLog(@"UpAction==%f",sender.value);
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
@@ -288,7 +295,7 @@ NSLog(@"UpAction==%f",sender.value);
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
