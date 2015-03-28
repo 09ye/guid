@@ -253,7 +253,8 @@
         reader.showsZBarControls=NO;
         reader.showsCameraControls=NO;
         
-        reader.scanCrop = CGRectMake(1, 1, 0.8, 0.8);//扫描的感应框
+        reader.scanCrop = CGRectMake(0, 0, 1, 1);//扫描的感应框
+
 
         ZBarImageScanner * scanner = reader.scanner;
         [scanner setSymbology:ZBAR_I25
