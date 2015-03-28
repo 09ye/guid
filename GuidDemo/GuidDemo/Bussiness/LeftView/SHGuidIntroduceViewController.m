@@ -70,18 +70,26 @@
     //把音频文件转换成url格式
     NSURL *url = [NSURL fileURLWithPath:[detail objectForKey:@"mp3Path"]];
     
-    //初始化音频类 并且添加播放文件
     
-    if (app.avAudioPlayer) {
-        [app.avAudioPlayer stop];
+
+    //初始化音频类 并且添加播放文件
+    //    if (app.avAudioPlayer) {
+    //        [app.avAudioPlayer stop];
+    //    }
+
+    if([[url absoluteString] isEqual:[app.avAudioPlayer.url absoluteString]]){
+        avAudioPlayer = app.avAudioPlayer;
+    }else{
+        avAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     }
-    avAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     avAudioPlayer.delegate = self;
     avAudioPlayer.volume = 1;
     avAudioPlayer.numberOfLoops = 0;  //-1为一直循环
     [avAudioPlayer prepareToPlay];
     [avAudioPlayer play];
     app.avAudioPlayer =  avAudioPlayer;
+    
+    
     timerSlider = [NSTimer scheduledTimerWithTimeInterval:0.1
                                              target:self
                                            selector:@selector(playProgress)                                                     userInfo:nil
