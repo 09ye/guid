@@ -348,9 +348,11 @@ NSLog(@"UpAction==%f",sender.value);
                     mlabIntroduce.text = [dic objectForKey:@"txt"];
                     [mlabIntroduce sizeToFit];
                     [self showMp3];
+                    break;
                 }
                 
             }
+            [self showAlertDialog:@"未找到相关景点"];
         }else{
             [self showAlertDialog:@"未找到相关景点"];
         }

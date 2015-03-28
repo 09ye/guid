@@ -36,12 +36,6 @@
     for (int i = 0 ; i < 3; i++) {
 		
 		NSString *imageName = @"";
-		
-//		if (!IPHONE5) {
-//			imageName = @"guide4";
-//		}else {
-//			imageName = @"guide0";
-//		}
         imageName = @"guid";
         imageName = [imageName stringByAppendingFormat:@"%d.png", i + 1];
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:imageName]];

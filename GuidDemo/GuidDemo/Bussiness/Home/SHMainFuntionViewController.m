@@ -78,7 +78,32 @@
     
     
     [self loadCacheList];
-    [self requestDataDrawUI];
+   
+    if ([SHXmlParser.instance listPics].count>0) {
+         [self requestDataDrawUI];
+    }else{
+        [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-49)];
+        for (int i = 0 ; i < 3; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [mScrollview addSubview:imageView];
+            // 计算位置
+            imageView.frame = [Utility sizeFitImage:image.size];
+            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y);
+            imageView.center = point;
+            // 下载图片
+            imageView.image  = image;
+            // 事件监听
+            imageView.tag = i;
+            imageView.userInteractionEnabled = YES;
+            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
+            // 内容模式
+            imageView.clipsToBounds = YES;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            
+        }
+    }
+    
     
 }
 
@@ -89,6 +114,7 @@
     arryMore =  [[SHXmlParser.instance detail]objectForKey:@"more"];
     listImages  = [SHXmlParser.instance listPics];
     [mScrollview setContentSize:CGSizeMake(UIScreenWidth*listImages.count, UIScreenHeight-49)];
+
     for (int i = 0 ; i < listImages.count; i++) {
         NSDictionary *dic  = [listImages objectAtIndex:i];
         NSData *imageData = [NSData dataWithContentsOfFile:[dic objectForKey:@"fpath"]];
@@ -376,22 +402,44 @@
         if([task result] != nil){
             network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
         }
-        if ([[network objectForKey:@"success"]boolValue]) {
-            NSArray * list = [network objectForKey:@"package"];
-            if (list.count>0) {
-              dicPack =  [list objectAtIndex:0];
-                for(NSDictionary * dicfile in listPacks){
-                    if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
-                        [self showAlertDialog:@"您已经下载过该资源"];
-                        return ;
+        if([network.allKeys containsObject:@"scene_id"]){
+            if ([network objectForKey:@"scene_id"]) {
+                NSArray * list = [SHXmlParser.instance listAttractions];
+                for(int i = 0;i<list.count;i++){
+                    NSDictionary * dic =[list objectAtIndex:i];
+                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_id"]]){
+                        SHIntent * intent =[[SHIntent alloc]init];
+                        intent.target = @"SHGuidIntroduceViewController";
+                        [intent.args setValue:dic forKey:@"detail"];
+                        [[UIApplication sharedApplication]open:intent];
+                        break;
                     }
                     
                 }
-              [self beginRequest:[dicPack objectForKey:@"dir"]];
+                [self showAlertDialog:@"未找到相关景点"];
+            }else{
+                [self showAlertDialog:@"未找到相关景点"];
             }
         }else{
-            [self showAlertDialog:[network objectForKey:@"msg"]];
+            if ([[network objectForKey:@"success"]boolValue]) {
+                NSArray * list = [network objectForKey:@"package"];
+                if (list.count>0) {
+                    dicPack =  [list objectAtIndex:0];
+                    for(NSDictionary * dicfile in listPacks){
+                        if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
+                            [self showAlertDialog:@"您已经下载过该资源"];
+                            return ;
+                        }
+                        
+                    }
+                    [self beginRequest:[dicPack objectForKey:@"dir"]];
+                }
+            }else{
+                [self showAlertDialog:[network objectForKey:@"msg"]];
+            }
         }
+        
+        
     } taskWillTry:^(SHTask *task) {
         
     } taskDidFailed:^(SHTask *task) {
@@ -503,6 +551,7 @@
             self.navigationItem.leftBarButtonItem.enabled = YES;
             button2.enabled = YES;
             button1.enabled = YES;
+            [self requestDataDrawUI];
         }else{
             
              [MMProgressHUD dismissWithError:@"下载失败!"];
