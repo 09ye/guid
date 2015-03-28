@@ -73,13 +73,14 @@
     
 
     //初始化音频类 并且添加播放文件
-    //    if (app.avAudioPlayer) {
-    //        [app.avAudioPlayer stop];
-    //    }
 
     if([[url absoluteString] isEqual:[app.avAudioPlayer.url absoluteString]]){
         avAudioPlayer = app.avAudioPlayer;
     }else{
+        if (app.avAudioPlayer) {
+            [app.avAudioPlayer stop];
+        }
+
         avAudioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     }
     avAudioPlayer.delegate = self;
@@ -227,12 +228,15 @@ NSLog(@"UpAction==%f",sender.value);
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(0, 440, self.view.bounds.size.width, 35)];
-        [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [b setFrame:CGRectMake(20, 440, self.view.bounds.size.width-40, 35)];
+        [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
+        [b setBackgroundColor:[UIColor whiteColor]];
+        b.layer.cornerRadius = 5;
         [view bringSubviewToFront:b];
         [view addSubview:b];
+        
         
         _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, self.view.bounds.size.width-100, 2)];
         _line.image = [UIImage imageNamed:@"line.png"];
@@ -333,10 +337,11 @@ NSLog(@"UpAction==%f",sender.value);
         }
         
         NSLog(@" 二维码<<<<  %@",result);
+        
         NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:result] key:@"1234567890123456"];
         NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-        NSLog(@"encode ===%@==",url);
-        [self refresh:[Utility decryptUseDES:url]];
+        NSLog(@"encode ===%@",url);
+        [self refresh:url];
 
         
     }];
@@ -353,17 +358,17 @@ NSLog(@"UpAction==%f",sender.value);
         if([task result] != nil){
             network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
         }
-        if ([network objectForKey:@"scene_id"]) {
+        if ([network objectForKey:@"scene_code"]) {
             NSArray * list = [SHXmlParser.instance listAttractions];
             for(int i = 0;i<list.count;i++){
                 NSDictionary * dic =[list objectAtIndex:i];
-                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_id"]]){
+                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
                     self.title = [dic objectForKey:@"name"];
                     detail = [dic mutableCopy];
                     mlabIntroduce.text = [dic objectForKey:@"txt"];
                     [mlabIntroduce sizeToFit];
                     [self showMp3];
-                    break;
+                    return;
                 }
                 
             }

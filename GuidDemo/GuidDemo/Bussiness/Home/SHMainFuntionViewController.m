@@ -277,12 +277,15 @@
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(0, 440, self.view.bounds.size.width, 35)];
-        [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [b setFrame:CGRectMake(20, 440, self.view.bounds.size.width-40, 35)];
+        [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
+        [b setBackgroundColor:[UIColor whiteColor]];
+        b.layer.cornerRadius = 5;
         [view bringSubviewToFront:b];
         [view addSubview:b];
+//        view.backgroundColor= [UIColor redColor];
         
         _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, self.view.bounds.size.width-100, 2)];
         _line.image = [UIImage imageNamed:@"line.png"];
@@ -402,17 +405,18 @@
         if([task result] != nil){
             network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
         }
-        if([network.allKeys containsObject:@"scene_id"]){
-            if ([network objectForKey:@"scene_id"]) {
+        if([network.allKeys containsObject:@"scene_code"]){
+            if ([network objectForKey:@"scene_code"]) {
                 NSArray * list = [SHXmlParser.instance listAttractions];
                 for(int i = 0;i<list.count;i++){
                     NSDictionary * dic =[list objectAtIndex:i];
-                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_id"]]){
+                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
                         SHIntent * intent =[[SHIntent alloc]init];
                         intent.target = @"SHGuidIntroduceViewController";
                         [intent.args setValue:dic forKey:@"detail"];
+                        intent.container = self.navigationController;
                         [[UIApplication sharedApplication]open:intent];
-                        break;
+                        return;
                     }
                     
                 }
@@ -435,7 +439,7 @@
                     [self beginRequest:[dicPack objectForKey:@"dir"]];
                 }
             }else{
-                [self showAlertDialog:[network objectForKey:@"msg"]];
+                [self showAlertDialog:@"未找到相关资源"];
             }
         }
         
@@ -498,6 +502,7 @@
     }else if (listPacks.count ==1){
         NSDictionary * dic  = [listPacks objectAtIndex:0];
         [SHXmlParser.instance start:[dic objectForKey:@"path"]];
+        [self requestDataDrawUI];
     }else {
         SHIntent * intent  = [[SHIntent alloc]init];
         [intent.args setValue:listPacks forKey:@"list"];
@@ -551,7 +556,7 @@
             self.navigationItem.leftBarButtonItem.enabled = YES;
             button2.enabled = YES;
             button1.enabled = YES;
-            [self requestDataDrawUI];
+            [self loadCacheList];
         }else{
             
              [MMProgressHUD dismissWithError:@"下载失败!"];
