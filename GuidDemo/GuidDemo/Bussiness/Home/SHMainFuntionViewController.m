@@ -22,7 +22,9 @@
    UIView *markView;
    UIScrollView *imgScrollview;
    NSArray *listImages;
-    MMProgressHUD * progressDialog;
+   MMProgressHUD * progressDialog;
+    UIBarButtonItem * button1;
+    UIBarButtonItem * button2;
 }
 
 @end
@@ -56,7 +58,7 @@
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
     
-    [self loadCacheList];
+    
     
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
@@ -65,14 +67,17 @@
 //    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
 //    [self requestDateZip:url];
 //   [self beginRequest:@"http://dl.haima.me/download/haimapc/haimawan.exe"];
+    
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
 
-    UIBarButtonItem * button1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more"] target:self action:@selector(btnMore)];
-    UIBarButtonItem * button2 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"map"] target:self action:@selector(btnShowMap)];
+   button1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more"] target:self action:@selector(btnMore)];
+    button2 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"map"] target:self action:@selector(btnShowMap)];
     [self.navigationItem setRightBarButtonItems:@[button1,button2]];
     
+    
+    [self loadCacheList];
     [self requestDataDrawUI];
     
 }
@@ -228,11 +233,11 @@
                        config:ZBAR_CFG_ENABLE
                            to:0];
         
-        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 480)];
+        UIView * view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
         view.backgroundColor = [UIColor clearColor];
         reader.cameraOverlayView = view;
         
-        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, 280, 40)];
+        UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 20, self.view.bounds.size.width-40, 40)];
         label.text = @"请将扫描的二维码至于下面的框内\n谢谢！";
         label.textColor = [UIColor whiteColor];
         label.textAlignment = 1;
@@ -242,18 +247,18 @@
         [view addSubview:label];
         
         UIImageView * image = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pick_bg.png"]];
-        image.frame = CGRectMake(20, 80, 280, 280);
+        image.frame = CGRectMake(20, 80, self.view.bounds.size.width-40, self.view.bounds.size.width-40);
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(0, 440, 320, 35)];
+        [b setFrame:CGRectMake(0, 440, self.view.bounds.size.width, 35)];
         [b setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
         [view bringSubviewToFront:b];
         [view addSubview:b];
         
-        _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, 220, 2)];
+        _line = [[UIImageView alloc] initWithFrame:CGRectMake(30, 10, self.view.bounds.size.width-100, 2)];
         _line.image = [UIImage imageNamed:@"line.png"];
         [image addSubview:_line];
         
@@ -270,7 +275,7 @@
 -(void)cancelMe{
     
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
@@ -285,14 +290,14 @@
     
     if (upOrdown == NO) {
         num ++;
-        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        _line.frame = CGRectMake(30, 10+2*num, self.view.bounds.size.width-100, 2);
         if (2*num == 260) {
             upOrdown = YES;
         }
     }
     else {
         num --;
-        _line.frame = CGRectMake(30, 10+2*num, 220, 2);
+        _line.frame = CGRectMake(30, 10+2*num, self.view.bounds.size.width-100, 2);
         if (num == 0) {
             upOrdown = NO;
         }
@@ -305,7 +310,7 @@
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
@@ -322,7 +327,7 @@
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [timer invalidate];
-    _line.frame = CGRectMake(30, 10, 220, 2);
+    _line.frame = CGRectMake(30, 10, self.view.bounds.size.width-100, 2);
     num = 0;
     upOrdown = NO;
     
@@ -438,6 +443,9 @@
         
     }
     if(listPacks.count ==0){
+        self.navigationItem.leftBarButtonItem.enabled = NO;
+        button2.enabled = NO;
+        button1.enabled = NO;
         [self showAlertDialog:@"您还没有下载资源包，快去扫一扫下载吧"];
     }else if (listPacks.count ==1){
         NSDictionary * dic  = [listPacks objectAtIndex:0];
@@ -492,6 +500,9 @@
             [za UnzipCloseFile];
             [SHFileManager deleteFileOfPath:[NSString stringWithFormat:@"%@.zip",path]];
             [MMProgressHUD dismissWithSuccess:@"下载成功!"];
+            self.navigationItem.leftBarButtonItem.enabled = YES;
+            button2.enabled = YES;
+            button1.enabled = YES;
         }else{
             
              [MMProgressHUD dismissWithError:@"下载失败!"];
