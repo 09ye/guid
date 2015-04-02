@@ -153,7 +153,7 @@
     <btnnavigation >
         <property name="font"       type="UIFont"   value="FontScaleMid"/>
         <property name="titleColor:forState" type="UIColor" value="ColorStyleWhite" externType = "int"  extern = "1"/>
-        <property name="titleColor:forState" type="UIColor" value="ColorStyleLight" externType = "int"  extern = "0"/>
+        <property name="titleColor:forState" type="UIColor" value="ColorStyleWhite" externType = "int"  extern = "0"/>
     </btnnavigation>
     <btnmilkwhite>
         <property name="font"       type="UIFont"   value="FontScaleSmall"/>

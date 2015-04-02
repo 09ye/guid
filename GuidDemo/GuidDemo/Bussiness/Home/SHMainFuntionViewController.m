@@ -82,6 +82,10 @@
     if ([SHXmlParser.instance listPics].count>0) {
          [self requestDataDrawUI];
     }else{
+        for (UIView *view in mScrollview.subviews) {
+             [view removeFromSuperview];
+        }
+       
         [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-49)];
         for (int i = 0 ; i < 3; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
@@ -113,6 +117,9 @@
     self.title = [[SHXmlParser.instance detail]objectForKey:@"parkname"];
     arryMore =  [[SHXmlParser.instance detail]objectForKey:@"more"];
     listImages  = [SHXmlParser.instance listPics];
+    for (UIView *view in mScrollview.subviews) {
+        [view removeFromSuperview];
+    }
     [mScrollview setContentSize:CGSizeMake(UIScreenWidth*listImages.count, UIScreenHeight-49)];
 
     for (int i = 0 ; i < listImages.count; i++) {
