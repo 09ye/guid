@@ -405,59 +405,82 @@
 }
 -(void) requestDateZip:(NSString * )url
 {
-    SHHttpTask * post  = [[SHHttpTask alloc]init];
-    post.URL = url;
-    post.delegate = self;
-    [post start:^(SHTask *task) {
-        NSError * error ;
-        NSDictionary * network = nil;
-        if([task result] != nil){
-            network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
-        }
-        if([network.allKeys containsObject:@"scene_code"]){
-            if ([network objectForKey:@"scene_code"]) {
-                NSArray * list = [SHXmlParser.instance listAttractions];
-                for(int i = 0;i<list.count;i++){
-                    NSDictionary * dic =[list objectAtIndex:i];
-                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
-                        SHIntent * intent =[[SHIntent alloc]init];
-                        intent.target = @"SHGuidIntroduceViewController";
-                        [intent.args setValue:dic forKey:@"detail"];
-                        intent.container = self.navigationController;
-                        [[UIApplication sharedApplication]open:intent];
-                        return;
-                    }
-                    
-                }
-                [self showAlertDialog:@"未找到相关景点"];
-            }else{
-                [self showAlertDialog:@"未找到相关景点"];
+    
+    if([url hasPrefix:@"http://"]){
+        SHHttpTask * post  = [[SHHttpTask alloc]init];
+        post.URL = url;
+        post.delegate = self;
+        [post start:^(SHTask *task) {
+            NSError * error ;
+            NSDictionary * network = nil;
+            if([task result] != nil){
+                network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
             }
-        }else{
-            if ([[network objectForKey:@"success"]boolValue]) {
-                NSArray * list = [network objectForKey:@"package"];
-                if (list.count>0) {
-                    dicPack =  [list objectAtIndex:0];
-                    for(NSDictionary * dicfile in listPacks){
-                        if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
-                            [self showAlertDialog:@"您已经下载过该资源"];
-                            return ;
+            if([network.allKeys containsObject:@"scene_code"]){
+                if ([network objectForKey:@"scene_code"]) {
+                    NSArray * list = [SHXmlParser.instance listAttractions];
+                    for(int i = 0;i<list.count;i++){
+                        NSDictionary * dic =[list objectAtIndex:i];
+                        if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                            SHIntent * intent =[[SHIntent alloc]init];
+                            intent.target = @"SHGuidIntroduceViewController";
+                            [intent.args setValue:dic forKey:@"detail"];
+                            intent.container = self.navigationController;
+                            [[UIApplication sharedApplication]open:intent];
+                            return;
                         }
                         
                     }
-                    [self beginRequest:[dicPack objectForKey:@"dir"]];
+                    [self showAlertDialog:@"未找到相关景点"];
+                }else{
+                    [self showAlertDialog:@"未找到相关景点"];
                 }
             }else{
-                [self showAlertDialog:@"未找到相关资源"];
+                if ([[network objectForKey:@"success"]boolValue]) {
+                    NSArray * list = [network objectForKey:@"package"];
+                    if (list.count>0) {
+                        dicPack =  [list objectAtIndex:0];
+                        for(NSDictionary * dicfile in listPacks){
+                            if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
+                                [self showAlertDialog:@"您已经下载过该资源"];
+                                return ;
+                            }
+                            
+                        }
+                        [self beginRequest:[dicPack objectForKey:@"dir"]];
+                    }
+                }else{
+                    [self showAlertDialog:@"未找到相关资源"];
+                }
             }
+            
+            
+        } taskWillTry:^(SHTask *task) {
+            
+        } taskDidFailed:^(SHTask *task) {
+            
+        }];
+    }else {
+        NSDictionary * network = [NSJSONSerialization JSONObjectWithData:[url dataUsingEncoding:NSUTF8StringEncoding]options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:nil];
+        if ([network objectForKey:@"scene_code"]) {
+            NSArray * list = [SHXmlParser.instance listAttractions];
+            for(int i = 0;i<list.count;i++){
+                NSDictionary * dic =[list objectAtIndex:i];
+                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                    SHIntent * intent =[[SHIntent alloc]init];
+                    intent.target = @"SHGuidIntroduceViewController";
+                    [intent.args setValue:dic forKey:@"detail"];
+                    intent.container = self.navigationController;
+                    [[UIApplication sharedApplication]open:intent];
+                    return;
+                }
+                
+            }
+            [self showAlertDialog:@"未找到相关景点"];
+        }else{
+            [self showAlertDialog:@"未找到相关景点"];
         }
-        
-        
-    } taskWillTry:^(SHTask *task) {
-        
-    } taskDidFailed:^(SHTask *task) {
-        
-    }];
+    }
 }
 #pragma  download
 -(void)beginRequest:(NSString* )url

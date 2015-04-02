@@ -348,16 +348,41 @@ NSLog(@"UpAction==%f",sender.value);
 }
 -(void) refresh:(NSString * )url
 {
-    
-    SHHttpTask * post  = [[SHHttpTask alloc]init];
-    post.URL = url;
-    post.delegate = self;
-    [post start:^(SHTask *task) {
-        NSError * error ;
-        NSDictionary * network = nil;
-        if([task result] != nil){
-            network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
-        }
+    if([url hasPrefix:@"http://"]){
+        SHHttpTask * post  = [[SHHttpTask alloc]init];
+        post.URL = url;
+        post.delegate = self;
+        [post start:^(SHTask *task) {
+            NSError * error ;
+            NSDictionary * network = nil;
+            if([task result] != nil){
+                network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
+            }
+            if ([network objectForKey:@"scene_code"]) {
+                NSArray * list = [SHXmlParser.instance listAttractions];
+                for(int i = 0;i<list.count;i++){
+                    NSDictionary * dic =[list objectAtIndex:i];
+                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                        self.title = [dic objectForKey:@"name"];
+                        detail = [dic mutableCopy];
+                        mlabIntroduce.text = [dic objectForKey:@"txt"];
+                        [mlabIntroduce sizeToFit];
+                        [self showMp3];
+                        return;
+                    }
+                    
+                }
+                [self showAlertDialog:@"未找到相关景点"];
+            }else{
+                [self showAlertDialog:@"未找到相关景点"];
+            }
+        } taskWillTry:^(SHTask *task) {
+            
+        } taskDidFailed:^(SHTask *task) {
+            
+        }];
+    }else{
+        NSDictionary *  network  = [NSJSONSerialization JSONObjectWithData:[url dataUsingEncoding:NSUTF8StringEncoding] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:nil];;
         if ([network objectForKey:@"scene_code"]) {
             NSArray * list = [SHXmlParser.instance listAttractions];
             for(int i = 0;i<list.count;i++){
@@ -376,10 +401,7 @@ NSLog(@"UpAction==%f",sender.value);
         }else{
             [self showAlertDialog:@"未找到相关景点"];
         }
-    } taskWillTry:^(SHTask *task) {
-        
-    } taskDidFailed:^(SHTask *task) {
-        
-    }];
+    }
+    
 }
 @end
