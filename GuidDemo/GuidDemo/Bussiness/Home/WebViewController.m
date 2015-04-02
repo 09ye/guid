@@ -31,7 +31,10 @@
 //    NSURL* url = [[NSBundle mainBundle] URLForResource:@"agreement"withExtension:@"rtf"];
 //    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:[self.intent.args valueForKey:@"url"]]];
      [mWebView setScalesPageToFit:YES];
-    [mWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.intent.args valueForKey:@"path"]]]];
+//    [mWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.intent.args valueForKey:@"url"]]]];
+    NSString *filePath = [self.intent.args valueForKey:@"url"];
+    NSString *htmlString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    [mWebView loadHTMLString:htmlString baseURL:[NSURL URLWithString:filePath]];
     mWebView.delegate = self;
 }
 - (void) webViewDidStartLoad:(UIWebView *)webView

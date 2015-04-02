@@ -102,7 +102,7 @@ static SHXmlParser* _instance = nil;
     self.listHotPoints = [[NSMutableArray alloc]init];
     for (GDataXMLElement *map in arrayPoint) {
         NSMutableDictionary * dic  = [[NSMutableDictionary alloc]init];
-        [dic setValue:[[[[map elementsForName:@"idcode"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"idcode"];
+//        [dic setValue:[[[[map elementsForName:@"idcode"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"idcode"];
         [dic setValue:[[[[map elementsForName:@"latitude"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"latitude"];
         [dic setValue:[[[[map elementsForName:@"longitude"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"longitude"];
         [dic setValue:[[[[map elementsForName:@"potx"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"potx"];
@@ -121,15 +121,15 @@ static SHXmlParser* _instance = nil;
         
 //        [dic setValue:[[[map elementsForName:@"txtPath"]objectAtIndex:0] stringValue] forKey:@"txtPath"];
 //        [dic setValue:[[[map elementsForName:@"videoPath"]objectAtIndex:0] stringValue] forKey:@"videoPath"];
-//        [dic setValue:[[[map elementsForName:@"latitude"]objectAtIndex:0] stringValue] forKey:@"latitude"];
-//        [dic setValue:[[[map elementsForName:@"longitude"]objectAtIndex:0] stringValue] forKey:@"longitude"];
+        [dic setValue:[[[[map elementsForName:@"latitude"]objectAtIndex:0]attributeForName:@"value" ]stringValue] forKey:@"latitude"];
+        [dic setValue:[[[[map elementsForName:@"longitude"]objectAtIndex:0] attributeForName:@"value"]stringValue] forKey:@"longitude"];
         
-        NSArray * arraypic=  [[[map elementsForName:@"pictures"]objectAtIndex:0]elementsForName:@"pic"];
-        NSMutableArray * pics = [[NSMutableArray alloc]init];
-        for (GDataXMLElement *pic in arraypic) {
-            [pics addObject:[[[pic elementsForName:@"picPath"]objectAtIndex:0]stringValue]];
-        }
-        [dic setValue:pics forKey:@"pics"];
+//        NSArray * arraypic=  [[[map elementsForName:@"pictures"]objectAtIndex:0]elementsForName:@"pic"];
+//        NSMutableArray * pics = [[NSMutableArray alloc]init];
+//        for (GDataXMLElement *pic in arraypic) {
+//            [pics addObject:[[[pic elementsForName:@"picPath"]objectAtIndex:0]stringValue]];
+//        }
+//        [dic setValue:pics forKey:@"pics"];
         [self.listAttractions addObject:dic];
     }
     

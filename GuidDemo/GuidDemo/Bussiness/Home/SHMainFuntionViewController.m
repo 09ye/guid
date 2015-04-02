@@ -66,7 +66,7 @@
 //   [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
 //    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
 //    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-//    [self requestDateZip:url];
+//    [self requestDateZip:@"http://travel.team4.us/service/ipublic_ticket_check?ticket_id=1"];
 //   [self beginRequest:@"http://dl.haima.me/download/haimapc/haimawan.exe"];
     mListResPacks = [[NSMutableArray alloc]init];
     mbtnSao.layer.cornerRadius = 5.0;
@@ -94,7 +94,7 @@
             [mScrollview addSubview:imageView];
             // 计算位置
             imageView.frame = [Utility sizeFitImage:image.size];
-            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y);
+            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y-25);
             imageView.center = point;
             // 下载图片
             imageView.image  = image;
@@ -131,7 +131,7 @@
         [mScrollview addSubview:imageView];
         // 计算位置
         imageView.frame = [Utility sizeFitImage:image.size];
-        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y);
+        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y-25);
         imageView.center = point;
         // 下载图片
         imageView.image  = image;
