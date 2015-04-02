@@ -14,7 +14,7 @@
 #import "SHResPackListViewController.h"
 
 
-@interface SHMainFuntionViewController : SHTableViewController<ZBarReaderDelegate,UIActionSheetDelegate,ASIHTTPRequestDelegate,SHResPackListViewControllerDeleaget>
+@interface SHMainFuntionViewController : SHTableViewController<ZBarReaderDelegate,UIActionSheetDelegate,ASIHTTPRequestDelegate,SHResPackListViewControllerDeleaget,SHTaskDelegate,UIActionSheetDelegate>
 {
     __weak IBOutlet UIScrollView *mScrollview;
     __weak IBOutlet UIButton *mbtnSao;

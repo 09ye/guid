@@ -358,11 +358,11 @@ NSLog(@"UpAction==%f",sender.value);
             if([task result] != nil){
                 network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
             }
-            if ([network objectForKey:@"scene_code"]) {
+            if ([network objectForKey:@"code"]) {//扫描景点
                 NSArray * list = [SHXmlParser.instance listAttractions];
                 for(int i = 0;i<list.count;i++){
                     NSDictionary * dic =[list objectAtIndex:i];
-                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                    if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"code"]]){
                         self.title = [dic objectForKey:@"name"];
                         detail = [dic mutableCopy];
                         mlabIntroduce.text = [dic objectForKey:@"txt"];
@@ -381,13 +381,13 @@ NSLog(@"UpAction==%f",sender.value);
         } taskDidFailed:^(SHTask *task) {
             
         }];
-    }else{
+    }else{//扫描景点
         NSDictionary *  network  = [NSJSONSerialization JSONObjectWithData:[url dataUsingEncoding:NSUTF8StringEncoding] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:nil];;
-        if ([network objectForKey:@"scene_code"]) {
+        if ([network objectForKey:@"code"]) {
             NSArray * list = [SHXmlParser.instance listAttractions];
             for(int i = 0;i<list.count;i++){
                 NSDictionary * dic =[list objectAtIndex:i];
-                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"code"]]){
                     self.title = [dic objectForKey:@"name"];
                     detail = [dic mutableCopy];
                     mlabIntroduce.text = [dic objectForKey:@"txt"];

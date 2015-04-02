@@ -25,6 +25,7 @@
    MMProgressHUD * progressDialog;
     UIBarButtonItem * button1;
     UIBarButtonItem * button2;
+    NSMutableArray * mListResPacks;// 服务器传来资源
 }
 
 @end
@@ -67,7 +68,7 @@
 //    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
 //    [self requestDateZip:url];
 //   [self beginRequest:@"http://dl.haima.me/download/haimapc/haimawan.exe"];
-    
+    mListResPacks = [[NSMutableArray alloc]init];
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
     self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
@@ -166,6 +167,7 @@
                                                     cancelButtonTitle:@"取消"
                                                destructiveButtonTitle:nil
                                                     otherButtonTitles:[[arryMore objectAtIndex:0]objectForKey:@"name"], [[arryMore objectAtIndex:1]objectForKey:@"name"], nil];
+    choiceSheet.tag = 10000;
     [choiceSheet showInView:app.viewController.view];
 }
 - (IBAction)btnSaoOntouch:(id)sender {
@@ -175,23 +177,40 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
 
-    if (buttonIndex == 0) {
+    if(actionSheet.tag == 10000){
+        if (buttonIndex == 0) {
+            
+            SHIntent *intent = [[SHIntent alloc]init];
+            [intent.args setValue:[actionSheet buttonTitleAtIndex:0] forKey:@"title"];
+            [intent.args setValue:[[arryMore objectAtIndex:0]objectForKey:@"path"] forKey:@"url"];
+            intent.target = @"WebViewController";
+            intent.container = self.navigationController;
+            [[UIApplication sharedApplication]open:intent];
+        }else if(buttonIndex == 1){
+            
+            SHIntent *intent = [[SHIntent alloc]init];
+            [intent.args setValue:[actionSheet buttonTitleAtIndex:1] forKey:@"title"];
+            [intent.args setValue:[[arryMore objectAtIndex:0]objectForKey:@"path"] forKey:@"url"];
+            intent.target = @"WebViewController";
+            intent.container = self.navigationController;
+            [[UIApplication sharedApplication]open:intent];
+            
+        }
+
         
-        SHIntent *intent = [[SHIntent alloc]init];
-        [intent.args setValue:[actionSheet buttonTitleAtIndex:0] forKey:@"title"];
-        [intent.args setValue:[[arryMore objectAtIndex:0]objectForKey:@"path"] forKey:@"url"];
-        intent.target = @"WebViewController";
-        intent.container = self.navigationController;
-        [[UIApplication sharedApplication]open:intent];
-    }else if(buttonIndex == 1){
-        
-        SHIntent *intent = [[SHIntent alloc]init];
-        [intent.args setValue:[actionSheet buttonTitleAtIndex:1] forKey:@"title"];
-        [intent.args setValue:[[arryMore objectAtIndex:0]objectForKey:@"path"] forKey:@"url"];
-        intent.target = @"WebViewController";
-        intent.container = self.navigationController;
-        [[UIApplication sharedApplication]open:intent];
-        
+    }else if(actionSheet.tag == 10001){
+        if (buttonIndex == actionSheet.cancelButtonIndex) {
+            return;
+        }
+        dicPack =  [mListResPacks objectAtIndex:buttonIndex];
+        for(NSDictionary * dicfile in listPacks){
+            if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
+                [self showAlertDialog:@"您已经下载过该资源"];
+                return ;
+            }
+            
+        }
+        [self beginRequest:[dicPack objectForKey:@"dir"]];
     }
 }
 
@@ -416,12 +435,12 @@
             if([task result] != nil){
                 network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
             }
-            if([network.allKeys containsObject:@"scene_code"]){
-                if ([network objectForKey:@"scene_code"]) {
+            if([network.allKeys containsObject:@"code"]){
+                if ([network objectForKey:@"code"]) {
                     NSArray * list = [SHXmlParser.instance listAttractions];
                     for(int i = 0;i<list.count;i++){
                         NSDictionary * dic =[list objectAtIndex:i];
-                        if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                        if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"code"]]){
                             SHIntent * intent =[[SHIntent alloc]init];
                             intent.target = @"SHGuidIntroduceViewController";
                             [intent.args setValue:dic forKey:@"detail"];
@@ -437,9 +456,23 @@
                 }
             }else{
                 if ([[network objectForKey:@"success"]boolValue]) {
-                    NSArray * list = [network objectForKey:@"package"];
-                    if (list.count>0) {
-                        dicPack =  [list objectAtIndex:0];
+                    mListResPacks = [network objectForKey:@"package"];
+                    if(mListResPacks.count>1){
+                        UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:@"选择导览包"
+                                                                                 delegate:self
+                                                                        cancelButtonTitle:nil
+                                                                   destructiveButtonTitle:nil
+                                                                        otherButtonTitles:nil];
+                        
+                        for(NSDictionary * dicfile in mListResPacks){
+                             [choiceSheet addButtonWithTitle:[dicfile objectForKey:@"name"]];
+                        }
+                        [choiceSheet addButtonWithTitle:@"取消"];
+                        choiceSheet.cancelButtonIndex = choiceSheet.numberOfButtons-1;
+                        choiceSheet.tag = 10001;
+                        [choiceSheet showInView:self.view];
+                    }else if (mListResPacks.count==1) {
+                        dicPack =  [mListResPacks objectAtIndex:0];
                         for(NSDictionary * dicfile in listPacks){
                             if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
                                 [self showAlertDialog:@"您已经下载过该资源"];
@@ -462,11 +495,11 @@
         }];
     }else {
         NSDictionary * network = [NSJSONSerialization JSONObjectWithData:[url dataUsingEncoding:NSUTF8StringEncoding]options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:nil];
-        if ([network objectForKey:@"scene_code"]) {
+        if ([network objectForKey:@"code"]) {
             NSArray * list = [SHXmlParser.instance listAttractions];
             for(int i = 0;i<list.count;i++){
                 NSDictionary * dic =[list objectAtIndex:i];
-                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"scene_code"]]){
+                if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"code"]]){
                     SHIntent * intent =[[SHIntent alloc]init];
                     intent.target = @"SHGuidIntroduceViewController";
                     [intent.args setValue:dic forKey:@"detail"];
@@ -482,6 +515,7 @@
         }
     }
 }
+
 #pragma  download
 -(void)beginRequest:(NSString* )url
 {
@@ -516,12 +550,12 @@
     NSString * filePath = [SHFileManager getTargetFloderPath];
     NSArray* directoryContents = [[NSFileManager defaultManager] directoryContentsAtPath:filePath];
     listPacks = [[NSMutableArray alloc]init];
-    for (NSString *url in directoryContents) {
+    for (NSString *name in directoryContents) {
         NSMutableDictionary * dic  =[[NSMutableDictionary alloc]init];
-        [dic setValue:[NSString stringWithFormat:@"%@/%@/medias",filePath,url] forKey:@"path"];
-        [dic setValue:url forKey:@"name"];
+        [dic setValue:[NSString stringWithFormat:@"%@/%@/medias",filePath,name] forKey:@"path"];
+        [dic setValue:name forKey:@"name"];
         BOOL isDir;
-        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",filePath,url]  isDirectory:&isDir] && isDir){// 目录
+        if ([[NSFileManager defaultManager] fileExistsAtPath:[NSString stringWithFormat:@"%@/%@",filePath,name]  isDirectory:&isDir] && isDir){// 目录
             [listPacks addObject:dic];
         }
         
