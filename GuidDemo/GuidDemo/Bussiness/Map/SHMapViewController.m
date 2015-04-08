@@ -43,7 +43,7 @@
     listHotPoints = [SHXmlParser.instance listHotPoints];
     
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
-    if (![[dic objectForKey:@"potx"] isEqualToString:@""]) {
+    if (dic && ![[dic objectForKey:@"potx"] isEqualToString:@""]) {
         paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
     }
     
@@ -66,7 +66,7 @@
 {
     paintRed = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
     paintRed.layer.cornerRadius = 5;
-    paintRed.center = CGPointMake(250.5, 40);
+    paintRed.center = CGPointMake(0, 0);
     paintRed.alpha = 0.3;
     paintRed.backgroundColor = [UIColor redColor];
     [imageMap addSubview:paintRed];

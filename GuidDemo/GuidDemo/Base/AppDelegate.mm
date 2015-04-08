@@ -77,18 +77,14 @@ static bool __isupdate = NO;
 -(NSDictionary *) distanceFromCurrentLocationPoint
 {
     NSArray * list = [SHXmlParser.instance listHotPoints];
-    NSMutableDictionary * dicResult = [[NSMutableDictionary alloc]init];
-    double minDistance = 0.0;
+    NSMutableDictionary * dicResult ;
+    double minDistance = 30.0;
     for(int i = 0;i<list.count;i++){
         NSDictionary * dic =[list objectAtIndex:i];
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
-         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
-        if (i== 0) {
-            dicResult = [dic mutableCopy];
-            minDistance = meters;
-        }
+        CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
-            dicResult = [dic mutableCopy];
+            dicResult = [[NSMutableDictionary alloc]init];
             minDistance = meters;
         }
         
@@ -98,18 +94,14 @@ static bool __isupdate = NO;
 -(NSDictionary *) distanceFromCurrentLocationAttraction
 {
     NSArray * list = [SHXmlParser.instance listAttractions];
-    NSMutableDictionary * dicResult = [[NSMutableDictionary alloc]init];
-    double minDistance = 0.0;
+    NSMutableDictionary * dicResult ;
+    double minDistance = 30.0;
     for(int i = 0;i<list.count;i++){
         NSDictionary * dic =[list objectAtIndex:i];
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
-        if (i== 0) {
-            dicResult = [dic mutableCopy];
-            minDistance = meters;
-        }
         if (minDistance >meters) {
-            dicResult = [dic mutableCopy];
+            dicResult = [[NSMutableDictionary alloc]init];
             minDistance = meters;
         }
         
@@ -170,152 +162,5 @@ static bool __isupdate = NO;
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-}
-
-
-#pragma  download
--(void)beginRequest:(int )videoId hdType:(int)hdType isCollection:(BOOL)isCollection isBeginDown:(BOOL)isBeginDown
-{
-    ////    如果不存在则创建临时存储目录
-    NSFileManager *fileManager=[NSFileManager defaultManager];
-    if(![fileManager fileExistsAtPath:[SHFileManager getTargetFloderPath]])
-    {
-        [fileManager createDirectoryAtPath:[SHFileManager getTargetFloderPath] withIntermediateDirectories:YES attributes:nil error:nil];
-    }
-    if (!self.requestlist) {
-        self.requestlist = [[NSMutableArray alloc]init];
-    }
-    SHPostTaskM * post = [[SHPostTaskM alloc]init];
-    post.URL = URL_FOR(@"Pad/download");
-    [post.postArgs setValue:[NSNumber numberWithInt:videoId] forKey:@"id"];
-    post.delegate = self;
-    [post start:^(SHTask *task) {
-        NSArray * array  = [[task result]mutableCopy];
-        if (array.count<1) {
-            return ;
-        }
-        NSMutableDictionary * dic = [array objectAtIndex:0];
-        
-        if([fileManager fileExistsAtPath:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",[dic objectForKey:@"id"]]]])//存在已经下好的MP4
-        {
-            return;
-        }
-        NSDictionary *urls = [dic objectForKey:@"list"];
-        NSString *key  =[NSString stringWithFormat:@"hd%d",hdType];
-        NSString * url = [urls objectForKey:key];
-        
-        if (!url || [url isEqualToString:@""]) {
-            if (![[urls objectForKey:@"hd0"] isEqualToString:@""]) {
-                url = [urls objectForKey:@"hd0"];
-            }else  if (![[urls objectForKey:@"hd1"] isEqualToString:@""]) {
-                url = [urls objectForKey:@"hd1"];
-            }else  if (![[urls objectForKey:@"hd2"] isEqualToString:@""]) {
-                url = [urls objectForKey:@"hd2"];
-            }else{
-                UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"对不起，未找到相应的下载资源" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
-                [myAlertView show];
-                return;
-            }
-            
-        }
-        url = [Utility encodeVideoUrl:url];
-        
-        [dic setValue:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",[dic objectForKey:@"id"]]] forKey:@"path"];// 没有格式
-        [dic setValue:[NSNumber numberWithInt:emDownloading] forKey:@"state"];
-        [dic setValue:[NSNumber numberWithInt:hdType] forKey:@"hdType"];
-        [dic setValue:[NSNumber numberWithBool:isCollection] forKey:@"isCollection"];
-        ASIHTTPRequest *request=[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
-        request.delegate=self;
-        [request setDownloadDestinationPath:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4",[dic objectForKey:@"id"]]]];
-        [request setTemporaryFileDownloadPath:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.temp",[dic objectForKey:@"id"]]]];
-        //    [request setDownloadProgressDelegate:self];
-        //    [request setDownloadProgressDelegate:downCell.progress];//设置进度条的代理,这里由于下载是在AppDelegate里进行的全局下载，所以没有使用自带的进度条委托，这里自己设置了一个委托，用于更新UI
-        [request setAllowResumeForFileDownloads:YES];//支持断点续传
-        [request setTimeOutSeconds:120];
-        [request setNumberOfTimesToRetryOnTimeout:3];
-        [request setUserInfo:[NSDictionary dictionaryWithObject:dic forKey:@"file"]];//设置上下文的文件基本信息
-        [request startAsynchronous];
-        if (isBeginDown) {
-            UIAlertView *myAlertView = [[UIAlertView alloc] initWithTitle:@"提示" message:@"成功添加至离线观看" delegate:self cancelButtonTitle:nil otherButtonTitles:@"确定",nil];
-            [myAlertView show];
-            [self.cachesInfolist addObject:dic];
-        }
-        [self.requestlist addObject:request];
-        
-    } taskWillTry:^(SHTask *task) {
-        
-    } taskDidFailed:^(SHTask *task) {
-        
-    }];
-    
-    //    文件开始下载时，把id;文件名;图片url;文件URL
-    
-    //    NSString *fileName=[[fileInfo objectForKey:@"id"] stringByAppendingFormat:@";%@;%@;%@;",[fileInfo objectForKey:@"title"],[fileInfo objectForKey:@"pic"],[fileInfo objectForKey:@"url"]];
-    
-    //    [fileInfo setValue:@"http://padload-cnc.wasu.cn/pcsan08/mams/vod/201409/29/16/201409291618156309b21cbd8_4e58bd54.mp4" forKey:@"url"];
-    
-    
-}
--(void) loadCacheList
-{
-    NSData * data  = [[NSUserDefaults standardUserDefaults] valueForKey:DOWNLOAD_INFO_LIST];// 下载文件信息
-    if (data) {
-        self.cachesInfolist = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-    }
-    if (!self.cachesInfolist) {
-        self.cachesInfolist  = [[NSMutableArray alloc]init];
-    }
-    NSFileManager *fileManager=[NSFileManager defaultManager];
-    
-    for (int i = 0; i<self.cachesInfolist.count; i++) {
-        NSMutableDictionary * dic = [self.cachesInfolist objectAtIndex:i];
-        
-        if([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.temp",[dic objectForKey:@"path"]]]){
-            [self beginRequest:[[dic objectForKey:@"id"]intValue] hdType:[[dic objectForKey:@"hdType"]intValue] isCollection:[[dic objectForKey:@"isCollection"]boolValue]  isBeginDown:NO];
-            
-            
-        }
-        if([fileManager fileExistsAtPath:[NSString stringWithFormat:@"%@.mp4",[dic objectForKey:@"path"]]]){
-            [dic setValue:[NSNumber numberWithInt:emDownLoaded] forKey:@"state"];
-        }else{
-            [self.cachesInfolist removeObject:dic];
-        }
-        
-    }
-    
-}
-#pragma ASIHttpRequest回调委托
-
-//出错了，如果是等待超时，则继续下载
--(void)requestFailed:(ASIHTTPRequest *)request
-{
-    NSError *error=[request error];
-    NSLog(@"ASIHttpRequest出错了!%@",error);
-    
-}
-
--(void)requestStarted:(ASIHTTPRequest *)request
-{
-    NSLog(@"开始了!");
-}
-- (void)request:(ASIHTTPRequest *)request didReceiveResponseHeaders:(NSDictionary *)responseHeaders {
-    
-    NSLog(@"didReceiveResponseHeaders-%@",[responseHeaders valueForKey:@"Content-Length"]);
-    NSLog(@"收到回复了！");
-    NSMutableDictionary *fileInfo=[request.userInfo objectForKey:@"file"];
-    [fileInfo setValue:[SHFileManager getFileSizeString:[[request responseHeaders] objectForKey:@"Content-Length"]] forKey:@"fileSize"];
-    
-    
-    
-    NSData * data = [NSKeyedArchiver archivedDataWithRootObject:self.cachesInfolist];
-    [[NSUserDefaults standardUserDefaults ] setValue:data forKey:DOWNLOAD_INFO_LIST];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    
-    
-}
-
--(void)setProgress:(float)newProgress
-{
-    NSLog(@"setProgress-%f",newProgress);
 }
 @end

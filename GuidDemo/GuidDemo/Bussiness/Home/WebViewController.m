@@ -39,14 +39,10 @@
 }
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
-    [self showWaitDialogForNetWork];
-//    [self showWaitDialogForNetWork];
+
 }
 - (void) webViewDidFinishLoad:(UIWebView *)webView
 {
-    [self dismissWaitDialog];
-
-
     
 }
 

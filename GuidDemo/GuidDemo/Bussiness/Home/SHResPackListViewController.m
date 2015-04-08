@@ -18,6 +18,7 @@
     [super viewDidLoad];
     self.title = @"选择导览包";
     mList = [self.intent.args objectForKey:@"list"];
+    self.navigationItem.leftBarButtonItem = nil;
 //    [self showAlertDialog:@"发现多个资源包，请选择景区"];
     // Do any additional setup after loading the view from its nib.
     

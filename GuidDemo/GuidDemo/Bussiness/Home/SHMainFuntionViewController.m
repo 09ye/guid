@@ -223,28 +223,6 @@
     [intent.args setValue:imageview.image forKey:@"image"];
     intent.container = self.navigationController;
     [[UIApplication sharedApplication]open:intent];
-
-    
-    
-//    int count = 3;
-//    // 1.封装图片数据
-//    NSMutableArray *photos = [NSMutableArray arrayWithCapacity:count];
-//    for (int i = 0; i<mListImage.count; i++) {
-//        // 替换为中等尺寸图片
-//        NSString *url = [_urls[i] stringByReplacingOccurrencesOfString:@"thumbnail" withString:@"bmiddle"];
-//        MJPhoto *photo = [[MJPhoto alloc] init];
-////        photo.url = [NSURL URLWithString:url]; // 图片路径
-//        photo.image  = [mListImage objectAtIndex:i];
-////        photo.srcImageView = self.view.subviews[i]; // 来源于哪个UIImageView
-//         photo.srcImageView=mScrollview.subviews[i];
-//        [photos addObject:photo];
-//    }
-//    
-//    // 2.显示相册
-//    MJPhotoBrowser *browser = [[MJPhotoBrowser alloc] init];
-//    browser.currentPhotoIndex = tap.view.tag; // 弹出相册时显示的第一张图片是？
-//    browser.photos = photos; // 设置所有的图片
-//    [browser show];
 }
 
 
