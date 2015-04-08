@@ -79,6 +79,9 @@ static bool __isupdate = NO;
     NSArray * list = [SHXmlParser.instance listHotPoints];
     NSMutableDictionary * dicResult ;
     double minDistance = 30.0;
+    if([[SHXmlParser.instance detail]objectForKey:@"accuracy"]){
+        minDistance = [[[SHXmlParser.instance detail]objectForKey:@"accuracy"]intValue];
+    }
     for(int i = 0;i<list.count;i++){
         NSDictionary * dic =[list objectAtIndex:i];
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
@@ -96,6 +99,9 @@ static bool __isupdate = NO;
     NSArray * list = [SHXmlParser.instance listAttractions];
     NSMutableDictionary * dicResult ;
     double minDistance = 30.0;
+    if([[SHXmlParser.instance detail]objectForKey:@"accuracy"]){
+        minDistance = [[[SHXmlParser.instance detail]objectForKey:@"accuracy"]intValue];
+    }
     for(int i = 0;i<list.count;i++){
         NSDictionary * dic =[list objectAtIndex:i];
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];

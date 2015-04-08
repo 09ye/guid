@@ -58,6 +58,9 @@ static SHXmlParser* _instance = nil;
     GDataXMLElement *introEle = [[detail elementsForName:@"intro"] objectAtIndex:0];
     [self.detail setValue:[introEle stringValue] forKey:@"intro"];
     
+    GDataXMLElement *accuracy = [[detail elementsForName:@"accuracy"] objectAtIndex:0];
+    [self.detail setValue:[accuracy stringValue] forKey:@"accuracy"];
+    
     
     GDataXMLElement *aboutElement = [[detail elementsForName:@"about"] objectAtIndex:0];
      NSMutableDictionary * dicAbout = [[NSMutableDictionary alloc]init];
