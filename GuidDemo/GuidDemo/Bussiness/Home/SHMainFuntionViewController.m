@@ -283,7 +283,7 @@
         [view addSubview:image];
         
         UIButton  *b=[UIButton  buttonWithType:UIButtonTypeCustom];
-        [b setFrame:CGRectMake(20, view.bounds.size.height, self.view.bounds.size.width-40, 35)];
+        [b setFrame:CGRectMake(20, self.view.bounds.size.height-40, self.view.bounds.size.width-40, 35)];
         [b setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [b  setTitle:@"取消" forState:UIControlStateNormal];
         [b  addTarget:self action:@selector(cancelMe) forControlEvents:UIControlEventTouchUpInside];
