@@ -63,11 +63,14 @@
     
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
-//   [self requestDateZip:@"http://travel.team4.us/service/iperson_ticket_check?ticket_id=141"];
-//    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
-//    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-//    [self requestDateZip:@"http://travel.team4.us/service/ipublic_ticket_check?ticket_id=1"];
-//   [self beginRequest:@"http://dl.haima.me/download/haimapc/haimawan.exe"];
+    
+    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
+    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+    NSLog(@"encode ===%@==",url);
+    [self requestDateZip:url];
+    
+    
+//   [self beginRequest:@"https://developer.apple.com/library/ios/samplecode/Fit/FitStoreandRetrieveHealthKitData.zip"];
     mListResPacks = [[NSMutableArray alloc]init];
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
@@ -512,6 +515,8 @@
     
     ASIHTTPRequest *request=[[ASIHTTPRequest alloc] initWithURL:[NSURL URLWithString:url]];
     request.delegate=self;
+    [request setNumberOfTimesToRetryOnTimeout: 2  ];
+    [request setShouldContinueWhenAppEntersBackground:YES ];
     [request setDownloadDestinationPath:[NSString stringWithFormat:@"%@.zip",zipPath]];
     [request setTemporaryFileDownloadPath:[NSString stringWithFormat:@"%@.temp",zipPath]];
     [request setDownloadProgressDelegate:self];
@@ -561,9 +566,11 @@
 //出错了，如果是等待超时，则继续下载
 -(void)requestFailed:(ASIHTTPRequest *)request
 {
+    NSLog(@"失败!");
     [MMProgressHUD dismissWithError:@"下载失败!"];
     [self dismissWaitDialog];
     [self showAlertDialog:@"下载失败!"];
+    
     
 
     
@@ -575,6 +582,7 @@
 }
 -(void)requestFinished:(ASIHTTPRequest *)request
 {
+    NSLog(@"成功!");
    NSString * path = [request.userInfo objectForKey:@"path"];
     [self unZipPack:path];
     

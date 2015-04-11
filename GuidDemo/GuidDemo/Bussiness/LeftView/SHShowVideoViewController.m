@@ -18,7 +18,23 @@
 @end
 
 @implementation SHShowVideoViewController
+// 支持设备自动旋转
+- (BOOL)shouldAutorotate
+{
+    return YES;
+}
 
+// 支持横竖屏显示
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+
+{
+    // Return YES for supported orientations
+    return true;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     detail = [self.intent.args objectForKey:@"detail"];
