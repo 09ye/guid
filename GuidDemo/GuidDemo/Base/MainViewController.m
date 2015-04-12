@@ -21,6 +21,25 @@
 @end
 
 @implementation MainViewController
+- (BOOL)shouldAutorotate
+{
+//    AppDelegate * app  = (AppDelegate*)[UIApplication sharedApplication].delegate;
+//    if (app.currentViewController) {
+//        return YES;
+//    }
+    return YES;
+}
+
+// 支持横竖屏显示
+- (NSUInteger)supportedInterfaceOrientations
+{
+    AppDelegate * app  = (AppDelegate*)[UIApplication sharedApplication].delegate;
+    if (app.currentViewController) {
+        return [app.currentViewController supportedInterfaceOrientations];
+    }
+    return UIDeviceOrientationPortraitUpsideDown;
+}
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

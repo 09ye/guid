@@ -13,30 +13,27 @@
 {
     MPMoviePlayerViewController *playerViewController;
     NSDictionary * detail;
+    AppDelegate * app;
 }
 
 @end
 
 @implementation SHShowVideoViewController
-// 支持设备自动旋转
-- (BOOL)shouldAutorotate
-{
-    return YES;
-}
 
-// 支持横竖屏显示
-- (NSUInteger)supportedInterfaceOrientations
-{
-    return UIInterfaceOrientationMaskAll;
-}
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 
+-(void)viewWillAppear:(BOOL)animated
 {
-    // Return YES for supported orientations
-    return true;
+    [super viewWillAppear:YES];
+    app.currentViewController = self;
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:YES];
+    app.currentViewController = nil;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    app  = (AppDelegate*)[UIApplication sharedApplication].delegate;
     detail = [self.intent.args objectForKey:@"detail"];
     self.title = [detail objectForKey:@"name"];
     [self playMovie:[detail objectForKey:@"fpath"]];

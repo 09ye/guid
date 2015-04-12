@@ -44,6 +44,8 @@
 
 -(void)sendLoginSina:(UIViewController *)vc;
 
+@property (nonatomic,strong) UIViewController *currentViewController;
+
 @property (nonatomic,strong) AVAudioPlayer *avAudioPlayer;
 
 @property (nonatomic,strong) CLLocation * myLoaction;
