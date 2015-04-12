@@ -64,10 +64,10 @@
     
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
     
-    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
-    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-    NSLog(@"encode ===%@==",url);
-    [self requestDateZip:url];
+//    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8wNt8SW9PsuhGeexFsdMYjg=="] key:@"1234567890123456"];
+//    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+//    NSLog(@"encode ===%@==",url);
+//    [self requestDateZip:url];
     
     
 //   [self beginRequest:@"https://developer.apple.com/library/ios/samplecode/Fit/FitStoreandRetrieveHealthKitData.zip"];
@@ -517,6 +517,7 @@
     request.delegate=self;
     [request setNumberOfTimesToRetryOnTimeout: 2  ];
     [request setShouldContinueWhenAppEntersBackground:YES ];
+    [request setPersistentConnectionTimeoutSeconds: 120  ];
     [request setDownloadDestinationPath:[NSString stringWithFormat:@"%@.zip",zipPath]];
     [request setTemporaryFileDownloadPath:[NSString stringWithFormat:@"%@.temp",zipPath]];
     [request setDownloadProgressDelegate:self];
