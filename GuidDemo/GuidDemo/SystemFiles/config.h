@@ -74,14 +74,6 @@
 #define UIScreenHeight MAX([[UIScreen mainScreen]bounds].size.width ,[[UIScreen mainScreen]bounds].size.height)
 
 #define BEST_SCROLLVIEW_WIDTH 262
-typedef enum
-{
-    emDownLoaded,// 完成
-    emDownloading,//下载中
-    emPaused,//暂停
-    emWaiting,// 等待
-    
-    
-}DownLoadState;
+
 
 

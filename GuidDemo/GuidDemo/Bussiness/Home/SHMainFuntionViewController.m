@@ -59,15 +59,19 @@
     self.leftViewController = (SHViewController*)nacontroller;
     [super viewDidLoad];
     
+//    //测试解压
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
-    
+//    
+//    //测试下载加密url
 //    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"jXLZeWHQd4MXkK96vrkDAaodEsNVXFIlthpqkol4PUv00Yr9KhHEGi0fn1gkwHT8kx8FGp+SCS5OA6RMoAUcPg=="] key:@"1234567890123456"];
 //    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-//    NSLog(@"encode ===%@==",url);
 //    [self requestDateZip:url];
+//    [self requestDateZip:@"http://travel.team4.us/service/ipublic_ticket_check?ticket_id=4"];
+//
+//    //测试下载zip
+//    [self beginRequest:@"https://developer.apple.com/library/ios/samplecode/Fit/FitStoreandRetrieveHealthKitData.zip"];
     
     
-//   [self beginRequest:@"https://developer.apple.com/library/ios/samplecode/Fit/FitStoreandRetrieveHealthKitData.zip"];
     mListResPacks = [[NSMutableArray alloc]init];
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
@@ -566,7 +570,6 @@
 {
     NSLog(@"失败!");
     [MMProgressHUD dismissWithError:@"下载失败!"];
-    [self dismissWaitDialog];
     [self showAlertDialog:@"下载失败!"];
     
     
@@ -607,6 +610,8 @@
             button2.enabled = YES;
             button1.enabled = YES;
             [self loadCacheList];
+            NSLog(@"解压成功");
+            
         }else{
             
              [MMProgressHUD dismissWithError:@"下载失败!"];
