@@ -32,8 +32,8 @@
     imageMap = [[UIImageView alloc]init];
     imageMap.image = image;
     // 计算位置
-    imageMap.frame = [Utility sizeFitImage:image.size];
-    CGPoint point = CGPointMake(UIScreenWidth/2, mScrollview.frame.size.height/2);
+    imageMap.bounds = [Utility sizeFitImage:image.size];
+    CGPoint point = CGPointMake(UIScreenWidth/2, (UIScreenHeight-110)/2);
     imageMap.center = point;
     [mScrollview addSubview:imageMap];
     [mScrollview setMinimumZoomScale:1];
@@ -44,22 +44,8 @@
     
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic && ![[dic objectForKey:@"potx"] isEqualToString:@""]) {
-        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
+        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue], [[dic objectForKey:@"poty"]integerValue]);
     }
-    
-    
-
-    
-//    UITapGestureRecognizer *doubleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewDoubleTapped:)];
-//    doubleTapRecognizer.numberOfTapsRequired = 2;
-//    doubleTapRecognizer.numberOfTouchesRequired = 1;
-//    [mScrollview addGestureRecognizer:doubleTapRecognizer];
-//    
-//    UITapGestureRecognizer *twoFingerTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(scrollViewTwoFingerTapped:)];
-//    twoFingerTapRecognizer.numberOfTapsRequired = 1;
-//    twoFingerTapRecognizer.numberOfTouchesRequired = 2;
-//    [mScrollview addGestureRecognizer:twoFingerTapRecognizer];
-    // Do any additional setup after loading the view from its nib.
     
 }
 -(void)drawPointRed

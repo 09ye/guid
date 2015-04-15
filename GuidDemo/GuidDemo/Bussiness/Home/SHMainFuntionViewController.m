@@ -90,15 +90,15 @@
         for (UIView *view in mScrollview.subviews) {
              [view removeFromSuperview];
         }
-       
+        CGRect rx = [ UIScreen mainScreen ].bounds;
         [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-70)];
         for (int i = 0 ; i < 3; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
             UIImageView *imageView = [[UIImageView alloc] init];
             [mScrollview addSubview:imageView];
             // 计算位置
-            imageView.frame = [Utility sizeFitImage:image.size];
-            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, mScrollview.frame.size.height/2);
+            imageView.bounds = [Utility sizeFitImage:image.size];
+            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, (UIScreenHeight-110)/2);
             imageView.center = point;
             // 下载图片
             imageView.image  = image;
@@ -134,8 +134,8 @@
         UIImageView *imageView = [[UIImageView alloc] init];
         [mScrollview addSubview:imageView];
         // 计算位置
-        imageView.frame = [Utility sizeFitImage:image.size];
-        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, mScrollview.frame.size.height/2);
+        imageView.bounds = [Utility sizeFitImage:image.size];
+        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, (UIScreenHeight-110)/2);
         imageView.center = point;
         // 下载图片
         imageView.image  = image;
