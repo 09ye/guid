@@ -33,7 +33,7 @@
     imageMap.image = image;
     // 计算位置
     imageMap.frame = [Utility sizeFitImage:image.size];
-    CGPoint point = CGPointMake(UIScreenWidth/2, self.view.center.y);
+    CGPoint point = CGPointMake(UIScreenWidth/2, mScrollview.frame.size.height/2);
     imageMap.center = point;
     [mScrollview addSubview:imageMap];
     [mScrollview setMinimumZoomScale:1];

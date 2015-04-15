@@ -43,7 +43,7 @@
    
     NSURL *url = [[NSURL alloc ]initFileURLWithPath:fileName];
     playerViewController =[[MPMoviePlayerViewController alloc]     initWithContentURL:url];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[playerViewController moviePlayer]];
+//    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(playVideoFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:[playerViewController moviePlayer]];
     //    playerViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     playerViewController.view.frame = self.view.bounds;
     [self.view addSubview:playerViewController.moviePlayer.view];

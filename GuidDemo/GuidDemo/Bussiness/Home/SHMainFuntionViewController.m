@@ -91,14 +91,14 @@
              [view removeFromSuperview];
         }
        
-        [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-49)];
+        [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-70)];
         for (int i = 0 ; i < 3; i++) {
             UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
             UIImageView *imageView = [[UIImageView alloc] init];
             [mScrollview addSubview:imageView];
             // 计算位置
             imageView.frame = [Utility sizeFitImage:image.size];
-            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y-25);
+            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, mScrollview.frame.size.height/2);
             imageView.center = point;
             // 下载图片
             imageView.image  = image;
@@ -125,7 +125,7 @@
     for (UIView *view in mScrollview.subviews) {
         [view removeFromSuperview];
     }
-    [mScrollview setContentSize:CGSizeMake(UIScreenWidth*listImages.count, UIScreenHeight-49)];
+    [mScrollview setContentSize:CGSizeMake(UIScreenWidth*listImages.count, UIScreenHeight-70)];
 
     for (int i = 0 ; i < listImages.count; i++) {
         NSDictionary *dic  = [listImages objectAtIndex:i];
@@ -135,7 +135,7 @@
         [mScrollview addSubview:imageView];
         // 计算位置
         imageView.frame = [Utility sizeFitImage:image.size];
-        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, self.view.center.y-25);
+        CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, mScrollview.frame.size.height/2);
         imageView.center = point;
         // 下载图片
         imageView.image  = image;
@@ -609,7 +609,9 @@
             self.navigationItem.leftBarButtonItem.enabled = YES;
             button2.enabled = YES;
             button1.enabled = YES;
-            [self loadCacheList];
+//            [self loadCacheList];
+            [SHXmlParser.instance start:[NSString stringWithFormat:@"%@/medias",path]];
+            [self requestDataDrawUI];
             NSLog(@"解压成功");
             
         }else{
