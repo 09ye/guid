@@ -58,7 +58,7 @@ static bool __isupdate = NO;
     _locationManager.distanceFilter = 50.0f;
     [_locationManager startUpdatingLocation];
     self.myLoaction = [[CLLocation alloc] initWithLatitude:0.0 longitude:0.0];
-    
+    [Utility addNotBackUp];
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     [session setActive:YES error:nil];
