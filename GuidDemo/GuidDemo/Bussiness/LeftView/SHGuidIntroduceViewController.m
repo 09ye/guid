@@ -38,7 +38,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notification:) name:NOTIFICATION_LOCATION_CHANGE object:nil];
     detail = [self.intent.args objectForKey:@"detail"];
     self.title = [detail objectForKey:@"name"];
     mbtnSao.layer.cornerRadius = 5.0;
@@ -60,6 +60,17 @@
     
     [self showMp3];
     
+}
+-(void)notification:(NSNotification*)noti
+{
+    NSDictionary * dic  = [app distanceFromCurrentLocationAttraction];
+    if (dic && app.attractionShow) {
+        self.title = [dic objectForKey:@"name"];
+        detail = [dic mutableCopy];
+        mlabIntroduce.text = [dic objectForKey:@"txt"];
+        [mlabIntroduce sizeToFit];
+        [self showMp3];
+    }
 }
 -(void)showMp3
 {
