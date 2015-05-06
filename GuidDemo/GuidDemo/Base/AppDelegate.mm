@@ -53,6 +53,9 @@ static bool __isupdate = NO;
     //    }
     [super application:application didFinishLaunchingWithOptions:launchOptions];
     _locationManager = [[CLLocationManager alloc]init];
+    if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+        [_locationManager requestWhenInUseAuthorization];
+    }
     _locationManager.delegate = self;
 //    _locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
     _locationManager.distanceFilter = kCLDistanceFilterNone;
