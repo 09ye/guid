@@ -133,6 +133,7 @@ static SHXmlParser* _instance = nil;
 //            [pics addObject:[[[pic elementsForName:@"picPath"]objectAtIndex:0]stringValue]];
 //        }
 //        [dic setValue:pics forKey:@"pics"];
+        [dic setObject:[NSDate dateWithTimeIntervalSince1970:0] forKey:@"last_play_date"];
         [self.listAttractions addObject:dic];
     }
     

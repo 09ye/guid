@@ -97,7 +97,7 @@ static bool __isupdate = NO;
 -(NSDictionary *) distanceFromCurrentLocationAttraction
 {
     NSArray * list = [SHXmlParser.instance listAttractions];
-    NSMutableDictionary * dicResult ;
+    NSDictionary * dicResult ;
     double minDistance = 30.0;
     if([[SHXmlParser.instance detail]objectForKey:@"accuracy"]){
         minDistance = [[[SHXmlParser.instance detail]objectForKey:@"accuracy"]intValue];
@@ -107,7 +107,7 @@ static bool __isupdate = NO;
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
-            dicResult = [[NSMutableDictionary alloc]init];
+            dicResult = dic;
             minDistance = meters;
         }
         
@@ -127,10 +127,16 @@ static bool __isupdate = NO;
     if(!self.attractionShow){
         NSDictionary * dic  = [self distanceFromCurrentLocationAttraction];
         if (dic) {
-            SHIntent * intent =[[SHIntent alloc]init];
-            intent.target = @"SHGuidIntroduceViewController";
-            [intent.args setValue:dic forKey:@"detail"];
-            [[UIApplication sharedApplication]open:intent];
+            NSDate *lastPlayDate = [dic objectForKey:@"last_play_date"];
+            NSDate *nextPlayDate = [[NSDate alloc] initWithTimeInterval:30 * 60 sinceDate:lastPlayDate];
+            NSDate *now = [NSDate date];
+            if ([nextPlayDate compare:now] == NSOrderedAscending) {
+                [dic setValue:now forKey:@"last_play_date"];
+                SHIntent * intent =[[SHIntent alloc]init];
+                intent.target = @"SHGuidIntroduceViewController";
+                [intent.args setValue:dic forKey:@"detail"];
+                [[UIApplication sharedApplication]open:intent];
+            }
         }
     }
 }
