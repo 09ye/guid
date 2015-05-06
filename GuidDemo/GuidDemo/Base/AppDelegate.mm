@@ -130,10 +130,16 @@ static bool __isupdate = NO;
     if(!self.attractionShow){
         NSDictionary * dic  = [self distanceFromCurrentLocationAttraction];
         if (dic) {
-            SHIntent * intent =[[SHIntent alloc]init];
-            intent.target = @"SHGuidIntroduceViewController";
-            [intent.args setValue:dic forKey:@"detail"];
-            [[UIApplication sharedApplication]open:intent];
+            NSDate *lastPlayDate = [dic objectForKey:@"last_play_date"];
+            NSDate *nextPlayDate = [[NSDate alloc] initWithTimeInterval:30 * 60 sinceDate:lastPlayDate];
+            NSDate *now = [NSDate date];
+            if ([nextPlayDate compare:now] == NSOrderedAscending) {
+                [dic setValue:now forKey:@"last_play_date"];
+                SHIntent * intent =[[SHIntent alloc]init];
+                intent.target = @"SHGuidIntroduceViewController";
+                [intent.args setValue:dic forKey:@"detail"];
+                [[UIApplication sharedApplication]open:intent];
+            }
         }
     }
 }
