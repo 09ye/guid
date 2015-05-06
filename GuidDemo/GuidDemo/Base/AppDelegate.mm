@@ -88,6 +88,7 @@ static bool __isupdate = NO;
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
             dicResult = [[NSMutableDictionary alloc]init];
+            dicResult = [dic mutableCopy];
             minDistance = meters;
         }
         
@@ -108,6 +109,7 @@ static bool __isupdate = NO;
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
             dicResult = [[NSMutableDictionary alloc]init];
+            dicResult = [dic mutableCopy];
             minDistance = meters;
         }
         
@@ -122,6 +124,7 @@ static bool __isupdate = NO;
 -(void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     self.myLoaction = [locations lastObject];
+//    self.myLoaction =  [[CLLocation alloc]initWithLatitude:31.254600 longitude:121.430331];
     [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_LOCATION_CHANGE object:self.myLoaction];
     NSLog(@"%3.5f===%3.5f",self.myLoaction.coordinate.latitude,self.myLoaction.coordinate.longitude);
     if(!self.attractionShow){

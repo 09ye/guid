@@ -14,6 +14,7 @@
     AppDelegate * app;
     UIView * paintRed;
     NSArray * listHotPoints;
+    float  scalePaint;
 }
 
 @end
@@ -35,6 +36,9 @@
     imageMap.bounds = [Utility sizeFitImage:image.size];
     CGPoint point = CGPointMake(UIScreenWidth/2, (UIScreenHeight-110)/2);
     imageMap.center = point;
+    float width1 = imageMap.frame.size.width;
+    float width2 = image.size.width;
+    scalePaint = (float)width1/width2;
     [mScrollview addSubview:imageMap];
     [mScrollview setMinimumZoomScale:1];
     [mScrollview setMaximumZoomScale:4];
@@ -44,15 +48,15 @@
     
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic && ![[dic objectForKey:@"potx"] isEqualToString:@""]) {
-        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue], [[dic objectForKey:@"poty"]integerValue]);
+        paintRed.center = CGPointMake(imageMap.frame.origin.x+[[dic objectForKey:@"potx"]integerValue]*scalePaint, imageMap.frame.origin.y*2+[[dic objectForKey:@"poty"]integerValue]*scalePaint);
     }
     
 }
 -(void)drawPointRed
 {
-    paintRed = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 10, 10)];
+    paintRed = [[UIView alloc]initWithFrame:CGRectMake(375, 432+62*2, 10, 10)];
     paintRed.layer.cornerRadius = 5;
-    paintRed.center = CGPointMake(0, 0);
+    paintRed.center = CGPointMake(imageMap.frame.origin.x,imageMap.frame.origin.y*2);
     paintRed.alpha = 0.3;
     paintRed.backgroundColor = [UIColor redColor];
     [imageMap addSubview:paintRed];
@@ -64,7 +68,7 @@
     [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     rotationAnimation.duration = 1;
     rotationAnimation.autoreverses = YES;
-    rotationAnimation.RepeatCount = 100000;//你可以设置到最大的整数值
+    rotationAnimation.repeatCount = FLT_MAX;//你可以设置到最大的整数值
     rotationAnimation.cumulative = NO;
     rotationAnimation.removedOnCompletion = NO;
     rotationAnimation.fillMode = kCAFillModeForwards;
@@ -74,7 +78,7 @@
 {
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic) {
-        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]/2, [[dic objectForKey:@"poty"]integerValue]/2);
+        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]*scalePaint, [[dic objectForKey:@"poty"]integerValue]*scalePaint);
     }
 }
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer {

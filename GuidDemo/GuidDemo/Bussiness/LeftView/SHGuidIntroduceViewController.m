@@ -1,4 +1,4 @@
-//
+////
 //  SHGuidIntroduceViewController.m
 //  GuidDemo
 //
@@ -64,7 +64,7 @@
 -(void)notification:(NSNotification*)noti
 {
     NSDictionary * dic  = [app distanceFromCurrentLocationAttraction];
-    if (dic && app.attractionShow) {
+    if (dic && app.attractionShow && ![[dic objectForKey:@"code"] isEqualToString:[detail objectForKey:@"code"]]) {
         self.title = [dic objectForKey:@"name"];
         detail = [dic mutableCopy];
         mlabIntroduce.text = [dic objectForKey:@"txt"];
