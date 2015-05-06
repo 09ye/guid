@@ -30,36 +30,39 @@
     app = (AppDelegate*)[UIApplication sharedApplication].delegate;
     NSData *imageData = [NSData dataWithContentsOfFile:[[SHXmlParser.instance detail] objectForKey:@"ditupic"]];
     UIImage *image = [UIImage imageWithData:imageData];
-    imageMap = [[UIImageView alloc]init];
-    imageMap.image = image;
+
+    imageMap = [[UIImageView alloc]initWithImage:image];
     // 计算位置
-    imageMap.bounds = [Utility sizeFitImage:image.size];
+    
     CGPoint point = CGPointMake(UIScreenWidth/2, (UIScreenHeight-110)/2);
     imageMap.center = point;
+    imageMap.bounds = [Utility sizeFitImage:image.size];
     float width1 = imageMap.frame.size.width;
     float width2 = image.size.width;
     scalePaint = (float)width1/width2;
+    [self drawPointRed];
     [mScrollview addSubview:imageMap];
     [mScrollview setMinimumZoomScale:1];
     [mScrollview setMaximumZoomScale:4];
     
-    [self drawPointRed];
+    
     listHotPoints = [SHXmlParser.instance listHotPoints];
     
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic && ![[dic objectForKey:@"potx"] isEqualToString:@""]) {
-        paintRed.center = CGPointMake(imageMap.frame.origin.x+[[dic objectForKey:@"potx"]integerValue]*scalePaint, imageMap.frame.origin.y*2+[[dic objectForKey:@"poty"]integerValue]*scalePaint);
+//        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]*scalePaint, [[dic objectForKey:@"poty"]integerValue]*scalePaint+55);
+        paintRed.frame = CGRectMake(imageMap.frame.origin.x+[[dic objectForKey:@"potx"]integerValue]*scalePaint, imageMap.frame.origin.y+55+[[dic objectForKey:@"poty"]integerValue]*scalePaint, 10, 10);
     }
     
 }
 -(void)drawPointRed
 {
-    paintRed = [[UIView alloc]initWithFrame:CGRectMake(375, 432+62*2, 10, 10)];
+    paintRed = [[UIView alloc]initWithFrame:CGRectMake(imageMap.frame.origin.x, imageMap.frame.origin.y+55, 10, 10)];
     paintRed.layer.cornerRadius = 5;
-    paintRed.center = CGPointMake(imageMap.frame.origin.x,imageMap.frame.origin.y*2);
     paintRed.alpha = 0.3;
     paintRed.backgroundColor = [UIColor redColor];
     [imageMap addSubview:paintRed];
+//    paintRed.center = CGPointMake(0,55);
     
     CABasicAnimation *rotationAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
     rotationAnimation.fromValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(1.0, 1.0, 1.0)];
@@ -78,7 +81,8 @@
 {
     NSDictionary * dic  = [app distanceFromCurrentLocationPoint];
     if (dic) {
-        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]*scalePaint, [[dic objectForKey:@"poty"]integerValue]*scalePaint);
+//        paintRed.center = CGPointMake([[dic objectForKey:@"potx"]integerValue]*scalePaint, [[dic objectForKey:@"poty"]integerValue]*scalePaint);
+        paintRed.frame = CGRectMake(imageMap.frame.origin.x+[[dic objectForKey:@"potx"]integerValue]*scalePaint, imageMap.frame.origin.y+55+[[dic objectForKey:@"poty"]integerValue]*scalePaint, 10, 10);
     }
 }
 - (void)scrollViewDoubleTapped:(UITapGestureRecognizer*)recognizer {
