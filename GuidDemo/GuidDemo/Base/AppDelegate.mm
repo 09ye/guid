@@ -80,7 +80,7 @@ static bool __isupdate = NO;
 -(NSDictionary *) distanceFromCurrentLocationPoint
 {
     NSArray * list = [SHXmlParser.instance listHotPoints];
-    NSMutableDictionary * dicResult ;
+    NSDictionary * dicResult ;
     double minDistance = 30.0;
     if([[SHXmlParser.instance detail]objectForKey:@"accuracy"]){
         minDistance = [[[SHXmlParser.instance detail]objectForKey:@"accuracy"]intValue];
@@ -90,8 +90,7 @@ static bool __isupdate = NO;
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
-            dicResult = [[NSMutableDictionary alloc]init];
-            dicResult = [dic mutableCopy];
+            dicResult = dic;
             minDistance = meters;
         }
         
@@ -101,7 +100,7 @@ static bool __isupdate = NO;
 -(NSDictionary *) distanceFromCurrentLocationAttraction
 {
     NSArray * list = [SHXmlParser.instance listAttractions];
-    NSMutableDictionary * dicResult ;
+    NSDictionary * dicResult ;
     double minDistance = 30.0;
     if([[SHXmlParser.instance detail]objectForKey:@"accuracy"]){
         minDistance = [[[SHXmlParser.instance detail]objectForKey:@"accuracy"]intValue];
@@ -111,8 +110,7 @@ static bool __isupdate = NO;
         CLLocation *locationPoint=[[CLLocation alloc] initWithLatitude:[[dic objectForKey:@"latitude"]doubleValue] longitude:[[dic objectForKey:@"longitude"]doubleValue]];
         CLLocationDistance meters=[self.myLoaction distanceFromLocation:locationPoint];
         if (minDistance >meters) {
-            dicResult = [[NSMutableDictionary alloc]init];
-            dicResult = [dic mutableCopy];
+            dicResult = dic;
             minDistance = meters;
         }
         
