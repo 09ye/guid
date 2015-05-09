@@ -25,7 +25,10 @@
    MMProgressHUD * progressDialog;
     UIBarButtonItem * button1;
     UIBarButtonItem * button2;
+    UIBarButtonItem * buttonLeft1;
+    UIBarButtonItem * buttonLeft2;
     NSMutableArray * mListResPacks;// 服务器传来资源
+    NSMutableDictionary * mDetailMusic;
 }
 
 @end
@@ -71,51 +74,31 @@
 //    //测试下载zip
 //    [self beginRequest:@"https://developer.apple.com/library/ios/samplecode/Fit/FitStoreandRetrieveHealthKitData.zip"];
     
-    
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(notification:) name:NOTIFICATION_MUSIC_CHANGE object:nil];
     mListResPacks = [[NSMutableArray alloc]init];
     mbtnSao.layer.cornerRadius = 5.0;
     mbtnSao.layer.masksToBounds = YES;
-    self.navigationItem.leftBarButtonItem =[[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
+    buttonLeft1  = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"side"] target:self action:@selector(btnLeftOntouch)];
+    buttonLeft2  = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"nav_video"] target:self action:@selector(btnShowCurrentVideo)];
+    [self.navigationItem setLeftBarButtonItems:@[buttonLeft1]];
 
-   button1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more"] target:self action:@selector(btnMore)];
+    button1 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"more"] target:self action:@selector(btnMore)];
     button2 = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"map"] target:self action:@selector(btnShowMap)];
     [self.navigationItem setRightBarButtonItems:@[button1,button2]];
     
-    
     [self loadCacheList];
-   
-    if ([SHXmlParser.instance listPics].count>0) {
-         [self requestDataDrawUI];
-    }else{
-        for (UIView *view in mScrollview.subviews) {
-             [view removeFromSuperview];
-        }
-        CGRect rx = [ UIScreen mainScreen ].bounds;
-        [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-70)];
-        for (int i = 0 ; i < 3; i++) {
-            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
-            UIImageView *imageView = [[UIImageView alloc] init];
-            [mScrollview addSubview:imageView];
-            // 计算位置
-            imageView.bounds = [Utility sizeFitImage:image.size];
-            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, (UIScreenHeight-110)/2);
-            imageView.center = point;
-            // 下载图片
-            imageView.image  = image;
-            // 事件监听
-            imageView.tag = i;
-            imageView.userInteractionEnabled = YES;
-            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
-            // 内容模式
-            imageView.clipsToBounds = YES;
-            imageView.contentMode = UIViewContentModeScaleAspectFill;
-            
-        }
-    }
-    
     
 }
-
+-(void)notification:(NSNotification*)noti
+{
+    if (noti.object) {
+        mDetailMusic  = [noti.object mutableCopy];
+        [self.navigationItem setLeftBarButtonItems:@[buttonLeft1,buttonLeft2]];
+    }else{
+        mDetailMusic = nil;
+        [self.navigationItem setLeftBarButtonItems:@[buttonLeft1]];
+    }
+}
 //图片导航
 -(void) requestDataDrawUI
 {
@@ -156,6 +139,14 @@
 {
     [self leftItemClick4ViewController];
 }
+-(void)btnShowCurrentVideo
+{
+    SHIntent * intent =[[SHIntent alloc]init];
+    intent.target = @"SHGuidIntroduceViewController";
+    [intent.args setValue:mDetailMusic forKey:@"detail"];
+    intent.container = self.navigationController;
+    [[UIApplication sharedApplication]open:intent];
+}
 -(void)btnShowMap
 {
     SHIntent * intent = [[SHIntent alloc]init];
@@ -170,7 +161,7 @@
                                                              delegate:self
                                                     cancelButtonTitle:@"取消"
                                                destructiveButtonTitle:nil
-                                                    otherButtonTitles:[[arryMore objectAtIndex:0]objectForKey:@"name"], [[arryMore objectAtIndex:1]objectForKey:@"name"], nil];
+                                                    otherButtonTitles:[[arryMore objectAtIndex:0]objectForKey:@"name"], [[arryMore objectAtIndex:1]objectForKey:@"name"],@"清除数据包", nil];
     choiceSheet.tag = 10000;
     [choiceSheet showInView:app.viewController.view];
 }
@@ -199,6 +190,8 @@
             intent.container = self.navigationController;
             [[UIApplication sharedApplication]open:intent];
             
+        }else if(buttonIndex == 2){
+           [self showAlertDialog:@"是否要清除所有数据包" button:@"清除" otherButton:@"取消"];
         }
 
         
@@ -216,6 +209,11 @@
         }
         [self beginRequest:[dicPack objectForKey:@"dir"]];
     }
+}
+-(void)alertViewEnSureOnClick
+{
+    [SHFileManager deleteFileOfPath:[SHFileManager getTargetFloderPath]];
+    [self loadCacheList];
 }
 
 #pragma   图片浏览
@@ -546,10 +544,36 @@
         
     }
     if(listPacks.count ==0){
-        self.navigationItem.leftBarButtonItem.enabled = NO;
         button2.enabled = NO;
         button1.enabled = NO;
+        buttonLeft1.enabled = NO;
+//        buttonLeft2.enabled = NO;
         [self showAlertDialog:@"您还没有下载资源包，快去扫一扫下载吧"];
+        
+        for (UIView *view in mScrollview.subviews) {
+            [view removeFromSuperview];
+        }
+        CGRect rx = [ UIScreen mainScreen ].bounds;
+        [mScrollview setContentSize:CGSizeMake(UIScreenWidth*3, UIScreenHeight-70)];
+        for (int i = 0 ; i < 3; i++) {
+            UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"guid%d.png",i+1]];
+            UIImageView *imageView = [[UIImageView alloc] init];
+            [mScrollview addSubview:imageView];
+            // 计算位置
+            imageView.bounds = [Utility sizeFitImage:image.size];
+            CGPoint point = CGPointMake(UIScreenWidth/2+UIScreenWidth*i, (UIScreenHeight-110)/2);
+            imageView.center = point;
+            // 下载图片
+            imageView.image  = image;
+            // 事件监听
+            imageView.tag = i;
+            imageView.userInteractionEnabled = YES;
+            [imageView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapImage:)]];
+            // 内容模式
+            imageView.clipsToBounds = YES;
+            imageView.contentMode = UIViewContentModeScaleAspectFill;
+            
+        }
     }else if (listPacks.count ==1){
         NSDictionary * dic  = [listPacks objectAtIndex:0];
         [SHXmlParser.instance start:[dic objectForKey:@"path"]];
@@ -606,9 +630,10 @@
             [za UnzipCloseFile];
             [SHFileManager deleteFileOfPath:[NSString stringWithFormat:@"%@.zip",path]];
             [MMProgressHUD dismissWithSuccess:@"下载成功!"];
-            self.navigationItem.leftBarButtonItem.enabled = YES;
             button2.enabled = YES;
             button1.enabled = YES;
+            buttonLeft1.enabled = YES;
+//            buttonLeft2.enabled = YES;
 //            [self loadCacheList];
             [SHXmlParser.instance start:[NSString stringWithFormat:@"%@/medias",path]];
             [self requestDataDrawUI];

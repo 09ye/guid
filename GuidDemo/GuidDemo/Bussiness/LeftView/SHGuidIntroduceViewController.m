@@ -77,7 +77,7 @@
     if(![detail objectForKey:@"mp3Path"] || [[detail objectForKey:@"mp3Path"] isEqualToString:@""]){
         return;
     }
-   
+   [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MUSIC_CHANGE object:detail];
     //把音频文件转换成url格式
     NSURL *url = [NSURL fileURLWithPath:[detail objectForKey:@"mp3Path"]];
     
@@ -118,6 +118,7 @@
 - (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {
 //    [timerSlider invalidate]; //NSTimer暂停   invalidate  使...无效;
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MUSIC_CHANGE object:nil];
 }
 
 
@@ -137,6 +138,7 @@
         [sender setBackgroundImage:[UIImage imageNamed:@"mediacontroller_pause"] forState:UIControlStateNormal];
 
     }
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MUSIC_CHANGE object:detail];
 }
 
 
