@@ -239,9 +239,6 @@
 		77D8198E1AAC1C13002836EE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D8198D1AAC1C13002836EE /* MessageUI.framework */; };
 		77D819901AAC1C1A002836EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D8198F1AAC1C1A002836EE /* SystemConfiguration.framework */; };
 		77D819921AAC1C22002836EE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77D819911AAC1C21002836EE /* CoreGraphics.framework */; };
-		77D8199C1AAC1EEA002836EE /* guide01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77D819961AAC1EEA002836EE /* guide01.jpg */; };
-		77D8199D1AAC1EEA002836EE /* guide02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77D819971AAC1EEA002836EE /* guide02.jpg */; };
-		77D8199E1AAC1EEA002836EE /* guide03.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 77D819981AAC1EEA002836EE /* guide03.jpg */; };
 		77D8199F1AAC1EEA002836EE /* SHGuideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D8199A1AAC1EEA002836EE /* SHGuideViewController.m */; };
 		77D819A01AAC1EEA002836EE /* SHGuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 77D8199B1AAC1EEA002836EE /* SHGuideViewController.xib */; };
 		77D819A71AAC1F51002836EE /* SHMainFuntionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D819A51AAC1F51002836EE /* SHMainFuntionViewController.m */; };
@@ -704,9 +701,6 @@
 		77D8198D1AAC1C13002836EE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		77D8198F1AAC1C1A002836EE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		77D819911AAC1C21002836EE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		77D819961AAC1EEA002836EE /* guide01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guide01.jpg; sourceTree = "<group>"; };
-		77D819971AAC1EEA002836EE /* guide02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guide02.jpg; sourceTree = "<group>"; };
-		77D819981AAC1EEA002836EE /* guide03.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = guide03.jpg; sourceTree = "<group>"; };
 		77D819991AAC1EEA002836EE /* SHGuideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHGuideViewController.h; sourceTree = "<group>"; };
 		77D8199A1AAC1EEA002836EE /* SHGuideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHGuideViewController.m; sourceTree = "<group>"; };
 		77D8199B1AAC1EEA002836EE /* SHGuideViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHGuideViewController.xib; sourceTree = "<group>"; };
@@ -1677,9 +1671,6 @@
 				77D819F51AAC2FE7002836EE /* guid1.png */,
 				77D819F61AAC2FE7002836EE /* guid2.png */,
 				77D819F71AAC2FE7002836EE /* guid3.png */,
-				77D819961AAC1EEA002836EE /* guide01.jpg */,
-				77D819971AAC1EEA002836EE /* guide02.jpg */,
-				77D819981AAC1EEA002836EE /* guide03.jpg */,
 			);
 			path = guideimages;
 			sourceTree = "<group>";
@@ -2011,12 +2002,10 @@
 				77D819281AAC1AFF002836EE /* SHTableViewUnReadNumberCell.xib in Resources */,
 				77D818C61AAC1AFF002836EE /* DSLCalendarDaySelection-middle.png in Resources */,
 				77D818D91AAC1AFF002836EE /* NaviBack@2x.png in Resources */,
-				77D8199C1AAC1EEA002836EE /* guide01.jpg in Resources */,
 				77D818CE1AAC1AFF002836EE /* blackArrow@2x.png in Resources */,
 				77D8190D1AAC1AFF002836EE /* timeline_image_loading@2x.png in Resources */,
 				77D818C31AAC1AFF002836EE /* DSLCalendarDayCallout@2x.png in Resources */,
 				77D818AB1AAC1AFF002836EE /* MainViewController.xib in Resources */,
-				77D8199E1AAC1EEA002836EE /* guide03.jpg in Resources */,
 				77E7CD271AB0559F00DC2D0C /* SHShowBigImageViewController.xib in Resources */,
 				77D818D01AAC1AFF002836EE /* blueArrow@2x.png in Resources */,
 				77D819211AAC1AFF002836EE /* SHTableViewTitleContentBottomCell.xib in Resources */,
@@ -2055,7 +2044,6 @@
 				7753FF811AB1ECF70041D333 /* mediacontroller_pause.png in Resources */,
 				77D819F91AAC2FE7002836EE /* guid2.png in Resources */,
 				77D819F21AAC294C002836EE /* zbar-help.html in Resources */,
-				77D8199D1AAC1EEA002836EE /* guide02.jpg in Resources */,
 				77D818CA1AAC1AFF002836EE /* DSLCalendarDaySelection.png in Resources */,
 				77D818B11AAC1AFF002836EE /* SHCalendarViewController.xib in Resources */,
 				77D819F11AAC294C002836EE /* zbar-back.png in Resources */,
