@@ -20,6 +20,7 @@
 		7753FF821AB1ECF70041D333 /* mediacontroller_play.png in Resources */ = {isa = PBXBuildFile; fileRef = 7753FF801AB1ECF70041D333 /* mediacontroller_play.png */; };
 		7753FF861AB1F0120041D333 /* SHResPackListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7753FF841AB1F0120041D333 /* SHResPackListViewController.m */; };
 		7753FF871AB1F0120041D333 /* SHResPackListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7753FF851AB1F0120041D333 /* SHResPackListViewController.xib */; };
+		77BD05291AFC8731009083B8 /* nav_video.png in Resources */ = {isa = PBXBuildFile; fileRef = 77BD05281AFC8731009083B8 /* nav_video.png */; };
 		77D816F31AAC1A12002836EE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 77D816F21AAC1A12002836EE /* main.m */; };
 		77D816F91AAC1A12002836EE /* GuidDemo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 77D816F71AAC1A12002836EE /* GuidDemo.xcdatamodeld */; };
 		77D816FF1AAC1A12002836EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77D816FD1AAC1A12002836EE /* Main.storyboard */; };
@@ -318,6 +319,7 @@
 		7753FF831AB1F0120041D333 /* SHResPackListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHResPackListViewController.h; sourceTree = "<group>"; };
 		7753FF841AB1F0120041D333 /* SHResPackListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHResPackListViewController.m; sourceTree = "<group>"; };
 		7753FF851AB1F0120041D333 /* SHResPackListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHResPackListViewController.xib; sourceTree = "<group>"; };
+		77BD05281AFC8731009083B8 /* nav_video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = nav_video.png; sourceTree = "<group>"; };
 		77D816ED1AAC1A12002836EE /* GuidDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GuidDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		77D816F11AAC1A12002836EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		77D816F21AAC1A12002836EE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -1708,6 +1710,7 @@
 		77D819A21AAC1F39002836EE /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				77BD05281AFC8731009083B8 /* nav_video.png */,
 				77D819FD1AAC308F002836EE /* side.png */,
 				77D819FB1AAC307D002836EE /* map.png */,
 			);
@@ -2054,6 +2057,7 @@
 				77D81A0A1AAC3805002836EE /* SHLeftViewController.xib in Resources */,
 				7753FF811AB1ECF70041D333 /* mediacontroller_pause.png in Resources */,
 				77D819F91AAC2FE7002836EE /* guid2.png in Resources */,
+				77BD05291AFC8731009083B8 /* nav_video.png in Resources */,
 				77D819F21AAC294C002836EE /* zbar-help.html in Resources */,
 				77D8199D1AAC1EEA002836EE /* guide02.jpg in Resources */,
 				77D818CA1AAC1AFF002836EE /* DSLCalendarDaySelection.png in Resources */,
