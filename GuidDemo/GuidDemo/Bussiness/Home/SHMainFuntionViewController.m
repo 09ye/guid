@@ -144,6 +144,7 @@
     SHIntent * intent =[[SHIntent alloc]init];
     intent.target = @"SHGuidIntroduceViewController";
     [intent.args setValue:mDetailMusic forKey:@"detail"];
+    intent.container = self.navigationController;
     [[UIApplication sharedApplication]open:intent];
 }
 -(void)btnShowMap

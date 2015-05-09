@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GuidDemo/Bussiness/LeftView/SHGuidIntroduceViewController.m"
-            timestampString = "452843353.675982"
+            timestampString = "452844105.044941"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "270"
-            endingLineNumber = "270"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "-cancelMe"
             landmarkType = "5">
          </BreakpointContent>
