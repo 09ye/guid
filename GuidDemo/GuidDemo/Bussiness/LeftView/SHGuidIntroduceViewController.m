@@ -138,6 +138,7 @@
         [sender setBackgroundImage:[UIImage imageNamed:@"mediacontroller_pause"] forState:UIControlStateNormal];
 
     }
+    [[NSNotificationCenter defaultCenter]postNotificationName:NOTIFICATION_MUSIC_CHANGE object:detail];
 }
 
 
