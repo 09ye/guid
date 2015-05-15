@@ -132,7 +132,7 @@ static bool __isupdate = NO;
         NSDictionary * dic  = [self distanceFromCurrentLocationAttraction];
         if (dic) {
             NSDate *lastPlayDate = [dic objectForKey:@"last_play_date"];
-            NSDate *nextPlayDate = [[NSDate alloc] initWithTimeInterval:30 * 60 sinceDate:lastPlayDate];
+            NSDate *nextPlayDate = [[NSDate alloc] initWithTimeInterval:15 * 60 sinceDate:lastPlayDate];
             NSDate *now = [NSDate date];
             if ([nextPlayDate compare:now] == NSOrderedAscending) {
                 [dic setValue:now forKey:@"last_play_date"];
