@@ -10,9 +10,6 @@
 		773704621AAF44A5008C2EA6 /* SHMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 773704601AAF44A5008C2EA6 /* SHMapViewController.m */; };
 		773704631AAF44A5008C2EA6 /* SHMapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 773704611AAF44A5008C2EA6 /* SHMapViewController.xib */; };
 		773704651AAF452F008C2EA6 /* ditu.png in Resources */ = {isa = PBXBuildFile; fileRef = 773704641AAF452F008C2EA6 /* ditu.png */; };
-		77495E9F1AC69AF500D6E280 /* guid1.png in Resources */ = {isa = PBXBuildFile; fileRef = 77495E9C1AC69AF500D6E280 /* guid1.png */; };
-		77495EA01AC69AF500D6E280 /* guid2.png in Resources */ = {isa = PBXBuildFile; fileRef = 77495E9D1AC69AF500D6E280 /* guid2.png */; };
-		77495EA11AC69AF500D6E280 /* guid3.png in Resources */ = {isa = PBXBuildFile; fileRef = 77495E9E1AC69AF500D6E280 /* guid3.png */; };
 		774AFF421AADF2AC00C51E69 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 774AFF401AADF2AC00C51E69 /* WebViewController.m */; };
 		774AFF431AADF2AC00C51E69 /* WebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 774AFF411AADF2AC00C51E69 /* WebViewController.xib */; };
 		774AFF451AADF9DB00C51E69 /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 774AFF441AADF9DB00C51E69 /* more.png */; };
@@ -304,9 +301,6 @@
 		773704601AAF44A5008C2EA6 /* SHMapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHMapViewController.m; sourceTree = "<group>"; };
 		773704611AAF44A5008C2EA6 /* SHMapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SHMapViewController.xib; sourceTree = "<group>"; };
 		773704641AAF452F008C2EA6 /* ditu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ditu.png; sourceTree = "<group>"; };
-		77495E9C1AC69AF500D6E280 /* guid1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guid1.png; sourceTree = "<group>"; };
-		77495E9D1AC69AF500D6E280 /* guid2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guid2.png; sourceTree = "<group>"; };
-		77495E9E1AC69AF500D6E280 /* guid3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = guid3.png; sourceTree = "<group>"; };
 		774AFF3F1AADF2AC00C51E69 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
 		774AFF401AADF2AC00C51E69 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
 		774AFF411AADF2AC00C51E69 /* WebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WebViewController.xib; sourceTree = "<group>"; };
@@ -1851,9 +1845,6 @@
 		77D81A101AAC3A8E002836EE /* Res */ = {
 			isa = PBXGroup;
 			children = (
-				77495E9C1AC69AF500D6E280 /* guid1.png */,
-				77495E9D1AC69AF500D6E280 /* guid2.png */,
-				77495E9E1AC69AF500D6E280 /* guid3.png */,
 				7753FF7F1AB1ECF70041D333 /* mediacontroller_pause.png */,
 				7753FF801AB1ECF70041D333 /* mediacontroller_play.png */,
 				774AFF441AADF9DB00C51E69 /* more.png */,
@@ -2052,7 +2043,6 @@
 				77D818B11AAC1AFF002836EE /* SHCalendarViewController.xib in Resources */,
 				77D819F11AAC294C002836EE /* zbar-back.png in Resources */,
 				77D818C01AAC1AFF002836EE /* DSLCalendar-previousMonth.png in Resources */,
-				77495EA11AC69AF500D6E280 /* guid3.png in Resources */,
 				77D818F31AAC1AFF002836EE /* MBProgressHUD.bundle in Resources */,
 				77D819191AAC1AFF002836EE /* SHNoneViewCell.xib in Resources */,
 				77D8193F1AAC1AFF002836EE /* SHTitleContentViewController.xib in Resources */,
@@ -2073,7 +2063,6 @@
 				77D8191F1AAC1AFF002836EE /* SHTableViewSelectCell.xib in Resources */,
 				77D8191B1AAC1AFF002836EE /* SHTableViewEditGeneralCell.xib in Resources */,
 				77D819151AAC1AFF002836EE /* ic_re_error@2x.png in Resources */,
-				77495E9F1AC69AF500D6E280 /* guid1.png in Resources */,
 				77D818C91AAC1AFF002836EE /* DSLCalendarDaySelection-right@2x.png in Resources */,
 				77D819F01AAC294C002836EE /* pick_bg@2x.png in Resources */,
 				77D818D11AAC1AFF002836EE /* grayArrow.png in Resources */,
@@ -2081,7 +2070,6 @@
 				77D818EC1AAC1AFF002836EE /* button_current_bg.png in Resources */,
 				77D819381AAC1AFF002836EE /* status-bar-progress@2x.png in Resources */,
 				77D818BF1AAC1AFF002836EE /* DSLCalendar-nextMonth@2x.png in Resources */,
-				77495EA01AC69AF500D6E280 /* guid2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2368,6 +2356,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
@@ -2395,6 +2384,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_STRICT_OBJC_MSGSEND = NO;
