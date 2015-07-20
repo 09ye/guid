@@ -25,32 +25,6 @@
 static bool __isupdate = NO;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
-    //    [SHAnalyzeFactory setAnalyExtension:[[SHAnalyzeFactoryExtension1 alloc]init]];
-#ifdef DEBUG
-    [SHTask pull:URL_HEADER newUrl:URL_DEVELOPER];
-#endif
-    // Override point for customization after application launch.
-    
-    
-    //
-    //    // 新浪微博
-    //    [WeiboSDK enableDebugMode:YES];
-    //    [WeiboSDK registerApp:APPID_Sina];
-    //
-    //    [WXApi  registerApp:APPID_WeoXin];
-    //    //需要注意的是，SendMessageToWXReq的scene成员，如果scene填WXSceneSession，那么消息会发送至微信的会话内。如果scene填WXSceneTimeline，那么消息会发送至朋友圈。如果scene填WXSceneFavorite,那么消息会发送到“我的收藏”中。scene默认值为WXSceneSession。
-    //    _scene = WXSceneTimeline;
-    //    _mapManager = [[BMKMapManager alloc]init];
-    //    _locService = [[BMKLocationService alloc]init];
-    //    _locService.delegate = self;
-    //    _geocodesearch = [[BMKGeoCodeSearch alloc]init];
-    //    _geocodesearch.delegate = self;
-    //
-    //    BOOL ret = [_mapManager start:@"XUhLsGNq9Ch1HfTgZH8LFZs8"  generalDelegate:self];// ybh ky
-    ////zambon key  RNuxCab28lK3wgb3jGhsrpa3
-    //    if (!ret) {
-    //        NSLog(@"manager start failed!");
-    //    }
     [super application:application didFinishLaunchingWithOptions:launchOptions];
     _locationManager = [[CLLocationManager alloc]init];
     if ([_locationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
@@ -65,16 +39,6 @@ static bool __isupdate = NO;
     AVAudioSession *session = [AVAudioSession sharedInstance];
     [session setCategory:AVAudioSessionCategoryPlayback error:nil];
     [session setActive:YES error:nil];
-    
-    
-    
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(configUpdate:) name:CORE_NOTIFICATION_CONFIG_STATUS_CHANGED object:nil];
-//    [SHConfigManager instance];
-//    [SHConfigManager instance].URL = URL_FOR(@"get_config");
-    
-
-    
-//    [self loadCacheList];
     return YES;
 }
 -(NSDictionary *) distanceFromCurrentLocationPoint
