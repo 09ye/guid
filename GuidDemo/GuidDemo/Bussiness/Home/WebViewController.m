@@ -27,15 +27,10 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = [self.intent.args valueForKey:@"title"];
-//    NSURL* url = [[NSBundle mainBundle] URLForResource:@"agreement"withExtension:@"rtf"];
-//    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:[self.intent.args valueForKey:@"url"]]];
-     [mWebView setScalesPageToFit:YES];
-//    [mWebView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.intent.args valueForKey:@"url"]]]];
-    NSString *filePath = [self.intent.args valueForKey:@"url"];
-    NSString *htmlString = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    [mWebView loadHTMLString:htmlString baseURL:[NSURL URLWithString:filePath]];
+    self.title = [self.intent.args valueForKey:@"title"];    
+    [mWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[self.intent.args valueForKey:@"url"]]]];
     mWebView.delegate = self;
+    [mWebView setScalesPageToFit:YES];
 }
 - (void) webViewDidStartLoad:(UIWebView *)webView
 {
