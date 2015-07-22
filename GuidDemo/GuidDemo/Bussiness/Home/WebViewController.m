@@ -27,9 +27,13 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.title = [self.intent.args valueForKey:@"title"];    
-    [mWebView loadRequest:[NSURLRequest requestWithURL:[NSURL fileURLWithPath:[self.intent.args valueForKey:@"url"]]]];
+    self.title = [self.intent.args valueForKey:@"title"];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL fileURLWithPath:[self.intent.args valueForKey:@"url"]]];
+    [[NSURLCache sharedURLCache]removeAllCachedResponses];
+    [request setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+    [mWebView loadRequest:request];
     mWebView.delegate = self;
+    
     [mWebView setScalesPageToFit:YES];
 }
 - (void) webViewDidStartLoad:(UIWebView *)webView

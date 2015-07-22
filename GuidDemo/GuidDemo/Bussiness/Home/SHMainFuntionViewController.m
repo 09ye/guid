@@ -185,7 +185,7 @@
             
             SHIntent *intent = [[SHIntent alloc]init];
             [intent.args setValue:[actionSheet buttonTitleAtIndex:1] forKey:@"title"];
-            [intent.args setValue:[[arryMore objectAtIndex:0]objectForKey:@"path"] forKey:@"url"];
+            [intent.args setValue:[[arryMore objectAtIndex:1]objectForKey:@"path"] forKey:@"url"];
             intent.target = @"WebViewController";
             intent.container = self.navigationController;
             [[UIApplication sharedApplication]open:intent];
