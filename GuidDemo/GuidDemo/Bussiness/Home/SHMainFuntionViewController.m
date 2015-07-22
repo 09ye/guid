@@ -66,9 +66,9 @@
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
 //    
 //    //测试下载加密url
-//    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"7N/gfURyA/IW8WZIJosAMV7LsQfDDcLckookuKPfEdiy+w78nvIKy008zu+LdpSi"] key:@"1234567890123456"];
-//    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-//    [self requestDateZip:url];
+    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"7N/gfURyA/IW8WZIJosAMV7LsQfDDcLckookuKPfEdiy+w78nvIKy008zu+LdpSi"] key:@"1234567890123456"];
+    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+    [self requestDateZip:url];
 //    [self requestDateZip:@"http://travel.team4.us/service/ipublic_ticket_check?ticket_id=4"];
 //
 //    //测试下载zip
@@ -415,57 +415,38 @@
             if([task result] != nil){
                 network  = [NSJSONSerialization JSONObjectWithData:[task result] options:(NSJSONReadingOptions)NSJSONWritingPrettyPrinted error:&error];
             }
-            if([network.allKeys containsObject:@"code"]){
-                if ([network objectForKey:@"code"]) {
-                    NSArray * list = [SHXmlParser.instance listAttractions];
-                    for(int i = 0;i<list.count;i++){
-                        NSDictionary * dic =[list objectAtIndex:i];
-                        if([[dic objectForKey:@"code"] isEqualToString:[network objectForKey:@"code"]]){
-                            SHIntent * intent =[[SHIntent alloc]init];
-                            intent.target = @"SHGuidIntroduceViewController";
-                            [intent.args setValue:dic forKey:@"detail"];
-                            intent.container = self.navigationController;
-                            [[UIApplication sharedApplication]open:intent];
-                            return;
+            
+            if ([[network objectForKey:@"success"]boolValue]) {
+                mListResPacks = [network objectForKey:@"package"];
+                if(mListResPacks.count>1){
+                    UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:@"选择导览包"
+                                                                             delegate:self
+                                                                    cancelButtonTitle:nil
+                                                               destructiveButtonTitle:nil
+                                                                    otherButtonTitles:nil];
+                    
+                    for(NSDictionary * dicfile in mListResPacks){
+                        [choiceSheet addButtonWithTitle:[dicfile objectForKey:@"name"]];
+                    }
+                    [choiceSheet addButtonWithTitle:@"取消"];
+                    choiceSheet.cancelButtonIndex = choiceSheet.numberOfButtons-1;
+                    choiceSheet.tag = 10001;
+                    [choiceSheet showInView:self.view];
+                }else if (mListResPacks.count==1) {
+                    dicPack =  [mListResPacks objectAtIndex:0];
+                    for(NSDictionary * dicfile in listPacks){
+                        if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
+                            [self showAlertDialog:@"您已经下载过该资源"];
+                            return ;
                         }
                         
                     }
-                    [self showAlertDialog:@"未找到相关景点"];
-                }else{
-                    [self showAlertDialog:@"未找到相关景点"];
+                    [self beginRequest:[dicPack objectForKey:@"dir"]];
                 }
             }else{
-                if ([[network objectForKey:@"success"]boolValue]) {
-                    mListResPacks = [network objectForKey:@"package"];
-                    if(mListResPacks.count>1){
-                        UIActionSheet *choiceSheet = [[UIActionSheet alloc] initWithTitle:@"选择导览包"
-                                                                                 delegate:self
-                                                                        cancelButtonTitle:nil
-                                                                   destructiveButtonTitle:nil
-                                                                        otherButtonTitles:nil];
-                        
-                        for(NSDictionary * dicfile in mListResPacks){
-                             [choiceSheet addButtonWithTitle:[dicfile objectForKey:@"name"]];
-                        }
-                        [choiceSheet addButtonWithTitle:@"取消"];
-                        choiceSheet.cancelButtonIndex = choiceSheet.numberOfButtons-1;
-                        choiceSheet.tag = 10001;
-                        [choiceSheet showInView:self.view];
-                    }else if (mListResPacks.count==1) {
-                        dicPack =  [mListResPacks objectAtIndex:0];
-                        for(NSDictionary * dicfile in listPacks){
-                            if ([[dicfile objectForKey:@"name"] isEqualToString:[dicPack objectForKey:@"name"]]) {
-                                [self showAlertDialog:@"您已经下载过该资源"];
-                                return ;
-                            }
-                            
-                        }
-                        [self beginRequest:[dicPack objectForKey:@"dir"]];
-                    }
-                }else{
-                    [self showAlertDialog:@"未找到相关资源"];
-                }
+                [self showAlertDialog:@"未找到相关资源"];
             }
+            
             
             
         } taskWillTry:^(SHTask *task) {

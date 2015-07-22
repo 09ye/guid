@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GuidDemo/Bussiness/Home/SHMainFuntionViewController.m"
-            timestampString = "452844283.421202"
+            timestampString = "459225066.55414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "440"
-            endingLineNumber = "440"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "-requestDateZip:"
             landmarkType = "5">
          </BreakpointContent>
@@ -329,11 +329,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "GuidDemo/Bussiness/Home/SHMainFuntionViewController.m"
-            timestampString = "453277490.994961"
+            timestampString = "459225066.55414"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
+            startingLineNumber = "517"
+            endingLineNumber = "517"
             landmarkName = "-loadCacheList"
             landmarkType = "5">
          </BreakpointContent>
@@ -351,6 +351,22 @@
             startingLineNumber = "175"
             endingLineNumber = "175"
             landmarkName = "-actionSheet:clickedButtonAtIndex:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "GuidDemo/Bussiness/Home/SHMainFuntionViewController.m"
+            timestampString = "459224041.879434"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
