@@ -66,9 +66,9 @@
 //    [self unZipPack:[[SHFileManager getTargetFloderPath] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@",@"6"]]];
 //    
 //    //测试下载加密url
-    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"7N/gfURyA/IW8WZIJosAMV7LsQfDDcLckookuKPfEdiy+w78nvIKy008zu+LdpSi"] key:@"1234567890123456"];
-    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
-    [self requestDateZip:url];
+//    NSData * decode =[Utility  AES256DecryptWithKey:[Base64 decode:@"7N/gfURyA/IW8WZIJosAMV7LsQfDDcLckookuKPfEdiy+w78nvIKy008zu+LdpSi"] key:@"1234567890123456"];
+//    NSString * url  = [[NSString alloc]initWithData:decode encoding:NSUTF8StringEncoding];
+//    [self requestDateZip:url];
 //    [self requestDateZip:@"http://travel.team4.us/service/ipublic_ticket_check?ticket_id=4"];
 //
 //    //测试下载zip
